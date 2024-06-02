@@ -21,7 +21,6 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import org.primefaces.PrimeFaces;
-import org.slf4j.Logger;
 
 /**
  *
@@ -30,8 +29,6 @@ public abstract class AbstractBeanManager implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  @Inject
-  protected Logger log;
   @Inject
   protected AlertBean alertBean;
   @Inject
@@ -116,17 +113,6 @@ public abstract class AbstractBeanManager implements Serializable {
   }
 
   /**
-   * Permet d'écrire les logs
-   * 
-   * @param action
-   * @param detail
-   * @param message
-   */
-  public void doLog(String action, String detail, String message) {
-    UtilsLogger.doLog(log, action, detail, message);
-  }
-
-  /**
    * Permet d'avoir les informations de log.
    * 
    * @return Nom d'utilisateur + timestamp.
@@ -172,13 +158,5 @@ public abstract class AbstractBeanManager implements Serializable {
 
   public void setNotificationBean(NotificationBean notificationBean) {
     this.notificationBean = notificationBean;
-  }
-
-  public Logger getLog() {
-    return log;
-  }
-
-  public void setLog(Logger log) {
-    this.log = log;
   }
 }

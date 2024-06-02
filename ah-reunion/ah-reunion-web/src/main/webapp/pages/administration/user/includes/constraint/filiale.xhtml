@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:cc = "http://java.sun.com/jsf/composite/component"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:gt = "http://airalgerie.dz/facelets/grh"
+                xmlns:ct = "http://airalgerie.dz/facelets"
+                xmlns:o="http://omnifaces.org/ui">
+
+    <b:row>
+        <div class="col-xs-12">
+            <b:column col-sm="3" col-md="3" styleClass="pull-right m-b-2">
+                <ct:link id="addBtn"
+                         styleClass="btn-success btn-block"
+                         icon="fa-plus"
+                         value="Ajouter une filiale"
+                         update=":addConstraint"
+                         action="#{appUserBean.resetValue()}"
+                         onComplete="PF('addConstraint').show();"
+                         process="@this">
+                    <f:setPropertyActionListener target="#{appUserBean.valueMode}" value="#{1}"/>
+                </ct:link>
+            </b:column>
+        </div>
+        <b:column col-xs="12" >
+            <ct:dataTable value="#{appUserBean.user.filialeAutorisee}"
+                          id="filialesList"
+                          rendered="#{appUserBean.user.filialeAutorisee ne null}"
+                          lazy="false" filter="false"
+                          >
+
+                <p:column headerText="Filiale" filterBy="#{item}" sortBy="#{item}" style="text-align: center" width="120">
+                    <h:outputText value="#{item}"/>
+                </p:column>
+
+                <p:column headerText="Actions" width="120" style="text-align: center">
+
+                    <b:commandButton ajax="true" look="danger" styleClass="btn-small-square" iconAwesome="trash"
+                                     tooltip="Supprimer"
+                                     oncomplete="$('.delete-constraint').modal(); loadingHide();" >
+                        <f:setPropertyActionListener target="#{appUserBean.value}" value="#{item}"/>
+                        <f:setPropertyActionListener target="#{appUserBean.valueMode}" value="#{1}"/>
+                    </b:commandButton>
+
+                </p:column>
+
+            </ct:dataTable>
+        </b:column>
+    </b:row>
+
+</ui:composition>

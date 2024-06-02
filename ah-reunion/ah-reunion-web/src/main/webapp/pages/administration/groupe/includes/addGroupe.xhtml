@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:cc = "http://java.sun.com/jsf/composite/component"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:gt = "http://airalgerie.dz/facelets/grh"
+                xmlns:ct = "http://airalgerie.dz/facelets">
+
+    <h:panelGroup layout="block" id="dialogWrapper">
+        <h:panelGroup id="alertWrapper" layout="block" styleClass="row">
+            <cc:alert alert="#{groupeBean.alertBean.alerts}" />
+        </h:panelGroup>
+        <b:messages />
+
+        <b:row id="new-groupe-container">
+            <b:column col-xs="12" >
+                <div class="col-sm-12">
+                    <ct:input id="new-groupe-nom" label="Nom" placeholder="Nom..."
+                              value="#{groupeBean.groupe.name}" required="true"
+                              />
+                </div>
+                <div class="col-sm-12">
+                    <ct:input id="new-groupe-url" label="Description" placeholder="Description..."
+                              value="#{groupeBean.groupe.description}" required="true"
+                              />
+                </div>
+            </b:column>
+        </b:row>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="hr-text hr-text-center m-b-0 m-t-0">
+                    <h6 class="bg-white-i text-gray-darker"><strong>Permissions</strong></h6>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <b:column col-sm="3" col-md="3" styleClass="pull-right m-b-2">
+                    <ct:link id="addBtn"
+                             styleClass="btn-success btn-block"
+                             icon="fa-plus"
+                             value="Ajouter une permission"
+                             update=":addPermission"
+                             action="#{groupeBean.resetAddPermission()}"
+                             onComplete="PF('addPermission').show();"
+                             process="@this">
+                    </ct:link>
+                </b:column>
+            </div>
+            <b:column col-xs="12" id="permList" >
+
+                <ct:dataTable value="#{groupeBean.groupe.refPermissionSet}"
+                              id="permissionsList"
+                              rendered="#{groupeBean.groupe.refPermissionSet ne null}"
+                              lazy="false" filter="false"
+                              >
+
+                    <p:column headerText="#ID" filterBy="#{item.id}" sortBy="#{item.id}" style="text-align: center" width="100">
+                        <h:outputText value="#{item.id}"/>
+                    </p:column>
+                    <p:column headerText="Nom" filterBy="#{item.name}" sortBy="#{item.name}" style="text-align: center" width="250">
+                        <h:outputText value="#{item.name}"/>
+                    </p:column>
+                    <p:column headerText="Description" filterBy="#{item.description}" sortBy="#{item.description}" style="text-align: center" width="300">
+                        <h:outputText value="#{item.description}"/>
+                    </p:column>
+
+                    <p:column headerText="Actions" width="120" style="text-align: center">
+
+                        <b:commandButton ajax="true" look="danger" styleClass="btn-small-square" iconAwesome="trash"
+                                         tooltip="Supprimer"
+                                         oncomplete="$('.delete-permission2').modal(); loadingHide();" >
+                            <f:setPropertyActionListener target="#{groupeBean.permission}" value="#{item}"/>
+                        </b:commandButton>
+
+                    </p:column>
+
+                </ct:dataTable>
+            </b:column>
+        </div>
+    </h:panelGroup>
+
+    <p:commandLink styleClass="addGroupeBtn hidden" onclick="loading()"
+                   id="devButton" update="dialogWrapper :contentForm" process="@form"
+                   oncomplete=" if (args &amp;&amp; !args.validationFailed) {PF('addGroupe').hide();} loadingHide();" 
+                   actionListener="#{groupeBean.saveGroupe()}">
+    </p:commandLink>
+</ui:composition>

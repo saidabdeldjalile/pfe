@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+    <title>Liste des utilisateurs</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+    <style>
+        .navbar-custom {
+            background-color: red; /* Rouge */
+        }
+        .navbar-custom .navbar-brand {
+            color: white; /* Texte blanc */
+        }
+        .table-custom {
+            background-color: red; /* Rouge */
+            color: white; /* Texte blanc */
+        }
+    </style>
+</h:head>
+
+<h:body>
+
+<nav class="navbar navbar-expand-lg navbar-custom">
+    <a class="navbar-brand" href="#">AIR ALGERIE</a>
+    <h:link outcome="index.xhtml" value="Voir Réunions" styleClass="btn btn-primary ml-auto" />
+</nav>
+
+<h:form id="tableForm">
+    <div class="table-wrapper">
+        <p:dataTable value="#{loginb.logins}" var="login" id="tableLogins"
+                     styleClass="table table-bordered table-striped">
+            <p:column headerText="Adresse">#{login.adresse}</p:column>
+            <p:column headerText="Rôle">#{login.role}</p:column>
+            <p:column headerText="Matricule Employé">#{login.employe.matricule}</p:column>
+            <p:column headerText="Nom Employé">#{login.employe.nom}</p:column>
+            <p:column headerText="Prénom Employé">#{login.employe.prenom}</p:column>
+               <p:column headerText="Action">
+                     <p:commandButton value="Modifier" action="#{loginb.modifierLogin(login)}"
+                     oncomplete="PF('editLoginDialog').show();" icon="pi pi-pencil"
+                     update=":editLoginForm" />
+             <p:commandButton value="Supprimer" action="#{loginb.supprimerLogin(login)}"
+                         update=":tableForm" icon="pi pi-trash"
+                         onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet employé ?')"/>
+            </p:column>
+        </p:dataTable>
+    </div>
+</h:form>
+<h:form id="editLoginForm">
+    <p:dialog header="Modifier un login" widgetVar="editLoginDialog" modal="true" resizable="false">
+        <h:panelGrid columns="2">
+            <h:outputLabel for="editUsername" value="Nom d'utilisateur:" />
+            <p:inputText id="editUsername" value="#{loginb.loginAModifier.adresse}" />
+
+            <h:outputLabel for="editPassword" value="Mot de passe:" />
+            <p:password id="editPassword" value="#{loginb.loginAModifier.password}" />
+            
+            <h:outputLabel for="editRole" value="Rôle:" />
+            <p:inputText id="editRole" value="#{loginb.loginAModifier.role}" />
+
+            <h:outputLabel for="editEmployeeId" value="Nouveau matricule de l'employé:" />
+            <p:inputText id="editEmployeeId" value="#{loginb.matriculeEmploye}" />
+            
+            <f:facet name="footer">
+                <p:commandButton value="Modifier" action="#{loginb.modifierLogin}" update=":tableForm" />
+                <p:commandButton value="Annuler" onclick="PF('editLoginDialog').hide();" />
+            </f:facet>
+        </h:panelGrid>
+    </p:dialog>
+</h:form>
+
+
+
+<h:form id="addLoginForm">
+    <p:dialog header="Ajouter un login" widgetVar="addLoginDialog" modal="true" resizable="false">
+        <h:panelGrid columns="2">
+            <h:outputLabel for="username" value="Nom d'utilisateur:" />
+            <p:inputText id="username" value="#{loginb.login.adresse}" />
+
+            <h:outputLabel for="password" value="Mot de passe:" />
+            <p:password id="password" value="#{loginb.login.password}" />
+            
+ <h:outputLabel for="role" value="role:" />
+            <p:inputText id="role" value="#{loginb.login.role}" />
+
+            <h:outputLabel for="employeeId" value="Matricule de l'employé:" />
+            <p:inputText id="employeeId" value="#{loginb.matriculeEmploye}" />
+
+            <f:facet name="footer">
+                <p:commandButton value="Ajouter" action="#{loginb.ajouterLogin}" update=":tableForm" />
+                <p:commandButton value="Annuler" onclick="PF('addLoginDialog').hide();" />
+            </f:facet>
+        </h:panelGrid>
+    </p:dialog>
+       <p:commandButton value="Ajouter un login" onclick="PF('addLoginDialog').show();" />
+</h:form>
+<p:confirmDialog id="confirmDialog" header="Confirmation" severity="alert"
+                 widgetVar="confirmation" appendTo="@(body)">
+    <p:commandButton value="Oui" oncomplete="confirmation.hide()"
+                     action="#{loginb.supprimerLogin(loginb.login)}"
+                     update=":tableForm" />
+    <p:commandButton value="Non" onclick="confirmation.hide()" type="button" />
+    <p:outputLabel value="Êtes-vous sûr de vouloir supprimer ce login ?" />
+</p:confirmDialog>
+
+</h:body>
+</html>

@@ -5,8 +5,6 @@
 
 package dz.airalgerie.commun.bean;
 
-import dz.airalgerie.commun.facade.CountUsersFacade;
-import dz.airalgerie.commun.helper.ftp.FtpConfig;
 import dz.airalgerie.commun.ref.entities.RefPermission;
 import dz.airalgerie.commun.ref.facade.RefDomaineFacade;
 import dz.airalgerie.commun.ref.facade.RefPermissionFacade;
@@ -20,7 +18,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -87,8 +84,6 @@ public class ApplicationBean implements Serializable {
 
   private String appCode;
 
-  private FtpConfig ftpConfig;
-  private FtpConfig ftpConfigGRH;
   private ExternelConfigurationParameters externelConfigurationParameters;
   private ExternelConfigurationParameters externelConfigurationParametersGRH;
 
@@ -112,9 +107,6 @@ public class ApplicationBean implements Serializable {
 
   private static int peakCount = 0;
 
-  @EJB
-  private CountUsersFacade countUsersFacade;
-
   @Inject
   private HttpServletRequest request;
 
@@ -124,7 +116,6 @@ public class ApplicationBean implements Serializable {
       configureMessageResolver();
       loadVersion();
       loadAppCode();
-      countUsersFacade.resetCount(appCode, java.sql.Date.valueOf(LocalDate.now()));
       loadRefHost();
 
       // loadPermission();
@@ -180,20 +171,6 @@ public class ApplicationBean implements Serializable {
           checkConfigurationParameters.getConfigurationParameters(prop.getProperty("app.ftp.host")),
           checkConfigurationParameters
               .getConfigurationParameters(prop.getProperty("app.ftp.rootPath")));
-      ftpConfig = new FtpConfig(externelConfigurationParameters.getHostFtp(),
-          externelConfigurationParameters.getUsernameFtp(),
-          externelConfigurationParameters.getPasswordFtp(),
-          externelConfigurationParameters.getRootPathFtp());
-      externelConfigurationParametersGRH = new ExternelConfigurationParameters(
-          checkConfigurationParameters
-              .getConfigurationParameters(prop.getProperty("app.ftp.userGRH")),
-          checkConfigurationParameters
-              .getConfigurationParameters(prop.getProperty("app.ftp.passwordGRH")),
-          checkConfigurationParameters
-              .getConfigurationParameters(prop.getProperty("app.ftp.hostGRH")));
-      ftpConfigGRH = new FtpConfig(externelConfigurationParametersGRH.getHostFtp(),
-          externelConfigurationParametersGRH.getUsernameFtp(),
-          externelConfigurationParametersGRH.getPasswordFtp());
 
       try {
         sharedFolderPath = checkConfigurationParameters
@@ -256,22 +233,6 @@ public class ApplicationBean implements Serializable {
 
   public void setRefPermissions(List<RefPermission> refPermissions) {
     this.refPermissions = refPermissions;
-  }
-
-  public FtpConfig getFtpConfig() {
-    return ftpConfig;
-  }
-
-  public void setFtpConfig(FtpConfig ftpConfig) {
-    this.ftpConfig = ftpConfig;
-  }
-
-  public FtpConfig getFtpConfigGRH() {
-    return ftpConfigGRH;
-  }
-
-  public void setFtpConfigGRH(FtpConfig ftpConfigGRH) {
-    this.ftpConfigGRH = ftpConfigGRH;
   }
 
   public ExternelConfigurationParameters getExternelConfigurationParameters() {

@@ -5,7 +5,6 @@
 package dz.airalgerie.commun.facade;
 
 import dz.airalgerie.commun.model.utils.DataAccessQueryBuilder;
-import dz.airalgerie.commun.model.utils.QueryResult;
 import dz.airalgerie.commun.ref.entities.RefUser;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
@@ -25,19 +24,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletResponse;
 import dz.airalgerie.commun.utils.ErpConstante;
 import dz.airalgerie.grh.model.dto.commun.PersonnelDTO;
-import dz.airalgerie.grh.model.dto.rem.DTOReliquats;
-import java.util.Map;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.JoinType;
-import javax.persistence.criteria.Path;
-import javax.persistence.criteria.Root;
 import dz.airalgerie.grh.model.entities.commun.Personnel;
-import dz.airalgerie.grh.model.entities.commun.Personnel_;
-import dz.airalgerie.grh.model.entities.rem.Reliquats;
-import org.apache.poi.xssf.streaming.SXSSFSheet;
-import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 
 /**
  *
@@ -3657,39 +3644,6 @@ public class PersonnelFacade extends AbstractFacade<Personnel> {
       return null;
     }
 
-  }
-
-  /**
-   * Permet de rechercher reliquats de conge du personnel, avec pagination.
-   *
-   * @param count     Permet de calculer le nombe total de résultats.
-   * @param first     Indice du premier résultat.
-   * @param pageSize  Nombre de lignes d'une page.
-   * @param sortField Champ destiné au tri.
-   * @param sortOrder Sens du tri.
-   * @param filters   Liste des filtres à appliquer sur la recherche.
-   * @return
-   */
-  public QueryResult<DTOReliquats> findReliquatsByFilters(boolean count, int first, int pageSize,
-      String sortField, Boolean sortOrder, Map<String, Object> filters) {
-    CriteriaBuilder cb = em.getCriteriaBuilder();
-    CriteriaQuery<DTOReliquats> q = cb.createQuery(DTOReliquats.class);
-    Root<Personnel> personnel = q.from(Personnel.class);
-    Join<Personnel, Reliquats> reliquatsConge =
-        (Join<Personnel, Reliquats>) personnel.fetch(Personnel_.reliquats, JoinType.LEFT);
-    Path<?> path = personnel;
-    reliquatsConge.on(cb.and(cb.equal(reliquatsConge.get("reliquatsPK").get("dateTrt"), 210012)));
-
-    q.select(cb.construct(DTOReliquats.class, path.get("matricule"), path.get("nom"),
-        path.get("grpChap"), path.get("dirLibelle"), path.get("codeTech"),
-        cb.selectCase().when(cb.isNull(reliquatsConge.get("nbReliquats")), 0)
-            .otherwise(reliquatsConge.get("nbReliquats")),
-        cb.selectCase().when(cb.isNull(reliquatsConge.get("nbReliquatsAcquis")), 0)
-            .otherwise(reliquatsConge.get("nbReliquatsAcquis")),
-        cb.selectCase().when(cb.isNull(reliquatsConge.get("nbReliquatsPrevis")), 0)
-            .otherwise(reliquatsConge.get("nbReliquatsPrevis"))));
-    return (QueryResult<DTOReliquats>) findPaginated(personnel, q, count, first, pageSize,
-        sortField, sortOrder, filters);
   }
 
 

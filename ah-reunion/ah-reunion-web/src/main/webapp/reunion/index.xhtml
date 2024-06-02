@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+    <title>Liste des réunions</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+    <style>
+        .navbar-custom {
+            background-color: red; /* Rouge */
+            position: fixed; /* Fixer la navbar en haut */
+            width: 100%; /* Largeur de la navbar sur toute la page */
+            z-index: 1000; /* Assurer que la navbar est au-dessus des autres éléments */
+        }
+        .navbar-custom .navbar-brand {
+            color: white; /* Texte blanc */
+        }
+        .navbar-custom .nav-link {
+            color: white; /* Texte blanc */
+        }
+        .navbar-custom .nav-item form {
+            display: inline;
+        }
+        .navbar-custom .nav-item i {
+            color: white; /* Icône en blanc */
+        }
+        .leftbar {
+            background-color: red; /* Rouge */
+            color: white; /* Texte blanc */
+            position: fixed; /* Fixer le sidebar */
+            height: 100%; /* Hauteur sur toute la page */
+            width: 250px; /* Largeur du sidebar */
+            padding-top: 60px; /* Ajouter un espace pour la navbar */
+            top: 0; /* Aligner en haut */
+            left: 0; /* Aligner à gauche */
+        }
+        .leftbar ul {
+            list-style: none; /* Supprimer les puces des listes */
+            padding-left: 0; /* Retirer le padding de gauche */
+        }
+        .leftbar ul li {
+            padding: 8px 16px; /* Espacement des éléments de la liste */
+        }
+        .leftbar ul li a {
+            color: white; /* Texte blanc pour les liens */
+        }
+        .content {
+            margin-left: 250px; /* Marge à gauche pour le contenu pour laisser de l'espace pour le sidebar */
+            padding: 20px; /* Espacement du contenu */
+            padding-top: 80px; /* Espacement pour la navbar */
+        }
+    </style>
+</h:head>
+
+<h:body>
+
+<!-- Barre de navigation -->
+<nav class="navbar navbar-expand-lg navbar-custom">
+    <a class="navbar-brand" href="#">AIR ALGERIE</a>
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <h:form>
+                <p:commandLink action="#{loginBeans.loadNotifications}" oncomplete="PF('notifDialog').show()" update=":mainForm:notifTable">
+                    <i class="fas fa-bell" style="color: white;"></i>
+                </p:commandLink>
+            </h:form>
+        </li>
+        <li class="nav-item">
+            <span style="color: white; margin-right: 10px;">#{loginBeans.employe.prenom} #{loginBeans.employe.nom}</span>
+        </li>
+        <li class="nav-item">
+            <h:form>
+                <p:commandLink action="#{loginBeans.logout}">
+                    <i class="fas fa-power-off" style="color: white;"></i>
+                </p:commandLink>
+            </h:form>
+        </li>
+    </ul>
+</nav>
+
+<!-- Sidebar (leftbar) -->
+<div class="leftbar">
+    <!-- Contenu de la barre de navigation -->
+    <ul class="nav flex-column">
+        <!-- Lien pour l'admin -->
+        <ui:fragment rendered="#{request.isUserInRole('admin')}">
+            <li class="nav-item">
+                <a class="nav-link" href="admin.xhtml">Admin</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="Employe.xhtml">Gerer Employe</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="users.xhtml">Gerer User</a>
+            </li>
+        </ui:fragment>
+        <!-- Lien pour l'utilisateur -->
+        <ui:fragment rendered="#{request.isUserInRole('user')}">
+            <li class="nav-item">
+                <a class="nav-link" href="user.xhtml">User</a>
+            </li>
+        </ui:fragment>
+        <!-- Lien pour le manager -->
+        <ui:fragment rendered="#{request.isUserInRole('manager')}">
+            <li class="nav-item">
+                <a class="nav-link" href="manager.xhtml">Manager</a>
+            </li>
+        </ui:fragment>
+        <!-- Lien pour tous les utilisateurs -->
+        <li class="nav-item">
+            <a class="nav-link" href="#">Paramètres</a>
+        </li>
+    </ul>
+</div>
+
+<!-- Contenu principal -->
+<div class="content">
+    <h:form id="mainForm">
+        <p:dialog header="Notifications" widgetVar="notifDialog" modal="true" resizable="false" width="600">
+            <p:dataTable id="notifTable" value="#{loginBeans.notifications}" var="notification" lazy="true">
+                <p:column headerText="Message">
+                    #{notification.message}
+                </p:column>
+                <p:column headerText="Date de début">
+                    #{notification.dateDebut}
+                </p:column>
+            </p:dataTable>
+        </p:dialog>
+    </h:form>
+</div>
+
+</h:body>
+</html>

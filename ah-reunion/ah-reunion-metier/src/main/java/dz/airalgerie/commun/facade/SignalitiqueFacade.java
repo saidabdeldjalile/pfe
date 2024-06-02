@@ -9,7 +9,6 @@ import dz.airalgerie.commun.model.utils.DataAccessQueryBuilder;
 import dz.airalgerie.commun.ref.entities.RefUser;
 import dz.airalgerie.commun.utils.ErpConstante;
 import dz.airalgerie.commun.utils.UserRole;
-import dz.airalgerie.grh.model.entities.carriere.Parent;
 import dz.airalgerie.grh.model.entities.carriere.Signalitique;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -1243,15 +1242,6 @@ public class SignalitiqueFacade extends AbstractFacade<Signalitique> {
       return null;
     }
 
-  }
-
-  public List<Parent> getParentList(Integer matricule) {
-    try {
-      return em.createNativeQuery("SELECT * FROM [CAR].PARENT where MATRICULE = " + matricule,
-          Parent.class).getResultList();
-    } catch (Exception e) {
-      return null;
-    }
   }
 
   public Object[] findBanqueInfos(Integer matricule, boolean nature) {

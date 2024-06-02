@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/common/commonLayout.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:cc="http://java.sun.com/jsf/composite/component"
+                xmlns:ct="http://airalgerie.dz/facelets"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:of="http://omnifaces.org/functions">
+
+    <ui:define name="stylesTop">
+    </ui:define>
+
+    <ui:define name="titlePage">
+        <title>ERP - Gestion des Utilisateurs</title>
+    </ui:define>
+
+
+    <ui:define name="pageTitle">
+        <h3 class="m-a-2">Gestion des Utilisateurs</h3>
+    </ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="contentForm">
+
+            <div class="row m-b-2">
+                <!--add btn-->
+                <b:column col-sm="3" col-md="2" styleClass="pull-right" rendered="#{request.isUserInRole('refAdminUserAdd')}">
+                    <ct:link id="addBtn"
+                             styleClass="btn-success btn-block"
+                             icon="fa-plus"
+                             value="Ajouter un utilisateur"
+                             update=":addUser"
+                             action="#{appUserBean.resetAdd()}"
+                             onComplete="PF('addUser').show();"
+                             process="@this">
+                    </ct:link>
+                </b:column>
+            </div>
+
+            <b:row id="usersAlert" >
+                <cc:alert alert="#{appUserBean.alertBean.alerts}" />
+            </b:row>
+
+            <ct:dataTable value="#{appUserBean.userModel}"
+                          id="usersList"
+                          rendered="#{appUserBean.userModel ne null}"
+                          >
+
+                <p:column headerText="Matricule" filterBy="#{item.matricule}" sortBy="#{item.matricule}" style="text-align: center" width="100">
+                    <h:outputText value="#{item.matricule}"/>
+                </p:column>
+                <p:column headerText="Login" filterBy="#{item.login}" sortBy="#{item.login}" style="text-align: center" width="100">
+                    <h:outputText value="#{item.login}"/>
+                </p:column>
+
+                <p:column headerText="Actions" width="120" style="text-align: center" 
+                          rendered="#{request.isUserInRole('refAdminUserResetPwd') or request.isUserInRole('refAdminUserAdd')}">
+                    <b:commandButton ajax="true" look="primary" styleClass="btn-small-square" iconAwesome="lock"
+                                     tooltip="Réinitialiser mot de passe" action="#{appUserBean.resetPassword()}"
+                                     oncomplete="$('.reset-user-password').modal(); loadingHide();"
+                                     rendered="#{request.isUserInRole('refAdminUserResetPwd')}">
+                        <f:setPropertyActionListener target="#{appUserBean.user}" value="#{item}"/>
+                    </b:commandButton>
+                    &nbsp;
+                    <b:commandButton look="info" styleClass="btn-small-square" iconAwesome="edit"
+                                     tooltip="Editer" action="#{appUserBean.resetEdit()}"
+                                     oncomplete="PF('addUser').show(); loadingHide();" 
+                                     rendered="#{request.isUserInRole('refAdminUserAdd')}"
+                                     update=":addUser :dataUser">
+                        <f:setPropertyActionListener target="#{appUserBean.user}" value="#{item}"/>
+                    </b:commandButton>
+                    &nbsp;
+                    <b:commandButton ajax="true" look="danger" styleClass="btn-small-square" iconAwesome="trash"
+                                     tooltip="Supprimer" rendered="#{request.isUserInRole('refAdminUserAdd')}"
+                                     oncomplete="$('.delete-user').modal(); loadingHide();" >
+                        <f:setPropertyActionListener target="#{appUserBean.user}" value="#{item}"/>
+                    </b:commandButton>
+
+                </p:column>
+
+            </ct:dataTable>
+        </h:form>
+
+        <ct:dialog id="addUser" 
+                   headerTitle="#{appUserBean.editMode ? 'Modification' : 'Ajout'} d'un utilisateur"
+                   saveBtnRendred="true" height="450" saveBtnClass="addUserBtn" >
+            <h:form id="dataUser" rendered="#{request.isUserInRole('refAdminUserAdd')}">
+                <ui:include src="includes/addUser.xhtml" />
+            </h:form>
+        </ct:dialog>
+        
+         <ct:dialog id="addConstraint" headerTitle="Ajout d'une contrainte"
+                   saveBtnRendred="true" height="150" width="60%" saveBtnClass="addConstraintBtn" >
+            <h:form id="constraintsForm" rendered="#{request.isUserInRole('refAdminUserAdd')}">
+
+                <ui:include src="includes/constraint/addConstraint.xhtml" />
+            </h:form>
+        </ct:dialog>
+        
+         <ct:dialog id="addGroupe" headerTitle="Ajout d'un groupe"
+                   saveBtnRendred="true" height="150" width="60%" saveBtnClass="addGroupeBtn" >
+            <h:form id="groupesForm" rendered="#{request.isUserInRole('refAdminUserAdd')}">
+
+                <ui:include src="includes/constraint/addGroupe.xhtml" />
+            </h:form>
+        </ct:dialog>
+
+        <ct:confirmDiag name="delete-user" update=":contentForm"
+                        actionListener="appUserBean.deleteUser()"
+                        message="Êtes-vous sûr de vouloir supprimer cet utilisateur ?" />
+        
+        <ct:confirmDiag name="reset-user-password" update=":contentForm"
+                        actionListener="appUserBean.saveUser()"
+                        message="Êtes-vous sûr de vouloir réinitialiser le mot de passe de cet utilisateur ?" />
+        
+        <ct:confirmDiag name="delete-constraint" update=":dataUser"
+                        actionListener="appUserBean.deleteValue()"
+                        message="Êtes-vous sûr de vouloir supprimer cette contrainte ?" />
+        
+        <ct:confirmDiag name="delete-groupe" update=":dataUser"
+                        actionListener="appUserBean.deleteGroupe()"
+                        message="Êtes-vous sûr de vouloir supprimer ce groupe ?" />
+
+    </ui:define>
+</ui:composition>

@@ -19,7 +19,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
-@Named("loginBean")
+@Named("loginBeans")
 @SessionScoped
 public class LoginBean implements Serializable {
 

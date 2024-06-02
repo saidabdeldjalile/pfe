@@ -53,11 +53,9 @@ public class ResetPasswordBean extends AbstractBeanManager {
 
       sendToastr("success", "Félicitations !", "Votre mot de passe a été modifié avec succès.");
     } catch (InvalidPasswordException e) {
-      log.error("Error on changing user's password", e);
       this.sendFacesMessage(e.getMessage(), FacesMessage.SEVERITY_ERROR, false);
       getFacesContext().validationFailed();
     } catch (Exception e) {
-      log.error("Error on changing user's password", e);
       this.sendFacesMessage(e.getMessage(), FacesMessage.SEVERITY_ERROR, false);
       getFacesContext().validationFailed();
     }

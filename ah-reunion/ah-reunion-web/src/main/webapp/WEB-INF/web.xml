@@ -40,7 +40,256 @@
             <url-pattern>/resources/*</url-pattern>
         </web-resource-collection>
     </security-constraint>
-    
+    <security-constraint>
+        <display-name>AppAccess</display-name>
+        <web-resource-collection>
+            <web-resource-name>index page</web-resource-name>
+            <description>Secured index page</description>
+            <url-pattern>/index.xhtml</url-pattern>
+            <url-pattern>/faces/index.xhtml</url-pattern>
+            <url-pattern>/pages/*</url-pattern>
+            <url-pattern>/faces/pages/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>Secured index page</description>
+            <role-name>appRefAccess</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>Resources access</display-name>
+        <web-resource-collection>
+            <web-resource-name>resources</web-resource-name>
+            <description>Resources folder</description>
+            <url-pattern>/faces/javax.faces.resource/*</url-pattern>
+            <url-pattern>/javax.faces.resource/*</url-pattern>
+            <url-pattern>/faces/resources/*</url-pattern>
+            <url-pattern>/resources/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>notification</web-resource-name>
+            <description>send notification</description>
+            <url-pattern>/pages/stats/send.xhtml</url-pattern>
+            <url-pattern>/faces/pages/stats/send.xhtml</url-pattern>
+        </web-resource-collection>
+    </security-constraint>
+    <security-constraint>
+        <display-name>Home page</display-name>
+        <web-resource-collection>
+            <web-resource-name>Home page</web-resource-name>
+            <description/>
+            <url-pattern>/home.xhtml</url-pattern>
+            <url-pattern>/faces/home.xhtml</url-pattern>
+        </web-resource-collection>
+    </security-constraint>
+    <security-constraint>
+        <display-name>Domaine Page</display-name>
+        <web-resource-collection>
+            <web-resource-name>Domaine admin page</web-resource-name>
+            <description/>
+            <url-pattern>/pages/administration/domaine/index.xhtml</url-pattern>
+            <url-pattern>/faces/pages/administration/domaine/index.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>refAdminDomaineView</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>Module Page</display-name>
+        <web-resource-collection>
+            <web-resource-name>Module admin page</web-resource-name>
+            <description/>
+            <url-pattern>/pages/administration/module/index.xhtml</url-pattern>
+            <url-pattern>/faces/pages/administration/module/index.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>refAdminModuleView</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>Fonction Page</display-name>
+        <web-resource-collection>
+            <web-resource-name>Fonction admin page</web-resource-name>
+            <description/>
+            <url-pattern>/pages/administration/fonction/index.xhtml</url-pattern>
+            <url-pattern>/faces/pages/administration/fonction/index.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>refAdminFonctionView</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>Permission Page</display-name>
+        <web-resource-collection>
+            <web-resource-name>Permission admin page</web-resource-name>
+            <description/>
+            <url-pattern>/pages/administration/permission/index.xhtml</url-pattern>
+            <url-pattern>/faces/pages/administration/permission/index.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>refAdminPermissionView</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>Groupe Page</display-name>
+        <web-resource-collection>
+            <web-resource-name>Groupe admin page</web-resource-name>
+            <description/>
+            <url-pattern>/pages/administration/groupe/index.xhtml</url-pattern>
+            <url-pattern>/faces/pages/administration/groupe/index.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>refAdminGroupeView</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>User Page</display-name>
+        <web-resource-collection>
+            <web-resource-name>User admin page</web-resource-name>
+            <description/>
+            <url-pattern>/pages/administration/user/index.xhtml</url-pattern>
+            <url-pattern>/faces/pages/administration/user/index.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>refAdminUserView</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>Decision Page</display-name>
+        <web-resource-collection>
+            <web-resource-name>Decision page</web-resource-name>
+            <description/>
+            <url-pattern>/pages/decision/index.xhtml</url-pattern>
+            <url-pattern>/faces/pages/decision/index.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>refAdminUserView</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>USER PERMISSION</display-name>
+        <web-resource-collection>
+            <web-resource-name>USER PERMISSION</web-resource-name>
+            <description/>
+            <url-pattern>/pages/administration/userPermissions/index.xhtml</url-pattern>
+            <url-pattern>/faces/pages/administration/userPermissions/index.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>refAdminUserPermView</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>USER STATS</display-name>
+        <web-resource-collection>
+            <web-resource-name>USER STATS</web-resource-name>
+            <description/>
+            <url-pattern>/pages/stats/index.xhtml</url-pattern>
+            <url-pattern>/faces/pages/stats/index.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>refStatsView</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-role>
+        <description/>
+        <role-name>appRefAccess</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>refAdminDomaineView</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>refAdminModuleView</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>refAdminFonctionView</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>refAdminPermissionView</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>refAdminGroupeView</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>refAdminUserView</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>refDecisionView</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>refAdminDomaineAdd</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>refAdminFonctionAdd</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>refAdminModuleAdd</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>refAdminPermissionAdd</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>refAdminGroupeAdd</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>refAdminUserAdd</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>refAdminUserResetPwd</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>refDecisionAdd</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>refDecisionEdit</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>refDecisionDelete</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>refDecisionPdf</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>refAdminUserPermView</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>refAdminUserPermSearch</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>refAdminUserPermExcel</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>refStatsView</role-name>
+    </security-role>
      <security-role>
         <description/>
         <role-name>appPrtAccess</role-name>

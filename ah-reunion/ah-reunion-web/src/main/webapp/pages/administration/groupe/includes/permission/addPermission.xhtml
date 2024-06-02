@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:cc = "http://java.sun.com/jsf/composite/component"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:gt = "http://airalgerie.dz/facelets/grh"
+                xmlns:ct = "http://airalgerie.dz/facelets"
+                xmlns:o="http://omnifaces.org/ui">
+
+    <h:panelGroup layout="block" id="dialogWrapper">
+        <h:panelGroup id="alertWrapper" layout="block" styleClass="row">
+            <cc:alert alert="#{groupeBean.alertBean.alerts}" />
+        </h:panelGroup>
+        <b:messages />
+
+        <b:row id="new-permission-container">
+            <b:column col-xs="12" >
+                <div class="col-sm-12">
+                    <ct:input type="autocomplete" id="new-fonction-module-parent" label="Permission" 
+                              value="#{groupeBean.permission}" placeholder="Permission..."
+                              completeMethod="#{refHelpersBean.autoCompletePermissions}" immediate="true"
+                              var="permission" itemValue="#{permission}" itemLabel="#{permission.id} - #{permission.name}">
+                        <p:ajax event="itemSelect" process="@this" update="" onstart="loading()" oncomplete="loadingHide()" />
+                        <o:converter converterId="omnifaces.ListConverter" list="#{refHelpersBean.permissionsList}" />
+                    </ct:input>
+                </div>
+            </b:column>
+        </b:row>
+    </h:panelGroup>
+
+    <p:commandLink styleClass="addPermissionBtn hidden" onclick="loading()"
+                   id="devButton" update="dialogWrapper :dataGroupe:permList" process="@form"
+                   oncomplete=" if (args &amp;&amp; !args.validationFailed) {PF('addPermission').hide();} loadingHide();" 
+                   actionListener="#{groupeBean.addPermession()}">
+    </p:commandLink>
+</ui:composition>

@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:cc = "http://java.sun.com/jsf/composite/component"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:gt = "http://airalgerie.dz/facelets/grh"
+                xmlns:ct = "http://airalgerie.dz/facelets"
+                xmlns:o="http://omnifaces.org/ui">
+
+    <h:panelGroup layout="block" id="dialogWrapper">
+        <h:panelGroup id="alertWrapper" layout="block" styleClass="row">
+            <cc:alert alert="#{appUserBean.alertBean.alerts}" />
+        </h:panelGroup>
+        <b:messages />
+
+        <b:row id="new-user-container">
+            <b:column col-md="12" >
+                <div class="col-md-4">
+                    <ct:input id="new-user-matricule" type="number" label="Matricule" placeholder="Matricule..."
+                              value="#{appUserBean.user.matricule}" required="true" 
+                              disabled="#{appUserBean.editMode}" readonly="#{appUserBean.editMode}"
+                              decimalPlaces="0"
+                              />
+                </div>
+                <div class="col-md-8">
+                    <ct:input id="new-user-login" label="Login" placeholder="Login..."
+                              value="#{appUserBean.user.login}" required="true"
+                              disabled="#{appUserBean.editMode}" readonly="#{appUserBean.editMode}"
+                              />
+                </div>
+            </b:column>
+        </b:row>
+        <b:row id="new-user-constraint-container">
+            <b:column colSpan="12">
+                <b:tabView pills="true" tabPosition="left" 
+                           contentStyle="border: 1px solid #ddd;padding:10px"
+                           activeIndex="#{appUserBean.valueMode}">
+                    <b:tab title="Groupes Users">
+                        <ui:include src="constraint/groupeUser.xhtml" />
+                    </b:tab>
+                </b:tabView>
+
+            </b:column>
+        </b:row>
+    </h:panelGroup>
+
+    <p:commandLink styleClass="addUserBtn hidden" onclick="loading()"
+                   id="devButton" update="dialogWrapper :contentForm" process="@form"
+                   oncomplete=" if (args &amp;&amp; !args.validationFailed) {PF('addUser').hide();} loadingHide();" 
+                   actionListener="#{appUserBean.saveUser()}">
+    </p:commandLink>
+</ui:composition>

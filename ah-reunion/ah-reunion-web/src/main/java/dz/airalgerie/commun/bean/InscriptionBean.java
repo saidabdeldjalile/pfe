@@ -9,7 +9,6 @@ import dz.airalgerie.commun.bean.core.AbstractBeanManager;
 import dz.airalgerie.commun.exception.InvalideInscriptionPortaillException;
 import dz.airalgerie.commun.facade.CommunManagerFacade;
 import dz.airalgerie.commun.facade.PersonnelFacade;
-import dz.airalgerie.commun.grh.utils.EmailService;
 import dz.airalgerie.commun.ref.entities.RefGroupe;
 import dz.airalgerie.commun.ref.entities.RefInscription;
 import dz.airalgerie.commun.ref.entities.RefUser;
@@ -113,7 +112,6 @@ public class InscriptionBean extends AbstractBeanManager {
         refInscription = new RefInscription();
         String emailSubject = Messages.INSCRIPTION_CODE_PASSWORD_EMAIL_SUBJECT;
         String newInscriptionCode = this.generateInscriptionCode();
-        EmailService.notifInscriptionCode(inscriptionEmail, newInscriptionCode, emailSubject);
         refInscription.setMatricule(matricule);
         refInscription.setLogin(inscriptionEmail);
         refInscription.setInscriptionCode(newInscriptionCode);
@@ -125,13 +123,11 @@ public class InscriptionBean extends AbstractBeanManager {
       }
     } catch (InvalideInscriptionPortaillException e) {
       LOGGER.error("Erreur on send inscription code portail ", e);
-      log.error("Error on send inscription code portail ", e);
       this.sendFacesMessage(e.getMessage(), FacesMessage.SEVERITY_ERROR, false);
       getFacesContext().validationFailed();
     } catch (Exception e) {
       alertBean.getAlerts().addError(Messages.GENERIC_ERROR);
       LOGGER.error("Erreur on send  registration code   ", e);
-      log.error("Error on sendInscriptionCode ", e);
     }
   }
 
@@ -270,12 +266,10 @@ public class InscriptionBean extends AbstractBeanManager {
       personnel = null;
     } catch (InvalideInscriptionPortaillException e) {
       LOGGER.error("Erreur on inscription portail ", e);
-      log.error("Error on inscription ", e);
       this.sendFacesMessage(e.getMessage(), FacesMessage.SEVERITY_ERROR, false);
       getFacesContext().validationFailed();
     } catch (Exception e) {
       LOGGER.error("Erreur on inscription portail ", e);
-      log.error("Error on inscription", e);
       this.sendFacesMessage(e.getMessage(), FacesMessage.SEVERITY_ERROR, false);
       getFacesContext().validationFailed();
 

@@ -5,7 +5,6 @@
 
 package dz.airalgerie.commun.model.entities.commun;
 
-import dz.airalgerie.grh.model.entities.carriere.UniteGrh;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -45,12 +44,6 @@ public class GrpChap implements Serializable {
   @Column(name = "DATE_SAISIE")
   @Temporal(javax.persistence.TemporalType.DATE)
   private Date dateSaisie;
-  @JoinColumn(name = "CODE_WIL", referencedColumnName = "CODE_WIL")
-  @ManyToOne(optional = false, fetch = FetchType.LAZY)
-  private Wilaya wilaya;
-  @JoinColumn(name = "CODE_UNIT", referencedColumnName = "CODE_UNIT")
-  @ManyToOne(optional = false, fetch = FetchType.LAZY)
-  private UniteGrh unite;
   @Column(name = "STATUT")
   private Integer statut;
 
@@ -109,22 +102,6 @@ public class GrpChap implements Serializable {
 
   public void setDateSaisie(Date dateSaisie) {
     this.dateSaisie = dateSaisie;
-  }
-
-  public Wilaya getWilaya() {
-    return wilaya;
-  }
-
-  public void setWilaya(Wilaya wilaya) {
-    this.wilaya = wilaya;
-  }
-
-  public UniteGrh getUnite() {
-    return unite;
-  }
-
-  public void setUnite(UniteGrh unite) {
-    this.unite = unite;
   }
 
   public Integer getStatut() {

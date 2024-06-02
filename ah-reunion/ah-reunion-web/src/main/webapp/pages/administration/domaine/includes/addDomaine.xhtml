@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:cc = "http://java.sun.com/jsf/composite/component"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:gt = "http://airalgerie.dz/facelets/grh"
+                xmlns:ct = "http://airalgerie.dz/facelets">
+
+    <h:panelGroup layout="block" id="dialogWrapper">
+        <h:panelGroup id="alertWrapper" layout="block" styleClass="row">
+            <cc:alert alert="#{domaineBean.alertBean.alerts}" />
+        </h:panelGroup>
+        <b:messages />
+
+        <b:row id="new-domaine-container">
+            <b:column col-xs="12" >
+                <div class="col-sm-6 col-md-4">
+                    <ct:input id="new-domaine-code" label="Code" placeholder="Code..."
+                              value="#{domaineBean.domaine.code}" required="true"
+                              />
+                </div>
+                <div class="col-sm-6 col-md-8">
+                    <ct:input id="new-domaine-nom" label="Nom" placeholder="Nom..."
+                              value="#{domaineBean.domaine.nom}" required="true"
+                              />
+                </div>
+                <div class="col-sm-12">
+                    <ct:input id="new-domaine-url" label="Url" placeholder="Url..."
+                              value="#{domaineBean.domaine.url}" required="true"
+                              />
+                </div>
+
+                <div class="col-sm-6 col-md-6">
+                    <ct:input id="new-domaine-icon" label="Icone" placeholder="Icone..."
+                              value="#{domaineBean.domaine.icon}"
+                              />
+                </div>
+                <b:column col-md="3" col-sm="6">
+                    <ct:input type="number" id="new-domaine-rang" label="Rang" placeholder="Rang..."
+                              value="#{domaineBean.domaine.rang}" min='1'
+                              required="true" decimalPlaces="0" />
+                </b:column>
+                <div class="col-sm-6 col-md-3">
+                    <b:switch value="#{domaineBean.domaine.statut}" label="Statut" 
+                              offText="Non activé" offColor="danger" 
+                              onText="Activé" onColor="success"  />
+                </div>
+            </b:column>
+        </b:row>
+    </h:panelGroup>
+
+    <p:commandLink styleClass="addDomaineBtn hidden" onclick="loading()"
+                   id="devButton" update="dialogWrapper :contentForm" process="@form"
+                   oncomplete=" if (args &amp;&amp; !args.validationFailed) {PF('addDomaine').hide();} loadingHide();" 
+                   actionListener="#{domaineBean.saveDomaine()}">
+    </p:commandLink>
+</ui:composition>

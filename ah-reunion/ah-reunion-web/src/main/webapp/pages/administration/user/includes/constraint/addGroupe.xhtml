@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:cc = "http://java.sun.com/jsf/composite/component"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:gt = "http://airalgerie.dz/facelets/grh"
+                xmlns:ct = "http://airalgerie.dz/facelets"
+                xmlns:o="http://omnifaces.org/ui">
+
+    <h:panelGroup layout="block" id="dialogWrapper">
+        <h:panelGroup id="alertWrapper" layout="block" styleClass="row">
+            <cc:alert alert="#{groupeBean.alertBean.alerts}" />
+        </h:panelGroup>
+        <b:messages />
+
+        <b:row id="new-groupe-container">
+            <b:column col-xs="12" >
+                <div class="col-sm-12">
+                    <ct:input type="autocomplete" id="new-fonction-module-parent" label="Groupe" 
+                              value="#{appUserBean.groupe}" placeholder="Groupe..."
+                              completeMethod="#{refHelpersBean.autoCompleteGroupes}" immediate="true"
+                              var="groupe" itemValue="#{groupe}" itemLabel="#{groupe.id} - #{groupe.name}">
+                        <p:ajax event="itemSelect" process="@this" update="" onstart="loading()" oncomplete="loadingHide()" />
+                        <o:converter converterId="omnifaces.ListConverter" list="#{refHelpersBean.groupesList}" />
+                    </ct:input>
+                </div>
+            </b:column>
+        </b:row>
+    </h:panelGroup>
+
+    <p:commandLink styleClass="addGroupeBtn hidden" onclick="loading()"
+                   id="devButton" update="dialogWrapper :dataUser:new-user-constraint-container" process="@form"
+                   oncomplete=" if (args &amp;&amp; !args.validationFailed) {PF('addGroupe').hide();} loadingHide();" 
+                   actionListener="#{appUserBean.addGroupe()}">
+    </p:commandLink>
+</ui:composition>

@@ -10,19 +10,14 @@ package dz.airalgerie.commun.bean;
 
 import dz.airalgerie.commun.facade.CommunManagerFacade;
 import dz.airalgerie.commun.facade.SignalitiqueFacade;
-import dz.airalgerie.commun.gfc.facade.CentreComptableDirectionFacade;
-import dz.airalgerie.commun.grh.utils.Utils;
 import dz.airalgerie.commun.ref.entities.Notifications;
 import dz.airalgerie.commun.ref.entities.RefPermission;
 import dz.airalgerie.commun.ref.entities.RefUser;
-import dz.airalgerie.commun.utils.FTP;
-import dz.airalgerie.gfc.model.view.cg.CentreComptableDirection;
 import dz.airalgerie.grh.model.dto.commun.PersonnelDTO;
 import dz.airalgerie.grh.model.entities.carriere.Signalitique;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
@@ -31,7 +26,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
@@ -62,8 +56,6 @@ public class UserBean implements Serializable {
   @EJB
   SignalitiqueFacade SignalitiqueFacade;
   @EJB
-  CentreComptableDirectionFacade centreComptableDirectionFacade;
-  @EJB
   private CommunManagerFacade communManagerFacade;
 
   private Integer selectedMatricule;
@@ -86,8 +78,6 @@ public class UserBean implements Serializable {
   private Object[] Profile;
   private Object[] ProfileEdit;
   private String userCondition;
-  private final String FIL = Utils.dbSchema;
-  private List<CentreComptableDirection> listDirections;
   // private User activUser = null;
   private String selectedYear;
   private String communPath;
@@ -245,26 +235,6 @@ public class UserBean implements Serializable {
     }
   }
 
-  public void findUserDirections() {
-    try {
-      if (this.loggedUser != null && this.loggedUser.getGrpChap() != null
-          && (listDirections == null || listDirections.isEmpty())) {
-        if(refUser.getDirectionAutorisee().isEmpty()){
-            listDirections = centreComptableDirectionFacade
-            .findDirectionsByCentre(this.loggedUser.getGrpChap().substring(0, 2));  
-        } else{
-           Set<String> directionAutorisees = refUser.getDirectionAutorisee();
-           directionAutorisees.add(this.loggedUser.getGrpChap().substring(0, 2));
-           listDirections = centreComptableDirectionFacade
-            .findDirectionsByCentreAndDirectionAutorisee(directionAutorisees);  
-        }
-
-      }
-    } catch (Exception e) {
-      LOGGER.error("Error on finding logged user directions", e);
-    }
-  }
-
   public void setProfile(Object[] Profile) {
     this.Profile = Profile;
   }
@@ -402,20 +372,6 @@ public class UserBean implements Serializable {
       logPath = "";
       java.util.logging.Logger.getLogger(UserBean.class.getName()).log(Level.SEVERE, null, ex);
     }
-
-    if (getSelectedMatricule() != null) {
-      String app = FIL;// "PAIE";
-      // String app = "ANNU";
-      queryObject = SignalitiqueFacade.getUserQuery(selectedMatricule, codeApp);
-
-      log(null);
-
-      try {
-        redirectRole();
-      } catch (IOException ex) {
-        System.out.println("Error");
-      }
-    }
   }
 
   public String getDirectoryPath() throws IOException {
@@ -443,25 +399,12 @@ public class UserBean implements Serializable {
     return codeApp;
   }
 
-  public String getFIL() {
-    return FIL;
-  }
-
   public PersonnelDTO getLoggedUser() {
     return loggedUser;
   }
 
   public void setLoggedUser(PersonnelDTO loggedUser) {
     this.loggedUser = loggedUser;
-  }
-
-  public List<CentreComptableDirection> getListDirections() {
-    this.findUserDirections();
-    return listDirections;
-  }
-
-  public void setListDirections(List<CentreComptableDirection> listDirections) {
-    this.listDirections = listDirections;
   }
 
   public String getRole() {
@@ -487,23 +430,6 @@ public class UserBean implements Serializable {
 
   public void setRefUser(RefUser refUser) {
     this.refUser = refUser;
-  }
-
-  public void copyPhotoFromFTP(Integer matricule) {
-    try {
-      ServletContext servletContext =
-          (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
-      String relativeWebPath = "/resources/PhotosAH/";
-      URL ireportUrl = getClass().getResource("/ireport/PhotosAH/");
-      FTP.copyPhotoFromFTP(matricule, servletContext.getRealPath(relativeWebPath),
-          applicationBean.getFtpConfigGRH());
-      // System.out.println("***********************le Path Utilisé Est " +
-      // ireportUrl.getPath().replaceFirst("%20", " "));
-      // TO DO
-      // FTP.copyPhotoFromFTP(matricule, ireportUrl.getPath().replaceFirst("%20", " "));
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
   }
 
   public Integer getMatricule() {

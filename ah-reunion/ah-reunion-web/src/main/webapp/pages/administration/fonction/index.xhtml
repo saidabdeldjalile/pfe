@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/common/commonSimpleLayout.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:cc="http://java.sun.com/jsf/composite/component"
+                xmlns:ct="http://airalgerie.dz/facelets"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:of="http://omnifaces.org/functions">
+
+    <ui:define name="stylesTop">
+    </ui:define>
+
+    <ui:define name="titlePage">
+        <title>ERP - Gestion des Fonctions</title>
+    </ui:define>
+
+
+    <ui:define name="pageTitle">
+        <h3 class="m-a-2">Gestion des Fonctions</h3>
+    </ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="contentForm">
+
+            <div class="row m-b-2">
+                <!--add btn-->
+                <b:column col-sm="3" col-md="2" styleClass="pull-right" rendered="#{request.isUserInRole('refAdminFonctionAdd')}">
+                   <ct:link id="addBtn"
+                             styleClass="btn-success btn-block"
+                             icon="fa-plus"
+                             value="Ajouter une fonction"
+                             update=":addFonction"
+                             action="#{fonctionBean.resetAdd()}"
+                             onComplete="PF('addFonction').show();"
+                             process="@this">
+                    </ct:link>
+                </b:column>
+            </div>
+
+            <b:row id="fonctionsAlert" >
+                <cc:alert alert="#{fonctionBean.alertBean.alerts}" />
+            </b:row>
+
+            <ct:dataTable value="#{fonctionBean.fonctionModel}"
+                          id="fonctionsList"
+                          rendered="#{fonctionBean.fonctionModel ne null}"
+                          >
+
+                <p:column headerText="#ID" filterBy="#{item.id}" sortBy="#{item.id}" style="text-align: center" width="100">
+                    <h:outputText value="#{item.id}"/>
+                </p:column>
+                <p:column headerText="#ID Module" filterBy="#{item.refModule.id}" sortBy="#{item.refModule.id}" style="text-align: center" width="100">
+                    <h:outputText value="#{item.idModule}"/>
+                </p:column>
+                <p:column headerText="Code Module" filterBy="#{item.refModule.code}" sortBy="#{item.refModule.code}" style="text-align: center" width="120">
+                    <h:outputText value="#{item.codeModule}"/>
+                </p:column>
+                <p:column headerText="Code" filterBy="#{item.code}" sortBy="#{item.code}" style="text-align: center" width="100">
+                    <h:outputText value="#{item.code}"/>
+                </p:column>
+                <p:column headerText="Libellé" filterBy="#{item.libelle}" sortBy="#{item.libelle}" style="text-align: center" width="300">
+                    <h:outputText value="#{item.libelle}"/>
+                </p:column>
+                <p:column headerText="Description" filterBy="#{item.descr}" sortBy="#{item.descr}" style="text-align: center" width="300">
+                    <h:outputText value="#{item.description}"/>
+                </p:column>
+                <p:column headerText="Rang" filterBy="#{item.rang}" sortBy="#{item.rang}" style="text-align: center" width="100">
+                    <h:outputText value="#{item.rang}"/>
+                </p:column>
+                <p:column headerText="Icone" filterBy="#{item.icon}" sortBy="#{item.icon}" style="text-align: center" width="150">
+                    <h:outputText value="#{item.icon}"/>
+                </p:column>
+
+                <p:column headerText="Statut" width="130" styleClass="text-center"
+                          filterBy="#{item.statut}" sortBy="#{item.statut}" >
+                    <f:facet name="filter">
+                        <p:selectOneMenu onchange="PF('fonctionsList').filter()" styleClass="custom-filter">
+                            <f:selectItem itemLabel="Filtrer..." itemValue="#{null}" noSelectionOption="true" />
+                            <f:selectItem itemLabel="Activé(s)" itemValue="#{1}" />
+                            <f:selectItem itemLabel="Non Activé(s)" itemValue="#{0}" />
+                        </p:selectOneMenu>
+                    </f:facet>
+                    <b:label text="#{item.statut ? 'activé' : 'non activé'}" 
+                             severity="#{item.statut ? 'success' : 'danger'}"
+                             styleClass="label-outline label-pill"
+                             />
+                </p:column>
+
+
+                <p:column headerText="Actions" width="120" style="text-align: center" rendered="#{request.isUserInRole('refAdminFonctionAdd')}">
+                    <b:commandButton look="info" styleClass="btn-small-square" iconAwesome="edit"
+                                     tooltip="Editer" action="#{fonctionBean.resetEdit()}"
+                                     oncomplete="PF('addFonction').show(); loadingHide();" 
+                                     update=":addFonction :dataFonction">
+                        <f:setPropertyActionListener target="#{fonctionBean.selectedFonction}" value="#{item}"/>
+                    </b:commandButton>
+                    &nbsp;
+                    <b:commandButton ajax="true" look="danger" styleClass="btn-small-square" iconAwesome="trash"
+                                     tooltip="Supprimer"
+                                     oncomplete="$('.delete-fonction').modal(); loadingHide();" >
+                        <f:setPropertyActionListener target="#{fonctionBean.selectedFonction}" value="#{item}"/>
+                    </b:commandButton>
+
+                </p:column>
+
+            </ct:dataTable>
+        </h:form>
+
+        <ct:dialog id="addFonction" 
+                   headerTitle="#{fonctionBean.editMode ? 'Modification' : 'Ajout'} d'une fonction"
+                   saveBtnRendred="true" height="450" saveBtnClass="addFonctionBtn" >
+            <h:form id="dataFonction" rendered="#{request.isUserInRole('refAdminFonctionAdd')}" >
+                <ui:include src="includes/addFonction.xhtml" />
+            </h:form>
+        </ct:dialog>
+
+        <ct:confirmDiag name="delete-fonction" update=":contentForm"
+                        actionListener="fonctionBean.deleteFonction()"
+                        message="-vous sûr de vouloir supprimer cette fonction ?" />
+
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Liste des employés</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+    <style>
+        .navbar-custom {
+            background-color: red; /* Rouge */
+        }
+        .navbar-custom .navbar-brand {
+            color: white; /* Texte blanc */
+        }
+        .table-custom {
+            background-color: red; /* Rouge */
+            color: white; /* Texte blanc */
+        }
+    </style>
+</h:head>
+
+<h:body>
+
+<nav class="navbar navbar-expand-lg navbar-custom">
+  <a class="navbar-brand" href="#">AIR ALGERIE</a>
+
+    <p:commandButton value="Ajouter Employé" oncomplete="PF('addDialog').show()" styleClass="btn btn-primary ml-auto" />
+    <h:link outcome="index.xhtml" value="Voir Réunions" styleClass="btn btn-primary ml-2" />
+</nav>
+
+<!-- Ajoutez le composant <p:dialog> pour les messages -->
+<p:dialog header="Message" widgetVar="messageDialog" resizable="false" modal="true">
+    <h:form id="messageForm">
+        <h:messages globalOnly="true" showDetail="true" showSummary="false" styleClass="error-messages"/>
+    </h:form>
+</p:dialog>
+
+<p:dialog header="Ajouter un employé" widgetVar="addDialog" resizable="false" modal="true">
+    <h:form id="addDialogForm">
+        <h:panelGrid columns="2">
+            <h:outputLabel for="matriculeInput" value="Matricule:" />
+            <h:inputText id="matriculeInput" value="#{employeBean.employe.matricule}" />
+
+            <h:outputLabel for="nomInput" value="Nom:" />
+            <h:inputText id="nomInput" value="#{employeBean.employe.nom}" />
+
+            <h:outputLabel for="prenomInput" value="Prénom:" />
+            <h:inputText id="prenomInput" value="#{employeBean.employe.prenom}" />
+
+            <h:outputLabel for="adresseInput" value="Adresse:" />
+            <h:inputText id="adresseInput" value="#{employeBean.employe.adresse}" />
+        </h:panelGrid>
+        <p:commandButton value="Ajouter" action="#{employeBean.ajouterEmploye}" 
+                         oncomplete="if (!args.validationFailed) PF('addDialog').hide(); PF('messageDialog').show();" 
+                         update="addDialogForm :messageForm" />
+    </h:form>
+</p:dialog>
+
+<h:form id="tableForm">
+    <div class="table-wrapper">
+        <p:dataTable value="#{employeBean.employes}" var="employe" id="tableEmployes" styleClass="table table-bordered table-striped">
+            <p:column headerText="Matricule">#{employe.matricule}</p:column>
+            <p:column headerText="Nom">#{employe.nom}</p:column>
+            <p:column headerText="Prénom">#{employe.prenom}</p:column>
+            <p:column headerText="Adresse">#{employe.adresse}</p:column>
+
+            <p:column headerText="Actions">
+                <p:commandButton value="Modifier" action="#{employeBean.modifierEmploye(employe)}"
+                                 oncomplete="PF('modifyDialog').show()" update=":modifyForm"/>
+                <p:commandButton value="Supprimer" action="#{employeBean.supprimerEmploye(employe)}"
+                                 oncomplete="PF('messageDialog').show()" update=":tableForm :messageForm" icon="pi pi-trash"
+                                 onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet employé ?')"/>
+            </p:column>
+        </p:dataTable>
+    </div>
+</h:form>
+
+<p:dialog header="Modifier un employé" widgetVar="modifyDialog" resizable="false" modal="true">
+    <h:form id="modifyForm">
+        <h:panelGrid columns="2">
+            <h:outputLabel for="matriculeInput" value="Matricule:" />
+            <h:inputText id="matriculeInput" value="#{employeBean.employeAModifier.matricule}" />
+
+            <h:outputLabel for="nomInput" value="Nom:" />
+            <h:inputText id="nomInput" value="#{employeBean.employeAModifier.nom}" />
+
+            <h:outputLabel for="prenomInput" value="Prénom:" />
+            <h:inputText id="prenomInput" value="#{employeBean.employeAModifier.prenom}" />
+
+            <h:outputLabel for="adresseInput" value="Adresse:" />
+            <h:inputText id="adresseInput" value="#{employeBean.employeAModifier.adresse}" />
+        </h:panelGrid>
+        <p:commandButton value="Confirmer" action="#{employeBean.modifierEmploye}" 
+                         oncomplete="PF('modifyDialog').hide(); PF('messageDialog').show();" update=":tableForm :messageForm" />
+    </h:form>
+</p:dialog>
+
+<p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+    <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no ui-button-flat" />
+    <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" />
+</p:confirmDialog>
+
+</h:body>
+</html>

@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/common/commonLayout.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:cc="http://java.sun.com/jsf/composite/component"
+                xmlns:ct="http://airalgerie.dz/facelets"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:of="http://omnifaces.org/functions">
+
+    <ui:define name="stylesTop">
+    </ui:define>
+
+    <ui:define name="titlePage">
+        <title>ERP - Gestion des Domaines</title>
+    </ui:define>
+
+
+    <ui:define name="pageTitle">
+        <h3 class="m-a-2">Gestion des domaines</h3>
+    </ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="contentForm">
+
+            <div class="row m-b-2">
+                <!--add btn-->
+                <b:column col-sm="3" col-md="2" styleClass="pull-right" rendered="#{request.isUserInRole('refAdminDomaineAdd')}">
+                    <ct:link id="addBtn"
+                             styleClass="btn-success btn-block"
+                             icon="fa-plus"
+                             value="Ajouter un domaine"
+                             update=":addDomaine"
+                             action="#{domaineBean.resetAdd()}"
+                             onComplete="PF('addDomaine').show();"
+                             process="@this">
+                    </ct:link>
+                </b:column>
+            </div>
+
+            <b:row id="domainesAlert" >
+                <cc:alert alert="#{domaineBean.alertBean.alerts}" />
+            </b:row>
+
+            <ct:dataTable value="#{domaineBean.domaineModel}"
+                          id="domainesList"
+                          rendered="#{domaineBean.domaineModel ne null}"
+                          >
+
+                <p:column headerText="#ID" filterBy="#{item.id}" sortBy="#{item.id}" style="text-align: center" width="100">
+                    <h:outputText value="#{item.id}"/>
+                </p:column>
+                <p:column headerText="Code" filterBy="#{item.code}" sortBy="#{item.code}" style="text-align: center" width="100">
+                    <h:outputText value="#{item.code}"/>
+                </p:column>
+                <p:column headerText="Nom" filterBy="#{item.nom}" sortBy="#{item.nom}" style="text-align: center" width="300">
+                    <h:outputText value="#{item.nom}"/>
+                </p:column>
+                <p:column headerText="Url" filterBy="#{item.url}" sortBy="#{item.url}" style="text-align: center" width="300">
+                    <h:outputText value="#{item.url}"/>
+                </p:column>
+                <p:column headerText="Rang" filterBy="#{item.rang}" sortBy="#{item.rang}" style="text-align: center" width="100">
+                    <h:outputText value="#{item.rang}"/>
+                </p:column>
+                <p:column headerText="Icone" filterBy="#{item.icon}" sortBy="#{item.icon}" style="text-align: center" width="150">
+                    <h:outputText value="#{item.icon}"/>
+                </p:column>
+
+                <p:column headerText="Statut" width="130" styleClass="text-center"
+                          filterBy="#{item.statut}" sortBy="#{item.statut}" >
+                    <f:facet name="filter">
+                        <p:selectOneMenu onchange="PF('domainesList').filter()" styleClass="custom-filter">
+                            <f:selectItem itemLabel="Filtrer..." itemValue="#{null}" noSelectionOption="true" />
+                            <f:selectItem itemLabel="Activé(s)" itemValue="#{1}" />
+                            <f:selectItem itemLabel="Non Activé(s)" itemValue="#{0}" />
+                        </p:selectOneMenu>
+                    </f:facet>
+                    <b:label text="#{item.statut ? 'activé' : 'non activé'}" 
+                             severity="#{item.statut ? 'success' : 'danger'}"
+                             styleClass="label-outline label-pill"
+                             />
+                </p:column>
+
+
+                <p:column headerText="Actions" width="120" style="text-align: center"
+                          rendered="#{request.isUserInRole('refAdminDomaineAdd')}">
+                    <b:commandButton look="info" styleClass="btn-small-square" iconAwesome="edit"
+                                     tooltip="Editer" action="#{domaineBean.resetEdit()}"
+                                     oncomplete="PF('addDomaine').show(); loadingHide();" 
+                                     update=":addDomaine :dataDomaine">
+                        <f:setPropertyActionListener target="#{domaineBean.domaine}" value="#{item}"/>
+                    </b:commandButton>
+                    &nbsp;
+                    <b:commandButton ajax="true" look="danger" styleClass="btn-small-square" iconAwesome="trash"
+                                     tooltip="Supprimer"
+                                     oncomplete="$('.delete-domaine').modal(); loadingHide();" >
+                        <f:setPropertyActionListener target="#{domaineBean.domaine}" value="#{item}"/>
+                    </b:commandButton>
+
+                </p:column>
+
+            </ct:dataTable>
+        </h:form>
+
+        <ct:dialog id="addDomaine" 
+                   headerTitle="#{domaineBean.editMode ? 'Modification' : 'Ajout'} d'un domaine"
+                   saveBtnRendred="true" height="450" saveBtnClass="addDomaineBtn" >
+            <h:form id="dataDomaine" rendered="#{request.isUserInRole('refAdminDomaineAdd')}">
+                <ui:include src="includes/addDomaine.xhtml" />
+            </h:form>
+        </ct:dialog>
+
+        <ct:confirmDiag name="delete-domaine" update=":contentForm"
+                        actionListener="domaineBean.deleteDomaine()"
+                        message="-vous sûr de vouloir supprimer ce domaine ?" />
+
+    </ui:define>
+</ui:composition>

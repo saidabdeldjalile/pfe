@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/common/commonLayout.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:cc="http://java.sun.com/jsf/composite/component"
+                xmlns:ct="http://airalgerie.dz/facelets"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:of="http://omnifaces.org/functions">
+
+    <ui:define name="stylesTop">
+    </ui:define>
+
+    <ui:define name="titlePage">
+        <title>ERP - Gestion des Groupes</title>
+    </ui:define>
+
+
+    <ui:define name="pageTitle">
+        <h3 class="m-a-2">Gestion des Groupes</h3>
+    </ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="contentForm">
+
+            <div class="row m-b-2">
+                <!--add btn-->
+                <b:column col-sm="3" col-md="2" styleClass="pull-right" rendered="#{request.isUserInRole('refAdminGroupeAdd')}">
+                    <ct:link id="addBtn"
+                             styleClass="btn-success btn-block"
+                             icon="fa-plus"
+                             value="Ajouter un groupe"
+                             update=":addGroupe"
+                             action="#{groupeBean.resetAdd()}"
+                             onComplete="PF('addGroupe').show();"
+                             process="@this">
+                    </ct:link>
+                </b:column>
+            </div>
+
+            <b:row id="groupesAlert" >
+                <cc:alert alert="#{groupeBean.alertBean.alerts}" />
+            </b:row>
+
+            <ct:dataTable value="#{groupeBean.groupeModel}"
+                          id="groupesList"
+                          rendered="#{groupeBean.groupeModel ne null}"
+                          >
+
+                <p:column headerText="#ID" filterBy="#{item.id}" sortBy="#{item.id}" style="text-align: center" width="100">
+                    <h:outputText value="#{item.id}"/>
+                </p:column>
+                <p:column headerText="Nom" filterBy="#{item.name}" sortBy="#{item.name}" style="text-align: center" width="300">
+                    <h:outputText value="#{item.name}"/>
+                </p:column>
+                <p:column headerText="Description" filterBy="#{item.description}" sortBy="#{item.description}" style="text-align: center" width="300">
+                    <h:outputText value="#{item.description}"/>
+                </p:column>
+
+                <p:column headerText="Actions" width="120" style="text-align: center" rendered="#{request.isUserInRole('refAdminGroupeAdd')}">
+                    <b:commandButton look="info" styleClass="btn-small-square" iconAwesome="edit"
+                                     tooltip="Editer" action="#{groupeBean.resetEdit()}"
+                                     oncomplete="PF('addGroupe').show(); loadingHide();" 
+                                     update=":addGroupe :dataGroupe">
+                        <f:setPropertyActionListener target="#{groupeBean.groupe}" value="#{item}"/>
+                    </b:commandButton>
+                    &nbsp;
+                    <b:commandButton ajax="true" look="danger" styleClass="btn-small-square" iconAwesome="trash"
+                                     tooltip="Supprimer"
+                                     oncomplete="$('.delete-groupe').modal(); loadingHide();" >
+                        <f:setPropertyActionListener target="#{groupeBean.groupe}" value="#{item}"/>
+                    </b:commandButton>
+
+                </p:column>
+
+            </ct:dataTable>
+        </h:form>
+
+        <ct:dialog id="addGroupe" 
+                   headerTitle="#{groupeBean.editMode ? 'Modification' : 'Ajout'} d'un groupe"
+                   saveBtnRendred="true" height="450" saveBtnClass="addGroupeBtn" >
+            <h:form id="dataGroupe" rendered="#{request.isUserInRole('refAdminGroupeAdd')}">
+                <ui:include src="includes/addGroupe.xhtml" />
+            </h:form>
+        </ct:dialog>
+
+        <ct:dialog id="addPermission" headerTitle="Ajout d'une permission"
+                   saveBtnRendred="true" height="150" width="60%" saveBtnClass="addPermissionBtn" >
+            <h:form id="permissionsForm" rendered="#{request.isUserInRole('refAdminGroupeAdd')}" >
+
+                <ui:include src="includes/permission/addPermission.xhtml" />
+            </h:form>
+        </ct:dialog>
+
+        <ct:confirmDiag name="delete-groupe" update=":contentForm"
+                        actionListener="groupeBean.deleteGroupe()"
+                        message="-vous sûr de vouloir supprimer ce groupe ?" />
+
+        <ct:confirmDiag name="delete-permission2" update=":dataGroupe:permList"
+                        actionListener="groupeBean.deletePermession()"
+                        message="-vous sûr de vouloir supprimer ce groupe ?" />
+
+    </ui:define>
+</ui:composition>

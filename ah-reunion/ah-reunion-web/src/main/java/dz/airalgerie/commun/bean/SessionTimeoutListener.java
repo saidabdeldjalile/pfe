@@ -9,7 +9,6 @@ package dz.airalgerie.commun.bean;
  *
  * @author Root
  */
-import dz.airalgerie.commun.facade.CountUsersFacade;
 import dz.airalgerie.commun.ref.entities.RefUser;
 import dz.airalgerie.commun.utils.ErpConstante;
 import dz.airalgerie.commun.utils.UtilsLogger;
@@ -25,8 +24,6 @@ import org.slf4j.LoggerFactory;
 @WebListener
 public class SessionTimeoutListener implements HttpSessionListener {
 
-  @EJB
-  private CountUsersFacade countUsersFacade;
   @Inject
   private ApplicationBean applicationBean;
 
@@ -44,8 +41,6 @@ public class SessionTimeoutListener implements HttpSessionListener {
         && applicationBean.getLogins().contains(user.getLogin())) {
       UtilsLogger.doLog(LOGGER, ErpConstante.LoggerAction.AUTH, "LOGOUT", "DECONNEXION");
       applicationBean.getLogins().remove(user.getLogin());
-      countUsersFacade.decreaseUsersCount(applicationBean.getAppCode(),
-          java.sql.Date.valueOf(LocalDate.now()));
       applicationBean.sendNotif();
     }
   }

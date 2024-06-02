@@ -85,7 +85,6 @@ public class NotificationBean extends AbstractBeanManager {
       communManagerFacade.addNotification(userMatricule, matricules, roleNames,
           applicationBean.getAppCode(), notifiableType, notifiableId, data);
     } catch (Exception e) {
-      log.error("Error on notification.", e);
     }
   }
 
@@ -102,7 +101,6 @@ public class NotificationBean extends AbstractBeanManager {
       communManagerFacade.readNotification(applicationBean.getAppCode(), userMatricule,
           notifiableType, notifiableId);
     } catch (Exception e) {
-      log.error("Error on notification read.", e);
     }
   }
 

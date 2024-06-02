@@ -4,27 +4,13 @@
  */
 package dz.airalgerie.grh.model.entities.commun;
 
-import dz.airalgerie.commun.model.entities.commun.DirectionGrh;
-import dz.airalgerie.commun.ref.entities.RefGroupe;
-import dz.airalgerie.grh.model.entities.rem.Reliquats;
-import dz.airalgerie.grh.model.entities.rem.RubSpecifique;
-import dz.airalgerie.grh.model.view.commun.Fonction;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
-import java.util.Set;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -33,7 +19,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author Nabila
+ * @author Admin
  */
 @Entity
 @Table(name = "V_PERSONNEL", schema = "CAR")
@@ -196,36 +182,9 @@ public class Personnel implements Serializable {
   private String grpChapInterim;
   @Column(name = "PSTR_INTERIM")
   private String pstrInterim;
-  @JoinColumn(name = "CODE_PSTR", referencedColumnName = "CODE_PSTR", insertable = false,
-      updatable = false)
-  @ManyToOne(fetch = FetchType.LAZY, optional = false)
-  private Fonction fonction;
-  @JoinColumn(name = "CODE_DIR", referencedColumnName = "CODE_DIR")
-  @ManyToOne(optional = false, fetch = FetchType.LAZY)
-  private DirectionGrh codeDir;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "personnel", fetch = FetchType.LAZY)
-  private List<RubSpecifique> rubSpecifiqueList;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "personnel", fetch = FetchType.LAZY)
-  private List<Reliquats> reliquats;
 
 
   public Personnel() {
-  }
-
-  public List<Reliquats> getReliquats() {
-    return reliquats;
-  }
-
-  public void setReliquats(List<Reliquats> reliquats) {
-    this.reliquats = reliquats;
-  }
-
-  public List<RubSpecifique> getRubSpecifiqueList() {
-    return rubSpecifiqueList;
-  }
-
-  public void setRubSpecifiqueList(List<RubSpecifique> rubSpecifiqueList) {
-    this.rubSpecifiqueList = rubSpecifiqueList;
   }
 
   public Personnel(Integer matricule) {
@@ -638,22 +597,6 @@ public class Personnel implements Serializable {
 
   public void setDirLibelle(String dirLibelle) {
     this.dirLibelle = dirLibelle;
-  }
-
-  public DirectionGrh getCodeDir() {
-    return codeDir;
-  }
-
-  public void setCodeDir(DirectionGrh codeDir) {
-    this.codeDir = codeDir;
-  }
-
-  public Fonction getFonction() {
-    return fonction;
-  }
-
-  public void setFonction(Fonction fonction) {
-    this.fonction = fonction;
   }
 
   public String getCodeFiliale() {

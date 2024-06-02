@@ -5,7 +5,6 @@
 
 package dz.airalgerie.commun.bean;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import static javax.faces.application.FacesMessage.SEVERITY_ERROR;
 import static javax.security.enterprise.AuthenticationStatus.SEND_CONTINUE;
@@ -16,7 +15,6 @@ import static org.omnifaces.util.Faces.validationFailed;
 import dz.airalgerie.commun.bean.core.AbstractBeanManager;
 import dz.airalgerie.commun.exception.InvalidPasswordException;
 import dz.airalgerie.commun.facade.CommunManagerFacade;
-import dz.airalgerie.commun.facade.CountUsersFacade;
 import dz.airalgerie.commun.utils.Messages;
 import dz.airalgerie.commun.facade.PersonnelFacade;
 import dz.airalgerie.commun.facade.SignalitiqueFacade;
@@ -41,7 +39,6 @@ import javax.security.enterprise.credential.UsernamePasswordCredential;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import dz.airalgerie.commun.grh.utils.EmailService;
 import java.io.IOException;
 import dz.airalgerie.commun.utils.ErpConstante;
 import dz.airalgerie.commun.utils.UtilsLogger;
@@ -53,14 +50,9 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpSession;
-import org.primefaces.shaded.json.JSONException;
 import org.primefaces.shaded.json.JSONObject;
 
 /**
@@ -76,11 +68,9 @@ public class LoginBean extends AbstractBeanManager {
   @EJB
   private CommunManagerFacade communManagerFacade;
   @EJB
-  private RefUserFacade refUserFacade;
-  @EJB
-  private CountUsersFacade countUsersFacade;
-  @EJB
   private SignalitiqueFacade signalitiqueFacade;
+  @EJB
+  private RefUserFacade refUserFacade;
   @EJB
   private PersonnelFacade personnelFacade;
   private String login;
@@ -132,84 +122,12 @@ public class LoginBean extends AbstractBeanManager {
       userBean.setRefUser(refUser);
       userBean.setUser(user);
       userBean.setLoggedUser(loggedUser);
-      sessionMap.put(ErpConstante.SessionKey.LOGGED_USER, loggedUser);
-      doLog(ErpConstante.LoggerAction.AUTH, "LOGIN", "CONNEXION");
-      if (applicationBean.getLogins() != null) {
-        applicationBean.getLogins().add(refUser.getLogin());
-        countUsersFacade.updateUsersCount(applicationBean.getAppCode(),
-            java.sql.Date.valueOf(LocalDate.now()));
-        applicationBean.sendNotif();
-      }      
-      userBean.initNotifications();
-
-    URL auth = new URL("http://localhost/auth/v1/auth/authenticate");
-		HttpURLConnection urlConnection = (HttpURLConnection) auth.openConnection();
-    
-    System.out.println(" qqqqqqqqqqqqqq ");
-
-		urlConnection.setConnectTimeout(50000);
-		urlConnection.setRequestMethod("POST");
-		urlConnection.setRequestProperty("Content-Type", "application/json");
-		urlConnection.setRequestProperty("Accept", "application/json");
-      
-    urlConnection.setDoOutput(true);
-    
-    JSONObject cred = new JSONObject();
-		cred.put("email", login);
-		cred.put("password", password); 
-    
-    urlConnection.disconnect();
-    
-    OutputStreamWriter wr = new OutputStreamWriter(urlConnection.getOutputStream());
-		wr.write(cred.toString());
-		wr.close();
-    
-    try {
-			BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-                StringBuilder sb = new StringBuilder();
-                String line;
-                while ((line = br.readLine()) != null) {
-                    sb.append(line+"\n");
-                }
-                br.close();
-                System.out.println(" sv "+sb);
-                System.out.println(" sv "+sb);
-                
-
-        try {
-            Map<String, String> mapping = new ObjectMapper().readValue(sb.toString(), HashMap.class);
-            System.out.println(" token "+mapping.get("refreshToken"));
-        
-      String name = "jwt";
-      String value = mapping.get("refreshToken");
-      Map<String, Object> properties = new HashMap<>();
-      properties.put("domain", "localhost");
-      properties.put("maxAge", 31536000);
-      properties.put("httpOnly", true); 
-      properties.put("path","/");
-      
-      
-      FacesContext.getCurrentInstance().getExternalContext().addResponseCookie(name, URLEncoder.encode(value, "UTF-8"), properties);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-                
-                
-        
-        
-                
-      		} catch (IOException e) {
-			
-		}
-   
-     
-
-          
+      sessionMap.put(ErpConstante.SessionKey.LOGGED_USER, loggedUser);    
+      userBean.initNotifications(); 
       
     } catch (Exception e) {
       context.addMessage(null, new FacesMessage(SEVERITY_ERROR,
           "Une erreur est survenue, Veuillez vérifier vos identifiants", null));
-      log.error("Error on logging.", e);
       validationFailed();
     }
   }
@@ -220,34 +138,6 @@ public class LoginBean extends AbstractBeanManager {
 
   private static HttpServletRequest getRequest(FacesContext context) {
     return (HttpServletRequest) context.getExternalContext().getRequest();
-  }
-
-  @Deprecated
-  public String login() {
-    FacesContext context = FacesContext.getCurrentInstance();
-    HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-    try {
-      log.debug("email : " + login);
-      log.debug("password : " + password);
-      request.login(login, password);
-    } catch (ServletException e) {
-      log.debug(e.getMessage());
-      context.addMessage(null,
-          new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login failed!", null));
-      return "login.xhtml";
-    } catch (Exception ex) {
-      log.debug(ex.getMessage());
-    }
-    Principal principal = request.getUserPrincipal();
-    this.refUser = refUserFacade.findByLogin(principal.getName());
-    Object[] user = signalitiqueFacade.findUserInfos(this.refUser.getMatricule());
-    log.info("Authentication done for user: " + principal.getName());
-    ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-    Map<String, Object> sessionMap = externalContext.getSessionMap();
-    sessionMap.put("User", refUser);
-    userBean.setRefUser(refUser);
-    userBean.setUser(user);
-    return "index.xhtml?faces-redirect=true";
   }
 
   /**
@@ -283,11 +173,9 @@ public class LoginBean extends AbstractBeanManager {
       newPassword = null;
       nextStep = false;
     } catch (InvalidPasswordException e) {
-      log.error("Error on changing user's password", e);
       this.sendFacesMessage(e.getMessage(), FacesMessage.SEVERITY_ERROR, false);
       getFacesContext().validationFailed();
     } catch (Exception e) {
-      log.error("Error on changing user's password", e);
       this.sendFacesMessage(e.getMessage(), FacesMessage.SEVERITY_ERROR, false);
       getFacesContext().validationFailed();
 
@@ -304,7 +192,6 @@ public class LoginBean extends AbstractBeanManager {
       this.refUser = refUserFacade.findByLogin(passwordResetEmail);
       if (refUser != null) {
         String newConfirmationCode = this.generateConfirmationCode();
-        EmailService.notifConfirmationCode(passwordResetEmail, newConfirmationCode, emailSubject);
         refUser.setConfirmationCode(newConfirmationCode);
         refUserFacade.edit(refUser);
         nextStep = true;
@@ -315,7 +202,6 @@ public class LoginBean extends AbstractBeanManager {
       }
     } catch (Exception e) {
       alertBean.getAlerts().addError(Messages.GENERIC_ERROR);
-      log.error("Error on reset password", e);
     }
   }
 
@@ -393,7 +279,6 @@ public class LoginBean extends AbstractBeanManager {
         ec.redirect(contextPath + "/index.xhtml");
       }
     } catch (IOException e) {
-      log.error("ERROR on redirection ", e);
     }
   }
 
