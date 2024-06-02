@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.5.final using JasperReports Library version 6.20.5-3efcf2e67f959db3888d79f73dde2dbd7acb4f8e  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="fichePaieDirectory" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0af32ec5-ac3d-4474-8536-61267644efc1">
+	<property name="ireport.zoom" value="1.2396694214876032"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="GRH_PROD"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
+	<parameter name="MATRICULE" class="java.lang.Integer"/>
+	<parameter name="DATE_TRT" class="java.math.BigDecimal"/>
+	<parameter name="DATE_PAIE" class="java.math.BigDecimal"/>
+	<parameter name="BUL_PRIM" class="java.lang.Boolean"/>
+	<parameter name="CODE_FILIALE" class="java.lang.String"/>
+	<parameter name="BACKGROUND" class="java.io.InputStream"/>
+	<queryString>
+		<![CDATA[SELECT B.MATRICULE
+	, B.DATE_TRT
+	, B.DATE_PAI
+	, B.BUL_PRIM
+	, B.CODE_FIL
+	, NOM
+	, GRP_CHAP
+	, AFFECTAT
+	, FONCTION
+	, MOIS_PAI
+	, ANNE_PAI
+	, DATE_ENT
+	, ENFANTM10
+	, ENFANTP10
+	, CODE_ITS
+	, COD_CATG
+	, COD_ECHL
+	, CODE_CIVIL
+	, BANQ_LIB
+	, BNQ_NCPT
+	, ADRESSE
+	, SAL_BASE
+	, INDICE
+	, TAUX
+	, CODE_TECH
+	, NET_APAY
+	, NET_FISC
+	, TROP_PER
+	, V_TOTAUX
+	, TO_RETEN
+	, TO_R_IMP
+	, TO_R_NIM
+	, LIB_CNAS
+	, CODE_WIL
+	, NSS_EMPR
+	, NSS_EMPE
+FROM T_BP.BULLETIN B
+INNER JOIN T_BP.BULLETIN_TOTAL BT ON B.MATRICULE = BT.MATRICULE AND B.DATE_PAI = BT.DATE_PAI AND
+    B.DATE_TRT = BT.DATE_TRT AND B.BUL_PRIM = BT.BUL_PRIM AND B.CODE_FIL = BT.CODE_FIL
+WHERE B.DATE_TRT = $P{DATE_TRT}
+	AND B.MATRICULE = $P{MATRICULE}
+	AND B.CODE_FIL = $P{CODE_FILIALE}
+	AND B.DATE_PAI = $P{DATE_PAIE}
+	AND B.BUL_PRIM = $P{BUL_PRIM}]]>
+	</queryString>
+	<field name="MATRICULE" class="java.lang.Integer"/>
+	<field name="DATE_TRT" class="java.math.BigDecimal"/>
+	<field name="DATE_PAI" class="java.math.BigDecimal"/>
+	<field name="BUL_PRIM" class="java.lang.Boolean"/>
+	<field name="CODE_FIL" class="java.lang.String"/>
+	<field name="NOM" class="java.lang.String"/>
+	<field name="GRP_CHAP" class="java.lang.String"/>
+	<field name="AFFECTAT" class="java.lang.String"/>
+	<field name="FONCTION" class="java.lang.String"/>
+	<field name="MOIS_PAI" class="java.lang.String"/>
+	<field name="ANNE_PAI" class="java.math.BigDecimal"/>
+	<field name="DATE_ENT" class="java.sql.Date"/>
+	<field name="ENFANTM10" class="java.lang.Integer"/>
+	<field name="ENFANTP10" class="java.lang.Integer"/>
+	<field name="CODE_ITS" class="java.lang.Integer"/>
+	<field name="COD_CATG" class="java.lang.String"/>
+	<field name="COD_ECHL" class="java.lang.String"/>
+	<field name="CODE_CIVIL" class="java.lang.String"/>
+	<field name="BANQ_LIB" class="java.lang.String"/>
+	<field name="BNQ_NCPT" class="java.lang.String"/>
+	<field name="ADRESSE" class="java.lang.String"/>
+	<field name="SAL_BASE" class="java.math.BigDecimal"/>
+	<field name="INDICE" class="java.lang.Integer"/>
+	<field name="TAUX" class="java.lang.String"/>
+	<field name="CODE_TECH" class="java.lang.String"/>
+	<field name="NET_APAY" class="java.math.BigDecimal"/>
+	<field name="NET_FISC" class="java.math.BigDecimal"/>
+	<field name="TROP_PER" class="java.math.BigDecimal"/>
+	<field name="V_TOTAUX" class="java.math.BigDecimal"/>
+	<field name="TO_RETEN" class="java.math.BigDecimal"/>
+	<field name="TO_R_IMP" class="java.math.BigDecimal"/>
+	<field name="TO_R_NIM" class="java.math.BigDecimal"/>
+	<field name="LIB_CNAS" class="java.lang.String"/>
+	<field name="CODE_WIL" class="java.lang.Integer"/>
+	<field name="NSS_EMPR" class="java.lang.String"/>
+	<field name="NSS_EMPE" class="java.lang.String"/>
+	<background>
+		<band height="555">
+			<image>
+				<reportElement x="0" y="0" width="802" height="555" uuid="357def14-4e26-42ec-bdda-b21c609b0ecb"/>
+				<imageExpression><![CDATA[$P{BACKGROUND}]]></imageExpression>
+			</image>
+		</band>
+	</background>
+	<pageHeader>
+		<band height="187">
+			<textField>
+				<reportElement x="23" y="87" width="33" height="20" uuid="a321c22e-4bb5-443b-8230-7e7fcd2e25ac"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{MATRICULE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="55" y="85" width="205" height="20" isPrintWhenDetailOverflows="true" uuid="06fe62d8-19f2-4858-9766-5162cc9f7e69"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOM}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="304" y="65" width="188" height="20" uuid="61c0623e-cee8-4215-bdb9-43efd1bd3dfe"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FONCTION}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="311" y="88" width="45" height="20" uuid="942db375-329c-4723-abff-1b2eb96b3d8a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{GRP_CHAP}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="349" y="88" width="195" height="20" uuid="9fff5621-32fc-4f97-868a-36b4550ff81b"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AFFECTAT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="127" y="136" width="45" height="20" uuid="1d27432d-b223-4343-b474-fe67278b6a7b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DATE_ENT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="31" y="136" width="33" height="20" uuid="86822c44-cd67-47fe-bae6-5d82ebe7146f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{COD_CATG}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="64" y="136" width="33" height="20" uuid="b5f7f2e0-3880-4649-b742-e4fa344d481f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{COD_ECHL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="207" y="136" width="25" height="20" uuid="18fe490f-d5df-4065-aa7c-458999b9ec53">
+					<printWhenExpression><![CDATA[$F{ENFANTM10} != null && $F{ENFANTM10} > 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ENFANTM10}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="234" y="136" width="25" height="20" uuid="ca5b4331-beaa-4c9e-b848-bf660e650f7c">
+					<printWhenExpression><![CDATA[$F{ENFANTP10} != null && $F{ENFANTP10} > 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ENFANTP10}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="180" y="136" width="25" height="20" uuid="e7c75345-2d77-4a13-ac4a-a7b13b7e03e1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{CODE_CIVIL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="395" y="137" width="164" height="13" uuid="63fe956f-e4c4-434a-86d9-5741aedaca4f"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BANQ_LIB}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="395" y="147" width="164" height="22" uuid="da0d2904-29e1-4f33-8221-c7bba4f0e21a"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BNQ_NCPT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="553" y="65" width="50" height="20" uuid="bf7e4faa-abfb-42e9-8c23-d8540c211bb3"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MOIS_PAI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="608" y="65" width="33" height="20" uuid="fdb57fa7-a6a0-4f7b-a544-20ca694c99fb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ANNE_PAI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="690" y="65" width="61" height="20" uuid="7a4af507-9f71-497b-b86e-d7cb3407091b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DATE_TRT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="51" y="156" width="100" height="11" uuid="289a1d2e-d346-47ba-9e52-5a4e7eb99903"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Salaire de base : ]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement x="151" y="156" width="62" height="11" uuid="57cae97a-b0f1-46af-b9d8-e394450c2bca"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SAL_BASE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="234" y="156" width="42" height="11" uuid="d923286f-31ef-4d07-b81a-16bdc9438a0c">
+					<printWhenExpression><![CDATA[$F{CODE_TECH}.equalsIgnoreCase("S")]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Indice : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="276" y="156" width="45" height="11" uuid="9ceeb038-ac6a-4bd1-b08a-9f76cabf4315">
+					<printWhenExpression><![CDATA[$F{CODE_TECH}.equalsIgnoreCase("S")]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{INDICE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="352" y="156" width="42" height="11" uuid="db6fc9e1-d025-446f-a6e1-0607aa37167d"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Taux : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="402" y="156" width="84" height="11" uuid="52f612df-b839-45c6-a191-fe2c67c4b99a"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TAUX}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="583" y="118" width="207" height="32" uuid="20dbba6a-06bd-4667-b8c4-f64a4b37015e">
+					<printWhenExpression><![CDATA[1!=1]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ADRESSE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="280" splitType="Stretch">
+			<subreport>
+				<reportElement mode="Transparent" x="16" y="0" width="558" height="280" backcolor="#FFFFFF" uuid="837dcab0-f9e7-49a6-88aa-c8d7ea21ccf3"/>
+				<subreportParameter name="BUL_PRIM">
+					<subreportParameterExpression><![CDATA[$F{BUL_PRIM}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="CODE_FILIALE">
+					<subreportParameterExpression><![CDATA[$F{CODE_FIL}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DATE_PAIE">
+					<subreportParameterExpression><![CDATA[$F{DATE_PAI}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="MATRICULE">
+					<subreportParameterExpression><![CDATA[$F{MATRICULE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DATE_TRT">
+					<subreportParameterExpression><![CDATA[$F{DATE_TRT}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "detail.jasper"]]></subreportExpression>
+			</subreport>
+			<elementGroup>
+				<subreport>
+					<reportElement x="729" y="0" width="73" height="208" uuid="f8b73491-59d4-4b43-949c-7d15ac25d1a0"/>
+					<subreportParameter name="DATE_TRT">
+						<subreportParameterExpression><![CDATA[$F{DATE_TRT}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="MATRICULE">
+						<subreportParameterExpression><![CDATA[$F{MATRICULE}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="DATE_PAIE">
+						<subreportParameterExpression><![CDATA[$F{DATE_PAI}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="CODE_FILIALE">
+						<subreportParameterExpression><![CDATA[$F{CODE_FIL}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="BUL_PRIM">
+						<subreportParameterExpression><![CDATA[$F{BUL_PRIM}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "pointage.jasper"]]></subreportExpression>
+				</subreport>
+			</elementGroup>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="88">
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="536" y="48" width="93" height="20" uuid="d8665656-2b22-40cd-b5f1-a2f09a029c58"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NET_APAY}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="199" y="48" width="100" height="20" uuid="7297a398-437a-4824-bb06-cd57707f5730"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{NET_FISC}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="430" y="48" width="100" height="20" uuid="0dcca926-8283-43e6-be20-0e8c3720ea7b">
+					<printWhenExpression><![CDATA[$F{TROP_PER} != null && $F{TROP_PER}.compareTo(BigDecimal.ZERO) > 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{TROP_PER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="330" y="14" width="95" height="20" uuid="a3328073-8ca0-468d-a685-cfa98a75f0cf"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{V_TOTAUX}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="317" y="48" width="100" height="20" uuid="a0cd7a5c-80de-45a4-8fb1-89c9362a3fe1"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TO_RETEN}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="472" y="14" width="94" height="20" uuid="12f26e7e-3ebd-4f59-84fa-729246205181"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{TO_R_IMP}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="566" y="14" width="80" height="20" uuid="9e7f67b4-f331-40e0-bb21-256b1ac5c7b5"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{TO_R_NIM}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="87" y="16" width="76" height="20" uuid="4ccc3ce1-f380-46e7-9576-9562a997d632">
+					<printWhenExpression><![CDATA[1==1]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LIB_CNAS}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="163" y="16" width="62" height="20" uuid="86a6a033-9f83-4ddf-927d-b6614a0f0dd3">
+					<printWhenExpression><![CDATA[1==1]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CODE_WIL}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="90" y="27" width="110" height="20" isPrintInFirstWholeBand="true" uuid="5e4eb076-a290-4d0d-a173-36938917fe2c">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA[1==1]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NSS_EMPR}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="90" y="42" width="110" height="20" uuid="6c0fb1f4-29d6-4ecb-81fd-de6f42a3174f">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA[1==1]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NSS_EMPE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

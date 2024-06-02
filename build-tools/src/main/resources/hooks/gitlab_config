@@ -1,0 +1,15 @@
+function defineConst(name, value) {
+    Object.defineProperty(exports, name, {
+        value:      value,
+        enumerable: true
+    });
+}
+
+defineConst("environment", {
+    url: 'http://git.airalgerie.dz/',
+    api_route: "api/v4/projects/",
+    project_id: 176,
+ 	user: {
+  		token: ''
+ 	}
+});

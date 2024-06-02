@@ -1,0 +1,160 @@
+/*@author sidali Bougarne*/
+
+body.footer-fixed:not(.footer-disabled) .main-wrap footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    box-shadow: 5px 1px 5px -1px rgba(0, 0, 0, 0.5);
+}
+
+body .main-wrap footer {
+    height: 60px;
+    line-height: 60px;
+    background-color: #fff;
+    width: 100%;
+    margin-left: 137px;
+    width: calc(100% - 137px);
+}
+body .main-wrap footer .saveButton {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    margin: 0;
+}
+body.sidebar-slim footer{
+    margin-left: 50px;
+    width: calc(100% - 50px);
+}
+.FileUp_button.b-t-info:hover {
+    color: #40c697;
+}
+div#pdfViewer .ui-dialog-content {
+    overflow: hidden;
+}
+.overlayer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: none;
+}
+.fileUp {
+    margin: 10px 0px;
+}
+.FileUp_button_wrapper {
+    position: relative;
+}
+.FileUp_button_wrapper .closeBtn {
+
+    width: 25px;
+    height: 25px;
+    display: block;
+    position: absolute;
+    right: 0;
+    background: none;
+    top: 5px;
+    border: 0;
+    box-shadow: none;
+    z-index: 99;
+}
+.FileUp_button_wrapper .closeBtn:after {
+    content: "\f2d3";
+    color: #333333;
+    font-size: 22px;
+    width: 25px;
+    display: block;
+    height: 25px;
+    line-height: 25px;
+}
+.FileUp_button_wrapper .closeBtn span.ui-icon:after, .closeBtn:after {
+    font-family: "fontAwesome";
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.panel-body {
+    position: relative;
+}
+.hvr-underline-from-center:before {
+    z-index: 9 !important;
+    height: 1px !important;
+}
+
+/*
+.ui-selectonebutton >div.ui-state-active {
+    background: #84b547;
+}
+
+.ui-selectonebutton >div {
+    background: #fff;
+    color: #ccc !important;
+    border:1px solid !important;
+
+}
+.ui-selectonebutton >div:first-child {
+    ;
+    border-right:none!important;
+
+}
+
+.ui-selectonebutton >div span {
+    color: #000 !important;
+    font-weight: 600;
+}
+.ui-selectonebutton >div:active,.ui-selectonebutton >div:focus,.ui-selectonebutton >div:visited{
+    background: #84b547 !important;
+}
+*/
+
+
+#steps {
+    height: 405px;
+    /*    overflow-y: auto;
+        margin-bottom: 15px;*/
+}
+#steps>.row {
+    height: auto !important;
+    width: 100%;
+    margin: 0 auto;
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+::-webkit-scrollbar-track {
+    background: #eee;
+}
+::-webkit-scrollbar-thumb {
+    background: #aaa;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #777;
+}
+.icon-plus:after {
+    text-shadow: none;
+}
+.checkBoxWrapper.text-center>div {
+    width: 20%;
+    float: none; 
+    display: inline-block;
+}
+.checkBoxWrapper {
+    background: #efefef;
+    border: 1px solid #c1c1c1;
+    padding: 15px;
+    margin: 15px;
+}
+
+.checkBoxWrapper>div label {
+    width: 100%;
+}
+.ui-selectbooleanbutton span {
+    color: black;
+    font-weight: 600;
+}
+
+.ui-selectbooleanbutton span.ui-button-text {
+    margin-left: -3px;
+}

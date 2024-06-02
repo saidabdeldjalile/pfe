@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <script type="text/javascript">
+        function loading() {
+            $('#inaction').height($(window).height());
+            var top = ($(window).height() / 2) + $(window).scrollTop();
+            $('#inaction').css('background-position', 'center ' + top + 'px');
+            $('#inaction').show();
+
+
+        }
+        function loadingHide() {
+
+            $('#inaction').hide();
+        }
+
+        function loadingHideDownload() {
+            // document.cookie = "primefaces.download=true;path=-1";
+            $('#inaction').hide();
+        }
+
+        $(function () {
+            var pathname = window.location.pathname;
+            $("ul.side-menu li a[href='" + pathname + "']").not("ul.side-menu li a.ui-link").closest('li.has-submenu.primary-submenu').addClass('nested-active');
+        });
+
+    </script>
+    <h:outputScript name="assets/javascript/app/lib.js" />
+    <h:outputScript name="assets/javascript/app.min.js" />
+    <h:outputScript name="assets/javascript/plugins-init.js" />
+    <h:outputScript name="assets/javascript/primefaces-locale-fr.js" />
+    <h:outputScript name="assets/vendor/js/toastr.min.js" />
+    <h:outputScript name="assets/javascript/toastr-settings.js" />
+</ui:composition>
+
+

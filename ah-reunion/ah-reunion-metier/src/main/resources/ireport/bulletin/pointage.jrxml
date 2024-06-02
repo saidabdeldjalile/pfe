@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.5.final using JasperReports Library version 6.20.5-3efcf2e67f959db3888d79f73dde2dbd7acb4f8e  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="pointage" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="7ea45536-727e-496f-9cf3-1f8a461cea2e">
+	<property name="ireport.zoom" value="1.9487171000000014"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="DATE_TRT" class="java.math.BigDecimal"/>
+	<parameter name="MATRICULE" class="java.lang.Integer"/>
+	<parameter name="DATE_PAIE" class="java.math.BigDecimal"/>
+	<parameter name="CODE_FILIALE" class="java.lang.String"/>
+	<parameter name="BUL_PRIM" class="java.lang.Boolean"/>
+	<queryString>
+		<![CDATA[SELECT COD_POIN
+	, NBR_JOUR
+  FROM [T_BP].[BULLETIN_POINTAGE]
+  WHERE MATRICULE = $P{MATRICULE}
+	AND DATE_TRT = $P{DATE_TRT}
+	AND DATE_PAI = $P{DATE_PAIE}
+	AND BUL_PRIM = $P{BUL_PRIM}
+	AND CODE_FIL = $P{CODE_FILIALE}
+--	AND COD_POIN < 3
+UNION
+SELECT COD_POIN
+	, 0
+ FROM T_BP.POINTAGE
+ WHERE COD_POIN IN (3, 5, 6, 7, 8, 9, 10)
+ ORDER BY COD_POIN ASC]]>
+	</queryString>
+	<field name="COD_POIN" class="java.lang.Integer"/>
+	<field name="NBR_JOUR" class="java.lang.Integer"/>
+	<detail>
+		<band height="12">
+			<textField>
+				<reportElement x="0" y="0" width="21" height="12" uuid="ff1b5302-66a5-4a96-9e52-d0d7c8f6efac"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{NBR_JOUR} != null && $F{NBR_JOUR} > 0) ? $F{NBR_JOUR} : ""]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

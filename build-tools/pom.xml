@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>dz.airalgerie.sii.ah-erp</groupId>
+        <artifactId>ah-erp</artifactId>
+        <version>${revision}${changelist}</version>
+    </parent>
+
+    <groupId>dz.airalgerie.sii.config</groupId>
+    <artifactId>build-tools</artifactId>
+    <name>Build Tools</name>
+    <description>Utilitaires pour la compilation.</description>
+    <packaging>jar</packaging>
+    
+    <properties>
+        <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
+    </properties>
+    
+</project>

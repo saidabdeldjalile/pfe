@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FicheFormation" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2aa37cad-045d-4fba-bf92-028f339bc545">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="matricule" class="java.lang.Integer"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
+	<parameter name="nom" class="java.lang.String"/>
+	<parameter name="njfille" class="java.lang.String"/>
+	<parameter name="prenom" class="java.lang.String"/>
+	<parameter name="logo" class="java.io.InputStream"/>
+	<queryString>
+		<![CDATA[select fi.ORGANISME as organisme,sf.LIBELLE1 as filiere,d.LIBELLE as diplome ,fi.DATE_DEB as dd,fi.DATE_FIN as df,fi.DUR_CONT as dr,fi.COUT_FRM as ct,t.LIBELLE as th
+from
+GRH.FRM.FORMATION_INT fi
+
+left join GRH.FRM.THEME t on t.CODE_THM=fi.CODE_THM
+left join GRH.FRM.DIPLOME d on d.CODE_DIP=fi.CODE_DIP
+left join GRH.FRM.SOUS_FILIERE sf on sf.CODE_SFL=fi.CODE_SFL
+where  fi.MATRICULE=$P{matricule}]]>
+	</queryString>
+	<field name="organisme" class="java.lang.String"/>
+	<field name="filiere" class="java.lang.String"/>
+	<field name="diplome" class="java.lang.String"/>
+	<field name="dd" class="java.lang.String"/>
+	<field name="df" class="java.lang.String"/>
+	<field name="dr" class="java.lang.Integer"/>
+	<field name="ct" class="java.math.BigDecimal"/>
+	<field name="th" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="4" y="9" width="406" height="20" uuid="956d03e8-a5ed-4a47-8722-d13640c76ebe"/>
+				<textElement>
+					<font fontName="SansSerif" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DIRECTION DES RESSOURCES HUMAINES]]></text>
+			</staticText>
+			<image>
+				<reportElement x="610" y="-12" width="228" height="42" uuid="5caef6c9-7db7-47eb-b9d6-ad63c2ea3aeb"/>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="71" splitType="Stretch">
+			<staticText>
+				<reportElement x="343" y="5" width="215" height="20" uuid="420a3131-bf55-40a5-9645-445b3850d68a"/>
+				<textElement>
+					<font fontName="SansSerif" size="13" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[FICHE  FORMATION INTERNE ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="48" y="25" width="67" height="20" uuid="e6501fd9-f07b-4e2c-a51a-1d75f6ef2eca"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Matricule :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="50" y="51" width="41" height="20" uuid="fa747ad6-7316-41e0-880f-f797de81875c"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nom :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="298" y="51" width="123" height="20" uuid="7f4dae96-b459-4fc9-b60f-f00d1c31109e">
+					<printWhenExpression><![CDATA[!($P{njfille}.isEmpty())]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NJFille : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="548" y="50" width="58" height="20" uuid="f915d226-069e-4d19-8088-58e37dbbdab1"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Prénoms : ]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="91" y="50" width="196" height="20" uuid="7520389c-7d94-4d99-8248-ae3c6eec032b"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nom}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="362" y="50" width="176" height="20" uuid="b0db1329-6f7f-43d4-ab48-02eecbb259f4"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{njfille}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="619" y="51" width="186" height="20" uuid="b8772efc-8ca2-44ff-bd2f-234f0f454a79"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{prenom}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="122" y="25" width="100" height="20" uuid="807ca93f-f403-481f-8ad8-56211f5a448f"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{matricule}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="38" splitType="Stretch">
+			<line>
+				<reportElement x="9" y="31" width="793" height="1" uuid="374b2dc0-07e4-4870-a918-443cce357362"/>
+			</line>
+			<line>
+				<reportElement x="9" y="5" width="793" height="1" uuid="6c3b34b1-ca10-4d61-ac99-de0da0a62c42"/>
+			</line>
+			<staticText>
+				<reportElement x="72" y="9" width="61" height="20" uuid="0a8cb17b-5d82-432c-a30f-40fa763b50f9"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Theme ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="297" y="9" width="79" height="20" uuid="af33c628-0646-48ef-b7c0-d183f7fed618"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Diplome]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="432" y="9" width="73" height="20" uuid="0434e1e5-1183-4962-9fb3-b346a8a7985c"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Organisme]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="516" y="9" width="72" height="20" uuid="8178e575-b7b3-4512-8c5b-5393e59bf21f"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date Début]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="608" y="9" width="56" height="20" uuid="cb770f87-40e4-4132-8994-04c40d71d9c1"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date Fin]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="683" y="9" width="58" height="20" uuid="2fe1ccd1-e107-411e-8860-97ffcbb5ab17"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Durée/Ctr]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="755" y="9" width="33" height="20" uuid="fdb7af21-9fc1-4d0e-8c2a-a9019313d0f4"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cout]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="47" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="687" y="5" width="51" height="20" uuid="c5236e79-c5b8-4323-95d1-14ef1f6a79eb"/>
+				<textFieldExpression><![CDATA[$F{dr}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="756" y="5" width="40" height="20" uuid="3234f383-efcf-4d89-bf87-0f2815c072ba"/>
+				<textFieldExpression><![CDATA[$F{ct}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="12" y="5" width="248" height="20" uuid="e1e70c17-b7d0-4c86-8660-67aba2e19de9"/>
+				<textFieldExpression><![CDATA[$F{th}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="432" y="5" width="73" height="20" uuid="064f4481-bbfe-446b-8b3b-7dc1f4dbc631"/>
+				<textFieldExpression><![CDATA[$F{organisme}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="266" y="5" width="159" height="20" uuid="8e630213-f945-4d65-92df-1699faf5fc97"/>
+				<textFieldExpression><![CDATA[$F{diplome}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="519" y="5" width="67" height="20" uuid="4ef9b1b8-998d-49e9-88df-19ecf1d75189"/>
+				<textFieldExpression><![CDATA[$F{dd}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="605" y="5" width="73" height="20" uuid="c6204b83-3e08-4f56-a1db-a89e0d8021b6"/>
+				<textFieldExpression><![CDATA[$F{df}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="17" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="33" splitType="Stretch">
+			<staticText>
+				<reportElement x="538" y="5" width="322" height="20" forecolor="#CC0000" uuid="272ee5b4-7d19-496d-944e-edda3be40158"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DIRECTION DES SYSTEMES D'INFORMATION]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="8" y="7" width="100" height="20" uuid="d50c5dc3-2c55-4603-91f1-87f6807f2dd9"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="13" splitType="Stretch"/>
+	</summary>
+</jasperReport>

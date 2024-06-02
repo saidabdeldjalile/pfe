@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:o="http://omnifaces.org/ui"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:p="http://primefaces.org/ui">
+
+    <o:tagAttribute name="path" default="" />
+    <o:tagAttribute name="value" />
+    <o:tagAttribute name="id" />
+    <o:tagAttribute name="style" />
+    <o:tagAttribute name="styleClass" />
+    <o:tagAttribute name="update" />
+    <o:tagAttribute name="process" default="@form" />
+    <o:tagAttribute name="onClick" default="" />
+    <o:tagAttribute name="onComplete" default="" />
+    <o:tagAttribute name="icon" />
+    <o:tagAttribute name="rendered" default="#{true}" />
+    <o:tagAttribute name="disabled" default="#{false}" />
+    <o:tagAttribute name="ajax" default="#{true}" />
+    <o:tagAttribute name="isMonitor" default="#{false}" />
+    <o:tagAttribute name="isBtn" default="#{true}" />
+
+    <o:methodParam name="actionListnerParam" value="#{actionListener}" />
+    <o:methodParam name="actionParam" value="#{action}" />
+
+    <c:set var="onClick" value="#{isMonitor ? 'PrimeFaces.monitorDownload(loading, loadingHide);' : 'loading(); '.concat(onClick)}" />
+    <c:set var="ajax" value="#{isMonitor ? true : ajax}" />
+    
+    <c:choose>
+        <c:when test="#{empty path}">
+            <p:commandLink id="#{id}"
+                           styleClass="#{isBtn ? 'btn' : ''} #{styleClass}"
+                           rendered="#{rendered}"
+                           disabled="#{disabled}"
+                           style="#{style}"
+                           actionListener="#{actionListnerParam}"
+                           onclick="#{onClick}"
+                           action="#{actionParam}"
+                           update="#{update}"
+                           oncomplete="#{onComplete} loadingHide();"
+                           ajax="#{ajax}"
+                           process="#{process}">
+                <c:if test="#{not empty icon}">
+                    <i class="fa fa-fw #{icon}"></i>
+                </c:if>
+                <c:if test="#{not empty value}">
+                    #{value}
+                </c:if>
+                
+                <ui:insert />
+            </p:commandLink>
+        </c:when>
+        <c:otherwise>
+
+        </c:otherwise>
+    </c:choose>
+</ui:composition>

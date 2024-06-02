@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.5.final using JasperReports Library version 6.20.5-3efcf2e67f959db3888d79f73dde2dbd7acb4f8e  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="detail" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="1facb452-0e75-4daa-95ca-9beb8d772651">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<parameter name="BUL_PRIM" class="java.lang.Boolean"/>
+	<parameter name="CODE_FILIALE" class="java.lang.String"/>
+	<parameter name="DATE_PAIE" class="java.math.BigDecimal"/>
+	<parameter name="MATRICULE" class="java.lang.Integer"/>
+	<parameter name="DATE_TRT" class="java.math.BigDecimal"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[SELECT [MATRICULE]
+	, DATE_TRT
+	, DATE_PAI
+	, BUL_PRIM
+	, CODE_FIL
+	, CODE_RUB
+	, LIB_RUBR
+	, SENS_RUB
+	, NB_JR_HR
+	, REF_TXAS
+	, G_IMPOSA
+	, G_NIMPOS
+	, R_IMPOSA
+	, R_NIMPOS
+  FROM [T_BP].[BULLETIN_DETAIL]
+  WHERE MATRICULE = $P{MATRICULE}
+	AND DATE_TRT = $P{DATE_TRT}
+	AND DATE_PAI = $P{DATE_PAIE}
+	AND BUL_PRIM = $P{BUL_PRIM}
+	AND CODE_FIL = $P{CODE_FILIALE}
+  ORDER BY CODE_RUB ASC]]>
+	</queryString>
+	<field name="MATRICULE" class="java.lang.Integer"/>
+	<field name="DATE_TRT" class="java.math.BigDecimal"/>
+	<field name="DATE_PAI" class="java.math.BigDecimal"/>
+	<field name="BUL_PRIM" class="java.lang.Boolean"/>
+	<field name="CODE_FIL" class="java.lang.String"/>
+	<field name="CODE_RUB" class="java.lang.String"/>
+	<field name="LIB_RUBR" class="java.lang.String"/>
+	<field name="SENS_RUB" class="java.lang.String"/>
+	<field name="NB_JR_HR" class="java.math.BigDecimal"/>
+	<field name="REF_TXAS" class="java.math.BigDecimal"/>
+	<field name="G_IMPOSA" class="java.math.BigDecimal"/>
+	<field name="G_NIMPOS" class="java.math.BigDecimal"/>
+	<field name="R_IMPOSA" class="java.math.BigDecimal"/>
+	<field name="R_NIMPOS" class="java.math.BigDecimal"/>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="24" height="12" uuid="99c65df9-aee4-4eee-a537-afc1f14a7e8f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CODE_RUB}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="34" y="0" width="162" height="12" uuid="a59b429e-686d-4b55-8599-d7e0ac94ab5c"/>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LIB_RUBR}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="203" y="0" width="20" height="12" uuid="b111ccd3-9c0f-472d-a9c2-cfb888cd4d2b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7" isBold="true" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SENS_RUB}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="234" y="0" width="37" height="12" uuid="3b1016e1-a0e7-4408-92d9-420e92bea1ec">
+					<printWhenExpression><![CDATA[$F{NB_JR_HR} != null && $F{NB_JR_HR}.compareTo(BigDecimal.ZERO ) > 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NB_JR_HR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="290" y="0" width="40" height="12" uuid="4e7f75de-2f52-466a-869f-a15cb447c25a">
+					<printWhenExpression><![CDATA[$F{REF_TXAS} != null && $F{REF_TXAS}.compareTo(BigDecimal.ZERO ) > 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{REF_TXAS}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="356" y="0" width="40" height="12" uuid="86e61bf5-358a-47c0-82d7-1cade524893e">
+					<printWhenExpression><![CDATA[$F{G_IMPOSA} != null && $F{G_IMPOSA}.compareTo(BigDecimal.ZERO ) > 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{G_IMPOSA}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="434" y="0" width="40" height="12" uuid="1908f4c0-cc43-4c1d-abd5-3d96c38b0734">
+					<printWhenExpression><![CDATA[$F{G_NIMPOS} != null && $F{G_NIMPOS}.compareTo(BigDecimal.ZERO ) > 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{G_NIMPOS}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="508" y="0" width="40" height="12" uuid="356710e9-8803-4aa0-869b-0f865cc45148">
+					<printWhenExpression><![CDATA[$F{R_IMPOSA} != null && $F{R_IMPOSA}.compareTo(BigDecimal.ZERO ) > 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{R_IMPOSA}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="585" y="0" width="40" height="12" uuid="7a9df331-01be-4f58-b942-633abf5a82da">
+					<printWhenExpression><![CDATA[$F{R_NIMPOS} != null && $F{R_NIMPOS}.compareTo(BigDecimal.ZERO ) > 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{R_NIMPOS}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

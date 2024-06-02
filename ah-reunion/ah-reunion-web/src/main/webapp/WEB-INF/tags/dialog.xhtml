@@ -1,0 +1,143 @@
+
+<ui:composition xmlns = "http://www.w3.org/1999/xhtml"   
+                xmlns:h = "http://java.sun.com/jsf/html"
+                xmlns:f = "http://java.sun.com/jsf/core"
+                xmlns:o="http://omnifaces.org/ui"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:composite = "http://java.sun.com/jsf/composite"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:b="http://bootsfaces.net/ui">
+
+    <o:tagAttribute name="height" default="350" />
+    <o:tagAttribute name="width" default="95%" />
+    <o:tagAttribute name="saveBtnRendred" default="false" />
+    <o:tagAttribute name="saveBtnClass" default="EditCarBtn" />
+    <o:tagAttribute name="isEditable" default="#{false}" />
+    <o:tagAttribute name="editableCondition" default="#{false}" />
+    <o:tagAttribute name="editableCancelCondition" default="#{true}" />
+    <o:tagAttribute name="isRefresh" default="#{false}" />
+    <o:tagAttribute name="updatedBlocks" />
+    <o:tagAttribute name="saveBtn" default="Enregistrer" />
+    <o:tagAttribute name="closeBtn" default="Fermer" />
+    <o:tagAttribute name="iconBtn" default="fa-floppy-o" />
+
+    <o:methodParam name="editListnerParam" value="#{editListner}" />
+    <o:methodParam name="cancelListnerParam" value="#{cancelListner}" />
+    <o:methodParam name="refreshListnerParam" value="#{refreshListner}" />
+
+
+    <c:set var="headerFormId" value="#{id}HeaderForm" />
+    <c:set var="footerFormId" value="#{id}FooterForm" />
+    <c:set var="refreshButtonId" value="#{id}-refresh-button" />
+
+    <p:dialog widgetVar="#{id}" 
+              id="#{id}"
+              resizable="false" 
+              styleClass="ui-confirm-dialog special__dialog m-a-3"
+              modal="true" 
+              position="top" 
+              appendTo="@(body)" 
+              width="#{width}"
+              height="#{height}" 
+              style="height: 450px;"
+              closeOnEscape="true"
+              responsive="true"
+              blockScroll="true" 
+              fitViewport="true"
+              >
+
+        <f:facet name="header">
+            <h:panelGroup styleClass="animated rotateInDownLeft pull-left" style="width: calc(100% - 40px); font-size: 20px" layout="block">
+                <h:form id="#{headerFormId}">
+                    <h:outputText value="#{headerTitle}" />
+                    <c:if test="#{isEditable}">
+                        <p:commandLink value="Modifier" process="@this" 
+                                       update="#{headerFormId}, #{updatedBlocks}, #{footerFormId}" 
+                                       style="font-size: 14px;text-decoration: underline;"
+                                       onclick="loading()" 
+                                       styleClass="m-l-2"
+                                       oncomplete="loadingHide()"
+                                       rendered="#{editableCondition}">
+                            <ui:insert name="editButton" />
+                        </p:commandLink>
+                        <p:commandLink value="Annuler la Modification" process="@this" 
+                                       update="#{headerFormId}, #{updatedBlocks}, #{footerFormId}" 
+                                       style="font-size: 14px;text-decoration: underline;"
+                                       styleClass="m-l-2"
+                                       onclick="loading()"
+                                       oncomplete="loadingHide()"
+                                       actionListener="#{cancelListnerParam}"
+                                       rendered="#{editableCancelCondition}">
+                            <ui:insert name="cancelButton" />
+                        </p:commandLink>
+                    </c:if>
+                    <ui:insert name="addonButton" />
+                    <c:if test="#{isRefresh}">
+                        <p:commandButton process="@this" icon="pi pi-refresh"
+                                       update="#{headerFormId}, #{updatedBlocks}, #{footerFormId}" 
+                                       style="font-size: 14px;text-decoration: underline;"
+                                       onclick="loading()" 
+                                       styleClass="m-l-2 rounded-button ui-button-secondary"
+                                       oncomplete="loadingHide()"
+                                       actionListener="#{refreshListnerParam}"
+                                       id="#{refreshButtonId}">
+                            <ui:insert name="refreshButton" />
+                        </p:commandButton>
+                        <p:tooltip for="#{refreshButtonId}" value="#{i18n['general.toolstip.refreshData']}" position="bottom"/>
+                    </c:if>
+                </h:form>
+            </h:panelGroup>
+
+        </f:facet>
+
+        <style>
+            .special__dialog .ui-dialog-content {
+                overflow-y: auto !important;
+            }
+        </style>
+        <div>
+            <ui:insert />
+        </div>
+
+
+        <f:facet name="footer">
+            <h:panelGroup layout="grid" >
+                <div class="row m-a-0 bg-sidebar-" >
+                    <h:form id="#{footerFormId}">
+                        <div class="m-y-2 clearfix">
+
+                            <c:if test="#{saveBtnRendred}" >
+                                <div class="col-xs-6 col-sm-6 col-md-4 pull-right">
+                                    <p:commandLink styleClass="btn btn-primary btn-block"  
+                                                   onclick="$('.#{saveBtnClass}').click()"
+                                                   rendered="#{editableCancelCondition}"
+                                                   style="color: #fff;">
+                                        <i class="fa #{iconBtn}" aria-hidden="true"></i> #{saveBtn}
+                                    </p:commandLink>
+
+                                    <p:commandLink styleClass="btn btn-primary disabled btn-block"  
+                                                   rendered="#{not editableCancelCondition}"
+                                                   process="@this"
+                                                   style="color: #fff;">
+                                        <i class="fa #{iconBtn}" aria-hidden="true"></i> #{saveBtn}
+                                    </p:commandLink>
+                                </div>
+                            </c:if>
+
+                            <div class="col-xs-6 col-sm-6 col-md-4 pull-right">
+                                <b:button value="#{closeBtn}" look="warning" styleClass="btn-raised btn-block"
+                                          icon-awesome="close" style="width: 100% !important;" 
+                                          onclick="loading(); PF('#{id}').hide(); loadingHide();" />
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+
+            </h:panelGroup>
+        </f:facet>
+
+
+    </p:dialog>
+
+</ui:composition>

@@ -1,0 +1,382 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="#{i18n['this.language.code']}" xml:lang="#{i18n['this.language.code']}"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:cc="http://java.sun.com/jsf/composite/component"
+      xmlns:ct = "http://airalgerie.dz/facelets"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+
+    <h:head>
+        <title>#{applicationBean.appCode}</title>
+        
+        <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+        <meta http-equiv="content-language" content="#{i18n['this.language.code']}" />
+        
+        <h:outputStylesheet name="assets/stylesheets/app.min.css" position="last" />
+        <h:outputStylesheet name="assets/stylesheets/style.css" position="last" /> 
+        <h:outputStylesheet name="assets/stylesheets/styleY.css" position="last" /> 
+        <script>
+            var ASSET_PATH_BASE = '';
+        </script>
+        <link href="#{resource['/images/favicon.png']}" rel="icon" type="image/png"/>
+
+
+        <style>
+            :root {
+                --GRH: url(#{resource['/images/GRH-login-background.jpg']});;
+                --GFC: url(#{resource['/images/GFC-login-background.jpg']});;
+                --REF: url(#{resource['/images/REF-login-background.jpg']});;
+                --OPS: url(#{resource['/images/OPS-login-background.jpg']});;
+                --PORTAIL: url(#{resource['/images/reunion.jpg']});;
+            }
+            .authentication-bg {
+                height: 100vh;
+                background-size: cover;
+                background-position: 50% center;
+                min-height: 720px;               
+                background-image: var(--#{applicationBean.appCode});
+            }
+        </style>
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{loginBean.isLoggedUser}" />
+        </f:metadata> 
+    </h:head>
+    <h:body styleClass="sidebar-disabled navbar-disabled footer-disabled">
+        <div class="main-wrap" style="background-color: white">
+            <div class="col-lg-9 col-md-7 visible-lg visible-md" style="padding: 0">
+                <h:panelGroup layout="block" class = "authentication-bg img-fluid">
+                    <div class="pull-right visible-lg" style="width:100px ; height: 100%">
+                        <svg style="height: 100%">
+                            <path d="M100 0 L0 1800 L100 1800 Z" fill="white"></path>
+                        </svg>
+                    </div>
+                </h:panelGroup>
+            </div>
+
+            <div class="col-lg-3 col-md-5" style="padding: 0">
+                <div class="content" style="background-color: white">
+                    <div class="container-fluid">
+                        <div class="visible-lg visible-md" style="padding-top: 30%" ></div>
+                        <div class="text-center" style="padding-top: 10%">
+                            <div>
+                                <img src="#{resource['/images/lg.png']}" alt="Logo" height="50" />
+                            </div>
+                            <h3 class="font-size-18 m-t-3">#{i18n['general.welcome']}</h3>
+                            <h3><strong><h:outputText value="#{msg['app.name']}" /></strong></h3>
+                            <h3 class="text-center m-b-0">#{i18n['login.title']}</h3>
+                        </div>
+
+                        <div class="row" style="">
+                            <div class="col-md-12">
+                                <div class="">
+                                    <div class="panel-body" >
+
+                                        <h:form class="m-t-2" id="loginForm">
+                                            <p:focus context="login-input" for="login-input"/>
+
+                                            <ct:input id="login-input" placeholder="Nom d'utilisateur..."
+                                                      value="#{loginBean.login}" renderLabel="false" label="Email" required="true" />
+                                            <ct:input id="password-input" type="password" placeholder="Mot de passe..."
+                                                      value="#{loginBean.password}" renderLabel="false" label="Mot de passe" required="true" />
+                                            <ui:remove>
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input type="checkbox"/> Remember Password?
+                                                    </label>
+                                                </div>
+                                            </ui:remove>
+
+                                            <b:commandButton action="#{loginBean.execute}"
+                                                             value="Se Connecter"
+                                                             ajax="false"
+                                                             styleClass="btn-block"
+                                                             look="havelock-blue" /> 
+                                        </h:form>
+
+                                        <h:form id="isncriptionPortailErp"  rendered="#{applicationBean.appCode eq 'PORTAIL'}" >
+                                            <div class="m-t-3 text-center">
+                                                <p>Vous n'avez pas encore un compte...
+                                                    <b:link onclick="$('#inscriptionModal').modal({backdrop: 'static', keyboard: false}); ajax:inscriptionBean.init()" 
+                                                            onmouseover="" style="cursor: pointer;" update=":inscriptionForm">
+                                                        <i class="mdi mdi-lock mr-1"></i> 
+                                                        S'inscrire
+                                                    </b:link> 
+                                                </p>                                                
+                                            </div>
+                                            <b:row>
+                                                <h:panelGroup id="alertWrapper2" layout="block" styleClass="row">
+                                                    <cc:alert alert="#{inscriptionBean.alertBean.alerts}" />
+                                                </h:panelGroup>
+                                            </b:row>
+                                        </h:form>
+                                        <h:form id="resetPasswordLink">
+                                            <div class="m-t-3 text-center">
+                                                <b:link onclick="$('#resetPasswordModal').modal({backdrop: 'static', keyboard: false}); ajax:loginBean.init()" 
+                                                        onmouseover="" style="cursor: pointer;" update=":resetPasswordForm">
+                                                    <i class="mdi mdi-lock mr-1"></i> 
+                                                    Mot de passe oublié ?
+                                                </b:link> 
+                                            </div>
+                                            <b:row>
+                                                <b:messages col-md="12" id="errorLoginForm"/>
+                                                <h:panelGroup id="alertWrapper" layout="block" styleClass="row">
+                                                    <cc:alert alert="#{loginBean.alertBean.alerts}" />
+                                                </h:panelGroup>
+                                            </b:row>
+                                        </h:form>
+
+                                        <div class="m-t-3 text-center">
+                                            <p> © 
+                                                <h:outputText value="#{session.lastAccessedTime}">
+                                                    <f:convertDateTime pattern="yyyy" type="date" />
+                                                </h:outputText>
+                                                Air Algérie - Tous droits réservés 
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade bs-example-modal-lg" id="resetPasswordModal" widgetVar="resetPasswordModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content b-a-0">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Mot de passe oublier</h4>
+                    </div>
+
+                    <h:form id="resetPasswordForm">
+
+                        <div class="modal-body">
+                            <p:panelGrid rendered="#{loginBean.nextStep}">
+                                <p:row>
+                                    <div class="alert alert-info shadow-box" role="alert">
+                                        <strong>
+                                            Choisissez un mot de passe avec minimum 8 caractères, contenant au moins un(e)
+                                            majuscule, minuscule, chiffre et caractère spécial.
+                                        </strong>
+                                    </div>
+                                </p:row>
+                            </p:panelGrid>
+                            <p>
+                                <h:outputText rendered="#{not loginBean.nextStep}" value="Veuillez saisir votre adresse email pour recevoir le code de confirmation."/>
+                                <h:outputText rendered="#{loginBean.nextStep}" value="Veuillez saisir le code de confirmation et votre nouveau mot de passe."/>
+                            </p>
+
+                            <b:messages id="messagesValisation" />
+
+                            <ct:input id="email-password-reset" 
+                                      type="text"
+                                      label="Email"
+                                      placeholder="Email..."
+                                      value="#{loginBean.passwordResetEmail}"
+                                      required="true">
+                                <f:attribute name = "autocomplete" value = "false" />
+                            </ct:input>
+                            <b:link onmouseover="" style="cursor: pointer;" update="@form" rendered="#{not loginBean.nextStep}">
+                                <f:ajax listener="#{loginBean.switchNextStep()}"/>
+                                <i class="mdi mdi-lock mr-1"></i> 
+                                J'ai déjà un code de confirmation
+                            </b:link>
+
+                            <ct:input id="confirmation-code-password-reset" 
+                                      type="text"
+                                      label="Code de confirmation"
+                                      placeholder="Code de confirmation..."
+                                      value="#{loginBean.confirmationCode}" 
+                                      required="#{loginBean.nextStep}"
+                                      rendered="#{loginBean.nextStep}"
+                                      >
+                                <f:attribute name = "autocomplete" value = "false" />
+                            </ct:input>
+
+                            <ct:input id="new-email-password-reset" 
+                                      type="password"
+                                      label="Nouveau mot de passe"
+                                      placeholder="Nouveau mot de passe..."
+                                      value="#{loginBean.newPassword}" 
+                                      required="#{loginBean.nextStep}"
+                                      rendered="#{loginBean.nextStep}"
+                                      >   
+                                <f:attribute name = "autocomplete" value = "false" />
+                            </ct:input>
+
+                            <ct:input id="confiramtuion-new-email-password-reset" 
+                                      type="password"
+                                      label="Confirmation du mot de passe"
+                                      placeholder="Confirmation du mot de passe..."
+                                      value="#{loginBean.passwordConfirm}" 
+                                      required="#{loginBean.nextStep}"
+                                      rendered="#{loginBean.nextStep}"
+                                      >
+                                <f:attribute name = "autocomplete" value = "false" />
+                            </ct:input>
+
+                        </div>
+                        <div class="modal-footer">
+                            <b:button value="Annuler" look="danger" styleClass="btn-raised" dismiss="modal" onclick="return false;"/>
+                            <b:commandButton value="Valider" look="success" styleClass="btn-raised" 
+                                             onclick="loading(); ajax:loginBean.sendConfiramtionCode()" 
+                                             update="@form"
+                                             onerror="alert('Erreur !')" 
+                                             oncomplete="loadingHide();"
+                                             rendered="#{not loginBean.nextStep}"/>
+
+                            <b:commandButton value="Valider" look="success" styleClass="btn-raised" 
+                                             onclick="loading(); ajax:loginBean.resetPassword()" 
+                                             update="@form resetPasswordLink:alertWrapper"
+                                             onerror="alert('Erreur !')" 
+                                             rendered="#{loginBean.nextStep}"
+                                             oncomplete="if(!validationFailed) { $('#resetPasswordModal').modal('hide'); }; loadingHide();"/>
+                        </div>
+                        <b:fetchBeanInfos />
+                    </h:form>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade bs-example-modal-lg" id="inscriptionModal" widgetVar="inscriptionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content b-a-0">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Inscription Employés </h4>
+                    </div>
+
+                    <h:form id="inscriptionForm">
+
+                        <div class="modal-body">
+                            <p:panelGrid rendered="#{inscriptionBean.nextStep}">
+                                <p:row>
+                                    <div class="alert alert-info shadow-box" role="alert">
+                                        <strong>
+                                            Choisissez un mot de passe avec minimum 8 caractères, contenant au moins un(e)
+                                            majuscule, minuscule, chiffre et caractère spécial.
+                                        </strong>
+                                    </div>
+                                </p:row>
+                            </p:panelGrid>
+                            <p>
+                                <h:outputText rendered="#{not inscriptionBean.nextStep}" value="Veuillez renseignrer votre matricule et adresse email pour recevoir le code de confirmation d'inscription"/>
+                                <h:outputText rendered="#{inscriptionBean.nextStep}" value="Veuillez saisir le code d'inscription reçu par email pour valider votre inscription"/>
+                            </p>
+
+                            <b:messages id="messagesValidation" />
+
+                            <ct:input id="email-inscription" 
+                                      type="text"
+                                      label="Email"
+                                      placeholder="Email@airalgerie.dz"
+                                      value="#{inscriptionBean.inscriptionEmail}"
+                                      required="true">
+                                <f:attribute name = "autocomplete" value = "false" />
+                            </ct:input>
+                            <ct:input id="matricule-inscription" 
+                                      type="number"
+                                      label="Matricule Ah"
+                                      placeholder="99999"
+                                      value="#{inscriptionBean.matricule}"
+                                      required="true" min="0" mask="99999" max="99999"
+                                      decimalPlaces="0">
+                                <f:attribute name = "autocomplete" value = "false" />
+                            </ct:input>
+
+                            <b:link onmouseover="" style="cursor: pointer;" update="@form" rendered="#{not inscriptionBean.nextStep}">
+                                <f:ajax listener="#{inscriptionBean.switchNextStep()}"/>
+                                <i class="mdi mdi-lock mr-1"></i> 
+                                J'ai reçu le code d'inscription
+                            </b:link>
+
+                            <ct:input id="confirmation-code-inscription" 
+                                      type="text"
+                                      label="Code d'inscription"
+                                      placeholder="Code de confirmation..."
+                                      value="#{inscriptionBean.inscriptionCode}" 
+                                      required="#{inscriptionBean.nextStep}"
+                                      rendered="#{inscriptionBean.nextStep}"
+                                      >
+                                <f:attribute name = "autocomplete" value = "false" />
+                            </ct:input>
+                            <ct:input id="new-inscription-password" 
+                                      type="password"
+                                      label="mot de passe"
+                                      placeholder="Nouveau mot de passe..."
+                                      value="#{inscriptionBean.password}" 
+                                      required="#{inscriptionBean.nextStep}"
+                                      rendered="#{inscriptionBean.nextStep}"
+                                      >   
+                                <f:attribute name = "autocomplete" value = "false" />
+                            </ct:input>
+
+                            <ct:input id="confiramtuion-inscription-password" 
+                                      type="password"
+                                      label="Confirmation du mot de passe"
+                                      placeholder="Confirmation du mot de passe..."
+                                      value="#{inscriptionBean.passwordConfirm}" 
+                                      required="#{inscriptionBean.nextStep}"
+                                      rendered="#{inscriptionBean.nextStep}"
+                                      >
+                                <f:attribute name = "autocomplete" value = "false" />
+                            </ct:input>
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <b:button value="Annuler" look="danger" styleClass="btn-raised" dismiss="modal" onclick="return false;"/>
+                            <b:commandButton value="Valider" look="success" styleClass="btn-raised" 
+                                             onclick="loading(); ajax:inscriptionBean.sendInscriptionCode()" 
+                                             update="@form"
+                                             onerror="alert('Erreur !')" 
+                                             oncomplete="loadingHide();"
+                                             rendered="#{not inscriptionBean.nextStep}"/>
+
+                            <b:commandButton value="Valider" look="success" styleClass="btn-raised" 
+                                             onclick="loading(); ajax:inscriptionBean.inscription()" 
+                                             update="@form isncriptionPortailErp:alertWrapper2"
+                                             onerror="alert('Erreur !')" 
+                                             rendered="#{inscriptionBean.nextStep}"
+                                             oncomplete="if(!validationFailed) { $('#inscriptionModal').modal('hide'); }; loadingHide();"/>
+                        </div>
+                        <b:fetchBeanInfos />
+                    </h:form>
+                </div>
+            </div>
+        </div>
+        <ui:include src="/template/common/scriptsBottom.xhtml" />
+        <ui:insert name="scriptsBottom" >
+
+        </ui:insert>
+
+        <div id="inaction">
+            <div class="cssload-loader">
+                <div class="cssload-inner cssload-one"></div>
+                <div class="cssload-inner cssload-two"></div>
+                <div class="cssload-inner cssload-three"></div>
+                <span style="
+                      color: #fff;
+                      top: 100%;
+                      left: 0;
+                      text-align: center;
+                      display: block;
+                      position: absolute;
+                      width: 100%;
+                      margin-top: 20px;
+                      ">
+                    Chargement...
+                </span>
+            </div>
+        </div>
+
+    </h:body>
+</html>

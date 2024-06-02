@@ -1,0 +1,44 @@
+#!/bin/sh
+#
+# Runs before git flow feature start
+#
+# Positional arguments:
+# $1    The friendly name of the branch
+# $2    The origin remote
+# $3    The full branch name (including the feature prefix)
+# $4    The base from which this feature is started
+#
+# The following variables are available as they are exported by git-flow:
+#
+# MASTER_BRANCH - The branch defined as Master
+# DEVELOP_BRANCH - The branch defined as Develop
+#
+NAME=$1
+ORIGIN=$2
+BRANCH=$3
+BASE=$4
+
+# Implement your script here.
+
+REPO_DIR=$(git rev-parse --show-toplevel)
+DOT_GIT_DIR=$(git rev-parse --git-dir)
+if [ "$DOT_GIT_DIR" = ".git" ]; then
+	DOT_GIT_DIR="$REPO_DIR"/"$DOT_GIT_DIR"
+fi
+HOOKS_DIR="$DOT_GIT_DIR"/hooks
+. "$HOOKS_DIR"/gitflow-functions
+
+echo ${WHITE}
+
+REGEX="^([0-9]+)(\-(bugfix|cleanup|doc|hotfix))?\-([a-z0-9._]+)$"
+
+MESSAGE="There is something wrong with your branch name. You should rename your branch to a valid name and try again."
+
+if ! [[ $NAME =~ $REGEX ]];
+then
+    echo "\n${CROSS}${RED} $MESSAGE"
+    exit 1
+fi
+
+# To terminate the git-flow action, return a non-zero exit code.
+exit 0

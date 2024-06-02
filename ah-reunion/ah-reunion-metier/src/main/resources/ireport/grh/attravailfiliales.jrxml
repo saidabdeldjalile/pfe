@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="attravailfiliales" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="185189d6-ee39-4ccd-95ce-6c3acd5f381f">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="96"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
+	<parameter name="matricule" class="java.lang.String"/>
+	<parameter name="dn" class="java.lang.String"/>
+	<parameter name="name" class="java.lang.String"/>
+	<parameter name="drecrut" class="java.lang.String"/>
+	<parameter name="fct" class="java.lang.String"/>
+	<parameter name="civilite" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="138" splitType="Stretch">
+			<staticText>
+				<reportElement x="17" y="71" width="236" height="54" uuid="c6e54703-f51c-4d96-85c0-3d4816f622fb"/>
+				<textElement>
+					<font fontName="Tahoma" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[AIR ALGERIE CARGO
+FILIALE AIR ALGERIE
+REF : DGCARGO/DRH/N°           /
+]]></text>
+			</staticText>
+			<textField pattern="yyyy">
+				<reportElement x="240" y="104" width="152" height="20" uuid="b1d5aef4-d189-4be6-8340-4dfc021ad481"/>
+				<textElement>
+					<font fontName="Tahoma" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="41" splitType="Stretch">
+			<staticText>
+				<reportElement x="365" y="18" width="89" height="20" uuid="4a31b7d0-7c95-4281-bc61-342c7e904070"/>
+				<textElement>
+					<font fontName="Tahoma" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ MATRICULE :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="454" y="17" width="111" height="20" uuid="0b7bcdb5-e934-4e71-a36a-65f691887d97"/>
+				<textElement>
+					<font fontName="Tahoma" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{matricule}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="462" splitType="Stretch">
+			<staticText>
+				<reportElement x="160" y="22" width="245" height="31" uuid="03e99ae6-cb7f-4afd-b64a-ac6cd4756216"/>
+				<textElement>
+					<font fontName="Tahoma" size="16" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[ATTESTATION DE TRAVAIL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="17" y="76" width="482" height="37" uuid="1a4a8e63-b612-4ba5-ad49-1baf1f6df808"/>
+				<textElement>
+					<font fontName="Tahoma" size="14"/>
+				</textElement>
+				<text><![CDATA[Nous soussignés, Société Publique Economique - SPA/Air Algérie Cargo, Aéroport Houari BOUMEDIENE, attestons que :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="54" y="123" width="92" height="20" uuid="9bf5b405-5bcc-4a64-8d8f-4c76e27be214"/>
+				<textElement>
+					<font fontName="Tahoma" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{civilite}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="134" y="123" width="12" height="20" uuid="e972f218-aa69-4555-91dd-84f070ccd19c"/>
+				<textElement>
+					<font fontName="Tahoma" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="153" y="123" width="385" height="20" uuid="d06e82bc-1350-47f0-94c5-6841ed5dcb49"/>
+				<textElement>
+					<font fontName="Tahoma" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="57" y="150" width="92" height="20" uuid="46389227-e927-42d0-82e7-007cfd358cb7"/>
+				<textElement>
+					<font fontName="Tahoma" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[  NE(E) LE  : ]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="153" y="150" width="385" height="20" uuid="0fb42f3e-0341-4860-96f2-44a72be75653"/>
+				<textElement>
+					<font fontName="Tahoma" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dn}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="17" y="187" width="97" height="20" uuid="0d149d25-593b-4dbf-815d-966391e8966b"/>
+				<textElement>
+					<font fontName="Tahoma" size="14"/>
+				</textElement>
+				<text><![CDATA[Est employé à ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="112" y="187" width="100" height="20" uuid="2fd3cbd0-8924-49ea-a0d9-886444ccbff1"/>
+				<textElement>
+					<font fontName="Tahoma" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[AIR ALGERIE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="209" y="187" width="71" height="20" uuid="1832a246-b4b8-4772-89ba-4414ec25ffc1"/>
+				<textElement>
+					<font fontName="Tahoma" size="14"/>
+				</textElement>
+				<text><![CDATA[depuis le  : ]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="296" y="187" width="259" height="20" uuid="7793391a-b746-47e7-843f-729b862a7927"/>
+				<textElement>
+					<font fontName="Tahoma" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{drecrut}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="17" y="212" width="268" height="20" uuid="76f0bd7d-3ede-4274-9963-c2028c3fe7f7"/>
+				<textElement>
+					<font fontName="Tahoma" size="14"/>
+				</textElement>
+				<text><![CDATA[Il occupe, à la présente, la fonction de    : ]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="296" y="212" width="259" height="20" uuid="cab0fe81-1a4b-45b5-a42e-614e20303ebf"/>
+				<textElement>
+					<font fontName="Tahoma" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fct}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="17" y="238" width="100" height="20" uuid="51f4be16-c768-4c42-8226-1915fda94a25"/>
+				<textElement>
+					<font fontName="Tahoma" size="14"/>
+				</textElement>
+				<text><![CDATA[Et est affecté à ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="118" y="238" width="123" height="20" uuid="6bcbd0de-252b-47cb-bbbf-c63315a190fb"/>
+				<textElement>
+					<font fontName="Tahoma" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Air Algerie Cargo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="242" y="238" width="43" height="20" uuid="65b91851-c028-45a7-874e-2e9930c36bb8"/>
+				<textElement>
+					<font fontName="Tahoma" size="14"/>
+				</textElement>
+				<text><![CDATA[le    :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="296" y="238" width="100" height="20" uuid="2ddb60ad-795f-4f55-9bd7-2a50dfa99f3b"/>
+				<textElement>
+					<font fontName="Tahoma" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[01/09/2017.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="17" y="278" width="482" height="34" uuid="dc8dd01c-e16c-4186-be46-3eadc21a341b"/>
+				<textElement>
+					<font fontName="Tahoma" size="14"/>
+				</textElement>
+				<text><![CDATA[La présente attestation est délivrée à l’intéressé pour servir et valoir ce que de droit.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="170" y="334" width="235" height="20" uuid="5d6be53b-9b68-45a9-9e5e-b86289029dce"/>
+				<textElement>
+					<font fontName="Tahoma" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Aéroport Houari Boumediene, le : ]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="379" y="334" width="142" height="20" uuid="7b8c24a5-ca79-4d2b-b0cd-f6114ced3322"/>
+				<textElement>
+					<font fontName="Tahoma" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="26" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="28" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="32" splitType="Stretch"/>
+	</summary>
+</jasperReport>

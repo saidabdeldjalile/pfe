@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns = "http://www.w3.org/1999/xhtml"   
+      xmlns:h = "http://java.sun.com/jsf/html"
+      xmlns:f = "http://java.sun.com/jsf/core"
+      xmlns:composite = "http://java.sun.com/jsf/composite">
+
+    <composite:interface>
+        <composite:attribute name = "alert" />
+    </composite:interface>
+
+    <composite:implementation>
+
+        <h:panelGroup rendered="#{cc.attrs.alert.active}">
+            <div class="col-xs-12">
+                <div class="alert alert-#{cc.attrs.alert.styleClass} shadow-box m-t-2 m-b-1" role="alert" >
+                    <span class="fa-stack fa-lg m-r-1">
+                        <i class="fa fa-circle-thin fa-stack-2x text-#{cc.attrs.alert.iconStyleClass}"></i>
+                        <i class="fa fa-#{cc.attrs.alert.icon} fa-stack-1x text-#{cc.attrs.alert.iconStyleClass}"></i>
+                    </span>
+                    <strong>
+                        <h:outputText escape="false" value="#{cc.attrs.alert.summary}"/>
+                    </strong>
+                    <h:outputText escape="false" value="#{cc.attrs.alert.message}" />
+                </div>
+            </div>
+        </h:panelGroup>
+
+    </composite:implementation>
+</html>

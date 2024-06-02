@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="#{i18n['this.language.code']}" xml:lang="#{i18n['this.language.code']}"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+        <meta http-equiv="content-language" content="#{i18n['this.language.code']}" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1"/>
+        <link href="#{resource['/images/favicon.png']}" rel="icon" type="image/png"/>
+
+        <ui:insert name="titlePage" >
+            <title></title>
+
+        </ui:insert>
+
+        <style>
+            #initial-loader{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;width:100%;background:#212121;position:fixed;z-index:10000;top:0;left:0;bottom:0;right:0;transition:opacity .2s ease-out}#initial-loader .initial-loader-top{display:flex;align-items:center;justify-content:space-between;width:200px;border-bottom:1px solid #2d2d2d;padding-bottom:5px}#initial-loader .initial-loader-top > *{display:block;flex-shrink:0;flex-grow:0}#initial-loader .initial-loader-bottom{padding-top:10px;color:#5C5C5C;font-family:-apple-system,"Helvetica Neue",Helvetica,"Segoe UI",Arial,sans-serif;font-size:12px}@keyframes spin{100%{transform:rotate(360deg)}}#initial-loader .loader g{transform-origin:50% 50%;animation:spin .5s linear infinite}body.loading {overflow: hidden !important} body.loaded #initial-loader{opacity:0}
+        </style>
+
+
+
+        <h:outputStylesheet name="assets/stylesheets/app.min.css" position="last" />
+        <h:outputStylesheet name="assets/vendor/css/lib.min.css" position="last" /> 
+        <h:outputStylesheet name="assets/vendor/css/animate-4/animate.min.css" position="last" /> 
+        <h:outputStylesheet name="assets/stylesheets/style.css" position="last" /> 
+        <h:outputStylesheet name="assets/stylesheets/styleA.css" position="last" /> 
+        <h:outputStylesheet name="assets/stylesheets/styleB.css" position="last" /> 
+        <h:outputStylesheet name="assets/stylesheets/styleD.css" position="last" /> 
+        <h:outputStylesheet name="assets/stylesheets/styleY.css" position="last" />
+
+        <script>
+            var ASSET_PATH_BASE = '';
+        </script>
+
+        <link href="https://fonts.googleapis.com/css2?family=Poppins" rel="stylesheet" />
+
+
+        <ui:insert name="scriptsTop" >
+
+        </ui:insert>
+        <ui:insert name="stylesTop" >
+
+        </ui:insert>
+
+    </h:head>
+    <h:body styleClass="sidebar-disabled footer-fixed">
+<!--        <f:event type="javax.faces.event.PreRenderViewEvent" listener="#{utilsBean.preRenderView()}"/>-->
+
+        <f:view locale="fr">
+
+            <div id="initial-loader">
+                <div>
+                    <div class="initial-loader-top b-a-0">
+                        <div class="loader loader--style1">
+                            <h:graphicImage value="/resources/images/globeAir2.svg" alt="loader" height="200" />
+                        </div>
+                    </div>
+                    <div class="initial-loader-bottom text-center text-white-i">
+                        Chargement en cours...<i class="fa fa-cricle" style="opacity: 0"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-wrap" style="min-height: 100vh; background-color: #EDF0F5;">
+                <div class="overlayer"></div>
+
+
+                <ui:insert name="content" >
+
+                </ui:insert>         
+
+                <ui:insert name="footer" >
+                    <ui:include src="/template/common/commonFooterHome.xhtml" />
+                </ui:insert>
+            </div>
+            <ui:include src="/template/common/scriptsBottom.xhtml" />
+            <ui:insert name="scriptsBottom" >
+
+            </ui:insert>
+
+            <div id="inaction">
+                <div class="cssload-loader">
+                    <div class="cssload-inner cssload-one"></div>
+                    <div class="cssload-inner cssload-two"></div>
+                    <div class="cssload-inner cssload-three"></div>
+                    <span style="
+                          color: #fff;
+                          top: 100%;
+                          left: 0;
+                          text-align: center;
+                          display: block;
+                          position: absolute;
+                          width: 100%;
+                          margin-top: 20px;
+                          ">
+                        Chargement...
+                    </span>
+                </div>
+            </div>
+        </f:view>
+
+
+    </h:body>
+</html>
+

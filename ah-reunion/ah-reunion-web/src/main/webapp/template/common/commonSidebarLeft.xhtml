@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <aside class="navbar-default sidebar affix-top">
+
+        <div class="sidebar-content">
+
+            <div class="sidebar-default-visible text-muted small text-uppercase sidebar-section p-y-2">
+                <strong>Navigation</strong>
+            </div>
+
+            <h:form>
+                <ul class="side-menu">
+                    <li class="#{view.viewId == '/index.xhtml' ? 'nested-active' : ''}">
+                        <p:link onclick="loading();" outcome="/index.xhtml" title="Accueil" >
+                            <i class="fa fa-home fa-lg fa-fw"></i><span class="nav-label">Accueil</span>
+                        </p:link>
+                    </li>
+
+                    <c:forEach var="module" items="#{menuBean.menu}" varStatus="status">
+                        <li class="has-submenu primary-submenu">
+                            <p:link href="javascript: void(0);" title="#{module.libelle}"  >
+                                <i class="#{module.icon}"></i>
+                                <span class="nav-label">#{module.libelle}</span>
+                            </p:link>
+
+                            <ul data-submenu-title="Start" class="submenu-level-1">
+                                <c:forEach var="fonction" items="#{module.fonctions}" rendered="#{module.fonctions ne null}" varStatus="status">
+                                    <li>
+                                        <h:link onclick="loading();" outcome="#{fonction.url}" title="" >
+                                            <span class="nav-label">#{fonction.libelle}</span>
+                                        </h:link>
+                                    </li>
+                                </c:forEach>
+
+                                <c:forEach var="moduleFils" items="#{module.subModule}" rendered="#{module.subModule ne null}" varStatus="status">
+                                    <li>
+                                        <p:link href="javascript: void(0);" title="#{moduleFils.libelle}" >
+                                            <span class="nav-label">#{moduleFils.libelle}</span>
+                                            <i class="fa arrow"></i>
+                                        </p:link>
+
+                                        <ul data-submenu-title="Start" class="submenu-level-2">
+                                            <c:forEach var="fonction" items="#{moduleFils.fonctions}" rendered="#{module.fonctions ne null}" varStatus="status">
+                                                <li>
+                                                    <h:link onclick="loading();" outcome="#{fonction.url}" title="" >
+                                                        <span class="nav-label">#{fonction.libelle}</span>
+                                                    </h:link>
+                                                </li>
+                                            </c:forEach>
+                                        </ul>
+                                    </li>
+                                </c:forEach>
+                            </ul>
+
+                        </li>
+                    </c:forEach>
+
+
+                </ul>
+            </h:form>
+            <div class="sidebar-default-visible">
+                <hr/>
+            </div>
+        </div>
+    </aside>
+
+</ui:composition>

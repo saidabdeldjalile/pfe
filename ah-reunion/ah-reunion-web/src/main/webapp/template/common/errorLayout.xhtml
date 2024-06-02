@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="#{i18n['this.language.code']}" xml:lang="#{i18n['this.language.code']}"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui">
+    <h:head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+        <meta http-equiv="content-language" content="#{i18n['this.language.code']}" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1"/>
+        <link href="#{resource['/images/favicon.png']}" rel="icon" type="image/png"/>
+
+        <ui:insert name="titlePage" >
+            <title></title>
+
+        </ui:insert>
+
+        <h:outputStylesheet name="assets/stylesheets/app.min.css" /> 
+        <h:outputStylesheet name="assets/stylesheets/error-page.css" /> 
+
+        <script>
+            var ASSET_PATH_BASE = '';
+        </script>
+
+        <link href="https://fonts.googleapis.com/css2?family=Poppins" rel="stylesheet" />
+
+    </h:head>
+    <h:body class="fix-header card-no-border fix-sidebar">
+
+        <f:view locale="fr">
+
+            <section id="wrapper" class="error-page">
+                <div class="error-box">
+                    <div class="error-body text-center">
+                        <h1 class="text-uppercase">Oups !</h1>
+                        <ui:insert name="content" >
+
+                        </ui:insert>  
+
+                        <b:link value="Retour à l'accueil" 
+                                outcome="/index.xhtml"
+                                icon-awesome="angle-left" 
+                                style-class="btn btn-default m-t-2 m-b-1 action-navigate-back" />
+                    </div>
+                </div>
+                <footer class="footer text-center">
+                    <ui:include src="/template/common/commonFooterContent.xhtml" />
+                </footer>
+
+            </section>
+
+        </f:view>
+
+
+    </h:body>
+</html>
+

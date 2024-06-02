@@ -1,0 +1,22 @@
+<ui:composition xmlns = "http://www.w3.org/1999/xhtml"   
+                xmlns:h = "http://java.sun.com/jsf/html"
+                xmlns:f = "http://java.sun.com/jsf/core"
+                xmlns:o="http://omnifaces.org/ui"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:composite="http://java.sun.com/jsf/composite"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:ct="http://airalgerie.dz/facelets"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:jsf="http://xmlns.jcp.org/jsf">
+
+    <!-- Confirm dialog -->
+    <o:tagAttribute name="id" />
+
+    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" width="550" id="#{id}" >
+        <p:commandButton value="Annuler" type="button" styleClass="ui-confirmdialog-no"    style="background-color: #CB3D4A ;color: #ffffff !important" />
+        <p:commandButton value="Valider" type="button" styleClass="ui-confirmdialog-yes"  style="background-color: #84b547;color: #ffffff !important " />
+    </p:confirmDialog> 
+
+
+</ui:composition>

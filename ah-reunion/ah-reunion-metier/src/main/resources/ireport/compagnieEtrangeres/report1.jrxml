@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="25fb995e-e874-4da8-a454-7b4a47d451f0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="18"/>
+	<parameter name="code" class="java.lang.String"/>
+	<parameter name="date" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select  CE.FACTURE_RECUE.NUM_CIE, CE.FACTURE_RECUE.NUM_FCT, CE.FACTURE_RECUE.DATE_FCT, CE.FACTURE_RECUE.SENS_OP,
+                      CE.FACTURE_RECUE.CODE_MON, CE.FACTURE_RECUE.DATE_COMP, CE.FACTURE_RECUE.NAT_PREST, CE.FACTURE_RECUE.CODE_DIR,
+                      CE.FACTURE_RECUE.DATE_CPTA, CE.FACTURE_RECUE.DATE_ENV, CE.FACTURE_RECUE.DATE_RET, CE.FACTURE_RECUE.TOT_PREST,
+                       CE.FACTURE_RECUE.PERIODE, COM.DIRECTION.DESC_DIR, CE.COMPAGNIE.NOM
+FROM         CE.FACTURE_RECUE INNER JOIN
+                      COM.DIRECTION ON CE.FACTURE_RECUE.CODE_DIR = COM.DIRECTION.CODE_DIR INNER JOIN
+                      CE.COMPAGNIE ON CE.FACTURE_RECUE.NUM_CIE = CE.COMPAGNIE.NUM_CIE
+  where  CE.FACTURE_RECUE.DATE_RET is NULL AND CE.FACTURE_RECUE. CODE_DIR = $P{code} and  CE.FACTURE_RECUE.DATE_COMP =$P{date}]]>
+	</queryString>
+	<field name="NUM_CIE" class="java.lang.String"/>
+	<field name="NUM_FCT" class="java.lang.String"/>
+	<field name="DATE_FCT" class="java.sql.Date"/>
+	<field name="SENS_OP" class="java.lang.String"/>
+	<field name="CODE_MON" class="java.lang.String"/>
+	<field name="DATE_COMP" class="java.math.BigDecimal"/>
+	<field name="NAT_PREST" class="java.lang.String"/>
+	<field name="CODE_DIR" class="java.lang.String"/>
+	<field name="DATE_CPTA" class="java.math.BigDecimal"/>
+	<field name="DATE_ENV" class="java.sql.Date"/>
+	<field name="DATE_RET" class="java.sql.Date"/>
+	<field name="TOT_PREST" class="java.math.BigDecimal"/>
+	<field name="PERIODE" class="java.lang.String"/>
+	<field name="DESC_DIR" class="java.lang.String"/>
+	<field name="NOM" class="java.lang.String"/>
+	<group name="groupe">
+		<groupHeader>
+			<band height="117">
+				<rectangle>
+					<reportElement x="342" y="94" width="98" height="21" uuid="a2c16cc8-ca28-4dfc-b75f-8377b5194ee8"/>
+				</rectangle>
+				<rectangle>
+					<reportElement x="31" y="94" width="111" height="21" uuid="657210d5-2055-4ac8-9deb-28b75e73e64f"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="40" y="3" width="36" height="20" uuid="96ea3fbb-3ce4-4c05-bb5b-2ab6f47db3a6"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Objet:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="75" y="3" width="223" height="37" uuid="fb70232d-b2ab-43bc-84e3-fb55373cf7d0"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[Relance Facture pour ordonnancement Compensation IATA Mois de :]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="298" y="20" width="110" height="20" uuid="34539478-ce90-4fd5-b0f0-597dea3bd2c0"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{date}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="17" y="61" width="530" height="32" uuid="f3b00b12-7f4e-4e1c-bcb6-2b798d6a4dfd"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[                 Nous vous rappelons que les factures détaillées ci-dessous, transmises pour controle et ordonnancement, ne nous sont pas encore retournées.]]></text>
+				</staticText>
+				<rectangle>
+					<reportElement x="440" y="94" width="107" height="21" uuid="800501c4-f31b-4916-92e8-540551297ab0"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="440" y="94" width="110" height="20" uuid="c50e45c8-4608-4cc4-ad99-4befdf6281bd"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Montant de la facture]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="358" y="93" width="75" height="21" uuid="9393046f-757a-4b73-9888-479f088f372e"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[code Monnaie]]></text>
+				</staticText>
+				<rectangle>
+					<reportElement x="142" y="94" width="200" height="21" uuid="51c8f5ba-fc05-48cd-90cc-aabc60f17673"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="40" y="96" width="97" height="20" uuid="da44579f-94f3-4d87-889a-ff55ef2c2a1e"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[References factures]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="185" y="94" width="122" height="20" uuid="afcbe799-c58b-4b31-a018-40f720433601"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Libelle de la compagnie]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="460" y="4" width="87" height="20" uuid="ea0dc2d6-179c-41cc-8f5f-4d52e71f73c2"/>
+					<textElement textAlignment="Right">
+						<font isBold="true" isUnderline="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{TOT_PREST}]]></textFieldExpression>
+				</textField>
+				<rectangle>
+					<reportElement x="442" y="4" width="105" height="21" uuid="12cfd0cf-235c-4c1c-94c8-5f562bbb6b7b"/>
+				</rectangle>
+				<textField>
+					<reportElement x="40" y="4" width="100" height="20" uuid="ad057121-1520-4e22-9bbf-88c4ae04a954"/>
+					<textFieldExpression><![CDATA[$F{NUM_FCT}]]></textFieldExpression>
+				</textField>
+				<rectangle>
+					<reportElement x="342" y="4" width="100" height="21" uuid="dbc103bc-6ef5-4c28-a119-d5f67257ff6a"/>
+				</rectangle>
+				<textField>
+					<reportElement x="185" y="5" width="100" height="20" uuid="0776cc85-7cb6-4042-a644-d43c3b987270"/>
+					<textFieldExpression><![CDATA[$F{NOM}]]></textFieldExpression>
+				</textField>
+				<rectangle>
+					<reportElement x="142" y="4" width="200" height="21" uuid="a54af5f2-932a-42f2-996e-bd0893f35861"/>
+				</rectangle>
+				<textField>
+					<reportElement x="351" y="4" width="82" height="19" uuid="8df8cb52-450a-4e42-8884-95572fb7f4cd"/>
+					<textFieldExpression><![CDATA[$F{CODE_MON}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="20" y="40" width="86" height="20" uuid="8338fe10-a107-4a61-b4ae-cfb49290aba9"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Messieurs,]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="50">
+				<staticText>
+					<reportElement x="10" y="3" width="288" height="30" uuid="a161b9db-f987-4443-a1e4-914e1daf6e63"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[Nous vous remercions de votre collaboration.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="375" y="26" width="165" height="22" uuid="f82bb7f6-ee52-4d50-8f7c-6b7dfb13ec38"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[Le Chef de Département]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="71" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="555" height="66" uuid="1b365d9b-ce2f-4972-b062-4e2e2291b7ca"/>
+				<imageExpression><![CDATA["/report/Capture.PNG"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="60" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="10" width="158" height="21" uuid="cb39cdce-3cd5-438a-bdda-27a0f4849eda"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[DIRECTION FINANCIERE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="31" width="158" height="20" uuid="c2ebd35b-2d98-4c4b-adf9-02e283617904"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[REF : DFC/SDCG/ETG/NR.......]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="367" y="10" width="58" height="20" uuid="47179133-01e6-4fba-99bf-b12498db069c"/>
+				<text><![CDATA[Alger le]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="425" y="10" width="100" height="20" uuid="abe600b6-b699-4ad0-b239-8f71b1c19015"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="367" y="31" width="508" height="20" uuid="31e0a8a0-fcfb-47bd-86aa-0effd77f35f5"/>
+				<textFieldExpression><![CDATA[$F{DESC_DIR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="267" y="30" width="100" height="20" uuid="dc003794-5454-4f1c-995a-86d9f6bc2e50"/>
+				<textFieldExpression><![CDATA[$F{CODE_DIR}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="27" splitType="Stretch">
+			<rectangle>
+				<reportElement x="442" y="4" width="105" height="21" uuid="85c3c588-0e14-4653-a032-ece13910a6ac"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="142" y="4" width="200" height="21" uuid="7c987faf-6352-4baa-916e-49d46967e6d2"/>
+			</rectangle>
+			<textField isBlankWhenNull="true">
+				<reportElement x="460" y="4" width="87" height="20" uuid="7f6d78a8-6112-40a8-b344-cea990b43e8f"/>
+				<textElement textAlignment="Right">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TOT_PREST}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="31" y="4" width="111" height="21" uuid="bc178d60-2510-42c4-8335-99dc80dfeb6b"/>
+			</rectangle>
+			<textField>
+				<reportElement x="40" y="4" width="100" height="20" uuid="6fed61a0-1cb2-4040-b900-ddce671e9cb8"/>
+				<textFieldExpression><![CDATA[$F{NUM_FCT}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="342" y="4" width="100" height="21" uuid="f80d346b-75b0-44ec-a8fc-066f612e63e8"/>
+			</rectangle>
+			<textField>
+				<reportElement x="185" y="5" width="100" height="20" uuid="bec184ad-be26-49f1-9787-4eb9a243ce53"/>
+				<textFieldExpression><![CDATA[$F{NOM}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="351" y="4" width="82" height="19" uuid="3ac90baf-26ce-4b7d-928a-8318bc3e3c3a"/>
+				<textFieldExpression><![CDATA[$F{CODE_MON}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

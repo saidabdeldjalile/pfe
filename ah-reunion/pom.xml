@@ -1,0 +1,87 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>dz.airalgerie.sii.ah-erp</groupId>
+        <artifactId>ah-erp</artifactId>
+        <version>${revision}${changelist}</version>
+    </parent>
+    
+    <groupId>dz.airalgerie.sii.commun</groupId>
+    <artifactId>ah-reunion</artifactId>
+    <packaging>pom</packaging>
+    <name>ah-reunion</name>
+    <description>ah-reunion du l'ERP</description>
+    <modules>
+        <module>ah-reunion-metier</module>
+        <module>ah-reunion-web</module>
+    </modules>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>net.sf.jasperreports</groupId>
+                <artifactId>jasperreports</artifactId>
+                <version>${jasperreports.version}</version>
+                <scope>compile</scope>
+                <optional>false</optional> 
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.lowagie</groupId>
+                        <artifactId>itext</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>        
+            <dependency>
+                <groupId>net.sf.jasperreports</groupId>
+                <artifactId>jasperreports-fonts</artifactId>
+                <version>${jasperreports.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ibm.icu</groupId>
+                <artifactId>icu4j</artifactId>
+                <version>${icu4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>${hibernate-validator.version}</version>
+            </dependency>
+            
+            <dependency>
+                <groupId>org.glassfish.soteria</groupId>
+                <artifactId>jakarta.security.enterprise</artifactId>
+                <version>${jakarta.security.enterprise.version}</version>
+            </dependency>
+            
+            <dependency>
+                <groupId>com.lowagie</groupId>
+                <artifactId>itext</artifactId>
+                <version>${com.lowagie.itext.version}</version>
+                
+            </dependency>
+        </dependencies>
+        
+    </dependencyManagement>
+    
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>templating-maven-plugin</artifactId>
+                    <version>${templating-maven-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>filter-src</id>
+                            <phase>process-sources</phase>
+                            <goals>
+                                <goal>filter-sources</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+</project>

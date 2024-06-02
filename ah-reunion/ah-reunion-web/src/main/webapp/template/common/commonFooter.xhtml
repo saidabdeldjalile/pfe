@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:ct = "http://airalgerie.dz/facelets">
+
+    <div class="modal fade bs-example-modal-lg" id="changePasswordModal" widgetVar="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content b-a-0">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Préférences</h4>
+                </div>
+                <h:form>
+                    <div class="modal-body">
+                        <div class="alert alert-info shadow-box" role="alert">
+                            <span class="fa-stack fa-lg m-r-1">
+                                <i class="fa fa-circle-thin fa-stack-2x text-primary"></i>
+                                <i class="fa fa-info fa-stack-1x text-primary"></i>
+                            </span>
+                            <strong>
+                                Choisissez un mot de passe avec minimum 8 caractères, contenant au moins un(e)
+                                majuscule, minuscule, chiffre et caractère spécial.
+                            </strong>
+                        </div>
+
+
+                        <b:messages />
+                        <ct:input id="old-password-input" type="password" 
+                                  label="Ancien mot de passe" placeholder="Ancien mot de passe..."
+                                  value="#{resetPasswordBean.oldPassword}" required="true" >
+                            <f:attribute name = "autocomplete" value = "false" />
+                        </ct:input>
+                        <ct:input id="new-password-input" type="password" 
+                                  label="Nouveau mot de passe" placeholder="Nouveau mot de passe..."
+                                  value="#{resetPasswordBean.newPassword}" required="true" >
+                            <f:attribute name = "autocomplete" value = "false" />
+                        </ct:input>
+                        <ct:input id="confirm-password-input" type="password" 
+                                  label="Confirmation du mot de passe" placeholder="Confirmation du mot de passe..."
+                                  value="#{resetPasswordBean.passwordConfirm}" required="true" >
+                            <f:attribute name = "autocomplete" value = "false" />
+                        </ct:input>
+                        <b:fetchBeanInfos />
+                    </div>
+                    <div class="modal-footer">
+                        <b:button value="Annuler" look="danger" styleClass="btn-raised" dismiss="modal" onclick="return false;"/>
+                        <b:commandButton value="Enregistrer" look="success" styleClass="btn-raised" 
+                                         onclick="loading(); ajax:resetPasswordBean.updatePassword()" 
+                                         update="@form :header-user-infos"
+                                         onerror="alert('Erreur !')" 
+                                         oncomplete="if(!validationFailed) { $('#changePasswordModal').modal('hide'); }; loadingHide();"/>
+                    </div>
+                </h:form>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container-fluid" style=" position: relative; height: 100%;">
+            <div class="pull-left" style=" margin: 0;">
+                <p class="text-gray-dark">
+                    © AIR ALGERIE | 
+                    <h:outputText value="#{session.lastAccessedTime}">
+                        <f:convertDateTime pattern="yyyy" type="date" />
+                    </h:outputText>
+                    DSI | 
+                    <h:outputText value="#{msg['app.name']}" />
+
+                </p>
+            </div>
+            <div class="pull-right" style=" margin: 0;">
+                <p class="text-gray-dark">
+                    <h:outputText value="Version #{applicationBean.version} " />
+                    <span><h:outputText value=" - #{msg['app.debug.mode']}" rendered="#{msg['app.debug.mode'] eq 'Test'}" /></span>
+                </p>
+            </div>
+            <ui:insert name="buttonsFooter" >
+
+            </ui:insert>
+        </div>
+    </footer>
+</ui:composition>
+

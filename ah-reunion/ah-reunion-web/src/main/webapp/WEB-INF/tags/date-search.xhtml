@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns = "http://www.w3.org/1999/xhtml"   
+                xmlns:h = "http://java.sun.com/jsf/html"
+                xmlns:f = "http://java.sun.com/jsf/core"
+                xmlns:o="http://omnifaces.org/ui"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:composite = "http://java.sun.com/jsf/composite"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:ct = "http://airalgerie.dz/facelets"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <!-- Block -->
+    <o:tagAttribute name="type" default="simple" />
+    <o:tagAttribute name="renderLabel" default="#{true}" />
+    <o:tagAttribute name="label" default="Recherche par date" />
+    <o:tagAttribute name="updatedBlock" />
+    <!-- Date input -->
+    <o:tagAttribute name="dateValue" />
+    <o:tagAttribute name="datePlaceholder" default="Sélectionner une date valide.." />
+    <o:tagAttribute name="datePattern" default="yyyyMM" />
+    <o:tagAttribute name="dateView" default="month" />
+    <o:tagAttribute name="selectionMode" default="single" />
+    <!-- Menu input -->
+    <o:tagAttribute name="includeMenuInput" default="#{false}" />
+    <o:tagAttribute name="menuInputId" default="liste-filter" />
+    <!-- Search button -->
+    <o:tagAttribute name="includeSearchButton" default="#{false}" />
+    <o:tagAttribute name="searchButtonStyleClass" default="btn-primary btn-block" />
+    <o:tagAttribute name="searchButtonValue" default="Rechercher" />
+    <o:tagAttribute name="disabledValue" default="#{false}" />
+    <o:tagAttribute name="searchButtonIcon" default="fa-search" />
+    <o:tagAttribute name="onComplete" />
+    <!-- Export button -->
+    <o:tagAttribute name="includeExportButton" default="#{false}" />
+    <o:tagAttribute name="exportButtonId" default="export-button" />
+    <o:tagAttribute name="exportButtonRendered" default="#{false}" />
+    <o:tagAttribute name="exportButtonStyleClass" default="pull-right text-havelock-blue" />
+    <o:tagAttribute name="target" />
+    <o:tagAttribute name="exportButtonValue" default="État" />
+    <o:tagAttribute name="exportedFileName" default="État" />
+
+    <!-- Methods -->
+    <o:methodParam name="method" value="#{bean}" />
+    <o:methodParam name="method" value="#{menuInputValue}" />
+    <o:methodParam name="actionListnerParam" value="#{actionListener}" />
+    <o:methodParam name="actionParam" value="#{action}" />
+
+    <c:set var="col" value="#{12 - (includeExportButton ? 1 : 0) - (renderLabel ? 3 : 0)}" />
+
+    <div class="row m-t-1">
+        <ui:insert name="label">
+            <b:column col-sm="3" rendered="#{renderLabel}" >
+                <h3 class="m-r-2 text-center">
+                    #{label}
+                </h3>
+            </b:column>
+        </ui:insert>
+        <h:form>
+            <div class="col-sm-#{col} p-t-1">
+                <p:focus context="selectedInput"/>
+                <c:choose>
+                    <c:when test="#{type eq 'simple'}">
+                        <div class="col-sm-4 col-md-3" style="padding: 0 1px;">
+                            <ct:input id="selectedInput" type="datePicker" value="#{dateValue}"
+                                      pattern="#{datePattern}" view="#{dateView}" 
+                                      selectionMode="#{selectionMode}" readonlyInput="#{true}"
+                                      placeholder="#{datePlaceholder}" renderLabel="false" required="#{true}" 
+                                      disabled="#{disabledValue}"/>
+                        </div>
+                    </c:when>
+                </c:choose>
+
+                <c:if test="#{includeMenuInput}">
+                    <div class="col-sm-3 col-md-2" style="padding: 0 1px;">
+                        <ct:input id="date-search-#{menuInputId}" type="menu" renderLabel="false"
+                                  value="#{menuInputValue}" >
+                            <ui:insert name="menuOptions" />
+                        </ct:input>
+                    </div>
+                </c:if>
+
+                <c:if test="#{includeSearchButton}">
+                    <div class="col-sm-3 col-md-2" style="padding: 0 1px;">
+                        <ct:link id="searchBtn"
+                                 actionListener="#{actionListener}"
+                                 action="#{action}"
+                                 styleClass="#{searchButtonStyleClass}"
+                                 update="#{updatedBlock} #{includeExportButton ? exportButtonId : ''}"
+                                 onComplete="#{onComplete}"
+                                 icon="#{searchButtonIcon}"
+                                 value="#{searchButtonValue}"
+                                 disabled="#{disabledValue}"/>
+                    </div>
+                </c:if>
+
+                <ui:insert name="afterInputs" />
+            </div>
+            <c:if test="#{includeExportButton}">
+                <b:column col-xs="1" id="#{exportButtonId}">
+                    <ct:link id="#{exportButtonId}-btn"
+                             actionListener="#{actionListener}"
+                             action="#{action}"
+                             rendered="#{exportButtonRendered}"
+                             isMonitor="#{true}"
+                             styleClass="#{exportButtonStyleClass}" 
+                             isBtn="#{false}" >
+                        <p:graphicImage name="/images/excel.png" width="48" styleClass="img-responsive"/>
+                        <p:dataExporter type="xls" target="#{target}" fileName="#{exportedFileName}" />
+                        <h5 class="m-a-0 text-center text-havelock-blue"><strong>#{exportButtonValue}</strong></h5>
+                    </ct:link>
+                </b:column>
+            </c:if>
+        </h:form>
+    </div>
+
+</ui:composition>

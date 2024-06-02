@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subDisciplines" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="71cdffa8-358a-45bd-9361-62f1ea85f2ad">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="matricule" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT d.DATE_FAUTE, a.LIBELLE
+FROM CAR.DISCIPLINE d
+inner join car.ACTE a on d.SN_MES_CONS = a.CODE_ACT and a.TYPE_ACT != 'x'
+and d.MATRICULE = $P{matricule}]]>
+	</queryString>
+	<field name="DATE_FAUTE" class="java.lang.String"/>
+	<field name="LIBELLE" class="java.lang.String"/>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<textField>
+				<reportElement uuid="815a0b16-f96d-4226-a982-daa44b3eb4a6" x="0" y="0" width="67" height="20" forecolor="#333333"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{DATE_FAUTE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="77e3a5ee-b7d1-4124-ae2a-bed34b1f69e4" x="67" y="0" width="475" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{LIBELLE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<noData>
+		<band height="22">
+			<staticText>
+				<reportElement uuid="e943fc18-1869-46bb-a226-78a9c72ddfcc" x="0" y="0" width="100" height="20" forecolor="#333333"/>
+				<textElement/>
+				<text><![CDATA[Néant]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

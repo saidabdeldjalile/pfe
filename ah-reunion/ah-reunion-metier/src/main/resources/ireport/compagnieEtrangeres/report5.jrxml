@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report5" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="45ea6f71-71ca-4f76-8705-28906b42d816">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#FFBFBF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#FFE6E6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<style name="table 3">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TH" mode="Opaque" backcolor="#CCB8B8">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_CH" mode="Opaque" backcolor="#FFE6E6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#FFF8F8"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="7086b10d-8491-4496-8046-7d27ae569884">
+		<parameter name="date" class="java.lang.Integer">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="code" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT * FROM CE.FACTURE_RECUE   where DATE_RET is NULL AND CODE_DIR = $P{code} and DATE_COMP =$P{date}]]>
+		</queryString>
+		<field name="NUM_CIE" class="java.lang.String"/>
+		<field name="NUM_FCT" class="java.lang.String"/>
+		<field name="DATE_FCT" class="java.sql.Date"/>
+		<field name="SENS_OP" class="java.lang.String"/>
+		<field name="CODE_MON" class="java.lang.String"/>
+		<field name="DATE_COMP" class="java.math.BigDecimal"/>
+		<field name="NAT_PREST" class="java.lang.String"/>
+		<field name="CODE_DIR" class="java.lang.String"/>
+		<field name="DATE_CPTA" class="java.math.BigDecimal"/>
+		<field name="DATE_ENV" class="java.sql.Date"/>
+		<field name="DATE_RET" class="java.sql.Date"/>
+		<field name="TOT_PREST" class="java.math.BigDecimal"/>
+		<field name="PERIODE" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="dataset1" uuid="8f154ec7-62c6-4e7e-96e0-cdbe2cab2f70"/>
+	<subDataset name="Table Dataset 2" uuid="cf8b1bc7-95f7-44c6-96e6-5f4b8b5e4caf"/>
+	<parameter name="date" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="code" class="java.lang.String"/>
+	<parameter name="dateenv" class="java.sql.Time">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="numcie" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="logoUrl" class="java.io.InputStream"/>
+	<queryString>
+		<![CDATA[select TOP(1) CE.FACTURE_RECUE.NUM_CIE, CE.FACTURE_RECUE.NUM_FCT, CE.FACTURE_RECUE.DATE_FCT, CE.FACTURE_RECUE.SENS_OP,
+                      CE.FACTURE_RECUE.CODE_MON, CE.FACTURE_RECUE.DATE_COMP, CE.FACTURE_RECUE.NAT_PREST, CE.FACTURE_RECUE.CODE_DIR,
+                      CE.FACTURE_RECUE.DATE_CPTA, CE.FACTURE_RECUE.DATE_ENV, CE.FACTURE_RECUE.DATE_RET, CE.FACTURE_RECUE.TOT_PREST,
+                       CE.FACTURE_RECUE.PERIODE, COM.DIRECTION.DESC_DIR, CE.COMPAGNIE.NOM
+FROM         CE.FACTURE_RECUE INNER JOIN
+                      COM.DIRECTION ON CE.FACTURE_RECUE.CODE_DIR = COM.DIRECTION.CODE_DIR INNER JOIN
+                      CE.COMPAGNIE ON CE.FACTURE_RECUE.NUM_CIE = CE.COMPAGNIE.NUM_CIE
+  where  CE.FACTURE_RECUE.DATE_RET is NULL AND CE.FACTURE_RECUE. CODE_DIR = $P{code} and  CE.FACTURE_RECUE.DATE_COMP =$P{date}]]>
+	</queryString>
+	<field name="NUM_CIE" class="java.lang.String"/>
+	<field name="NUM_FCT" class="java.lang.String"/>
+	<field name="DATE_FCT" class="java.sql.Date"/>
+	<field name="SENS_OP" class="java.lang.String"/>
+	<field name="CODE_MON" class="java.lang.String"/>
+	<field name="DATE_COMP" class="java.math.BigDecimal"/>
+	<field name="NAT_PREST" class="java.lang.String"/>
+	<field name="CODE_DIR" class="java.lang.String"/>
+	<field name="DATE_CPTA" class="java.math.BigDecimal"/>
+	<field name="DATE_ENV" class="java.sql.Date"/>
+	<field name="DATE_RET" class="java.sql.Date"/>
+	<field name="TOT_PREST" class="java.math.BigDecimal"/>
+	<field name="PERIODE" class="java.lang.String"/>
+	<field name="DESC_DIR" class="java.lang.String"/>
+	<field name="NOM" class="java.lang.String"/>
+	<group name="groupe1">
+		<groupExpression><![CDATA[$F{CODE_DIR}]]></groupExpression>
+		<groupHeader>
+			<band height="101">
+				<elementGroup>
+					<rectangle>
+						<reportElement x="430" y="79" width="107" height="21" uuid="92cbacc0-f21b-4904-a6ff-0a37e64a4ac8"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="430" y="79" width="110" height="20" uuid="f4b46692-3f8b-452c-a1ba-a79d252e1969"/>
+						<textElement>
+							<font isBold="true"/>
+						</textElement>
+						<text><![CDATA[Montant de la facture]]></text>
+					</staticText>
+				</elementGroup>
+				<elementGroup>
+					<rectangle>
+						<reportElement x="332" y="79" width="98" height="21" uuid="ced390f7-40fd-4ade-a888-33ae74146f2a"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="348" y="78" width="75" height="21" uuid="3f2b8f31-982f-4587-bc5d-06fc558b7974"/>
+						<textElement>
+							<font isBold="true"/>
+						</textElement>
+						<text><![CDATA[code Monnaie]]></text>
+					</staticText>
+				</elementGroup>
+				<elementGroup>
+					<rectangle>
+						<reportElement x="132" y="79" width="200" height="21" uuid="a5e2bd4b-68ad-4bac-a6b5-30b28fb654bc"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="175" y="79" width="122" height="20" uuid="8414ee25-6504-4b1b-abf7-1368af42711a"/>
+						<textElement>
+							<font isBold="true"/>
+						</textElement>
+						<text><![CDATA[Libelle de la compagnie]]></text>
+					</staticText>
+				</elementGroup>
+				<staticText>
+					<reportElement x="30" y="0" width="36" height="20" uuid="b61d5e2f-5653-4a1e-85e0-dd08a204dbc3"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Objet:]]></text>
+				</staticText>
+				<elementGroup>
+					<rectangle>
+						<reportElement x="21" y="79" width="111" height="21" uuid="35efa2ef-88ce-4fb4-bbc0-73c409034135"/>
+					</rectangle>
+					<staticText>
+						<reportElement x="30" y="81" width="97" height="20" uuid="fa056c3b-7f9d-46e6-8152-fca6f39aab0d"/>
+						<textElement>
+							<font isBold="true"/>
+						</textElement>
+						<text><![CDATA[References factures]]></text>
+					</staticText>
+				</elementGroup>
+				<staticText>
+					<reportElement x="21" y="32" width="530" height="32" uuid="a10d3d37-6c98-4f11-aee9-1fa4639ea1d9"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[                 Nous vous rappelons que les factures détaillées ci-dessous, transmises pour controle et ordonnancement,  nous ne sont pas encore retournées.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="73" y="0" width="292" height="21" uuid="aae0c5a4-c37c-43bc-b383-da584e0f3be2"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[Facturation Cie-Etg Recue Compensation IATA Mois ]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="365" y="1" width="110" height="20" uuid="a0eac248-30a7-4637-b12d-5e7c8edfc40e"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{date}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="159">
+				<staticText>
+					<reportElement x="375" y="87" width="165" height="22" uuid="705023cf-abf6-4a1e-9557-9825dea95fbc"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[Le Chef de Département]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="57" width="288" height="30" uuid="a69cce0f-611b-4681-aebb-e4b47794e5fc"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[Nous vous remercions de votre collaboration.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="5" width="551" height="52" uuid="5e1d6acc-06c0-4dec-afa8-09d016d678f5"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[Compte tenu des dispositions IATA en matiére de délai de rejets, nous vous demandons de bien vouloir prendre les dispositions utiles en vue d'un traitement rapide ou nous faire part de vos observations eventuelles.]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="555" height="79" uuid="ca0fda54-edaf-403f-b5e0-ab66fc91e95f"/>
+				<imageExpression><![CDATA[$P{logoUrl}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="48" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="28" width="158" height="20" uuid="01c658c6-5d87-4a1f-a757-14a247d705da"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[REF : DFC/SDCG/TIERS N° …… ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="7" width="158" height="21" uuid="8898d5db-f521-4d35-9e4c-5d8e16541d0b"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[DIRECTION FINANCIERE]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="430" y="8" width="100" height="20" uuid="36ef6b4e-f455-4c77-ae69-14520ecb433d"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="365" y="8" width="58" height="20" uuid="599fc173-afe6-4659-b6df-fd098876cb7f"/>
+				<text><![CDATA[Alger le]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="365" y="28" width="500" height="20" uuid="ddcf52b4-912d-43ce-b659-044aa37aa952"/>
+				<textFieldExpression><![CDATA[$F{DESC_DIR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="310" y="28" width="55" height="20" uuid="5a131031-1109-4953-8acc-ccdf87bc6116"/>
+				<textFieldExpression><![CDATA[$F{CODE_DIR}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<rectangle>
+				<reportElement x="132" y="1" width="200" height="21" uuid="d0c6799a-ac18-4224-b5af-6a35f8348564"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="21" y="1" width="111" height="21" uuid="33deb9d1-5e75-4328-8460-b75ce72378ba"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="432" y="1" width="105" height="21" uuid="1861e2bf-7be8-45f3-9e0d-4d671da1974d"/>
+			</rectangle>
+			<elementGroup/>
+			<textField>
+				<reportElement x="30" y="1" width="100" height="20" uuid="b9d1fe38-9096-40e8-96b3-2e68c4b24f91"/>
+				<textFieldExpression><![CDATA[$F{NUM_FCT}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="450" y="1" width="87" height="20" uuid="979994e9-c9a8-4b4f-a88d-c8c6513229cf"/>
+				<textElement textAlignment="Right">
+					<font isBold="true" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TOT_PREST}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="332" y="1" width="100" height="21" uuid="71fcb7f9-1451-4a63-bfc5-208164a3e4eb"/>
+			</rectangle>
+			<textField>
+				<reportElement x="341" y="1" width="82" height="19" uuid="9bcbefbc-356f-45e5-93c0-78e3053c02a6"/>
+				<textFieldExpression><![CDATA[$F{CODE_MON}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="175" y="2" width="100" height="20" uuid="15a4b0d5-5b02-4e7b-93bb-77c7937e4ee6"/>
+				<textFieldExpression><![CDATA[$F{NOM}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

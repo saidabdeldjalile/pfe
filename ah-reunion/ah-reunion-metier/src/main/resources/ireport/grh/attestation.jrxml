@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.5.final using JasperReports Library version 6.20.5-3efcf2e67f959db3888d79f73dde2dbd7acb4f8e  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="attestation" pageWidth="595" pageHeight="842" whenNoDataType="NoPages" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6efbfdd4-d9e6-4915-b254-a68b5abee74a">
+	<property name="ireport.zoom" value="1.1000000000000005"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.report.description" value=""/>
+	<parameter name="matricule" class="java.lang.Integer"/>
+	<parameter name="logo" class="java.io.InputStream"/>
+	<parameter name="text" class="java.lang.String"/>
+	<parameter name="wilaya" class="java.lang.String"/>
+	<parameter name="gender" class="java.lang.String"/>
+	<parameter name="dateNaissance" class="java.util.Date"/>
+	<parameter name="nom" class="java.lang.String"/>
+	<parameter name="lieuNaissance" class="java.lang.String"/>
+	<parameter name="textAddit" class="java.lang.String"/>
+	<parameter name="textAddit2" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select SUBSTRING(p.DIR_LIBELLE  , 1, CHARINDEX(' ', p.DIR_LIBELLE) -1) direction from CAR.V_PERSONNEL p where p.MATRICULE=$P{matricule}]]>
+	</queryString>
+	<field name="direction" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="137" splitType="Stretch">
+			<staticText>
+				<reportElement x="48" y="56" width="86" height="20" uuid="7232a096-b2d4-4f71-9261-4ad60d0944df">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="SansSerif" size="13" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[° ..................]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="56" width="39" height="20" uuid="d0d78e5c-fd32-40f9-bf58-e7bee5ce78d7">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="SansSerif" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Réf. N]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="178" y="56" width="10" height="20" backcolor="#CCFF00" uuid="ca810fc7-5bce-40cc-ba72-ff00e28ff90e">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="SansSerif" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<textField pattern="yyyy">
+				<reportElement x="190" y="56" width="134" height="20" uuid="854a635d-17c8-431c-b321-d6db19efdf36">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="SansSerif" size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="124" y="56" width="10" height="20" backcolor="#CCFF00" uuid="758d7f04-79d6-45ed-9aa7-c24f2579b654">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="SansSerif" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<line>
+				<reportElement x="-63" y="6" width="676" height="1" forecolor="#CC0000" uuid="670993f1-491d-483e-b125-8c4007e44c59"/>
+				<graphicElement>
+					<pen lineWidth="7.0" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+			<image>
+				<reportElement x="377" y="16" width="170" height="37" uuid="dbd9b6a2-65dc-4af0-96b1-29bdeb77aeba"/>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="131" y="56" width="47" height="20" uuid="afad6a76-8db9-4a0f-8bfc-eb9e95b093b0">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{direction}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="36" splitType="Stretch">
+			<staticText>
+				<reportElement x="1" y="7" width="554" height="22" uuid="7d1c3894-114a-45cb-afb9-1f0360f6197a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[ATTESTATION DE TRAVAIL]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="11" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="432" splitType="Stretch">
+			<textField textAdjust="StretchHeight">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="1" y="65" width="553" height="44" uuid="424990c3-1a7f-4cb4-b1c7-d7bee3248248"/>
+				<textElement textAlignment="Left" markup="html">
+					<font size="13" isBold="false"/>
+					<paragraph lineSpacing="1_1_2" leftIndent="20" rightIndent="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{text}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement stretchType="RelativeToTallestObject" x="1" y="185" width="553" height="95" uuid="38ca71df-efc7-4d64-80a6-6d459bad84fe"/>
+				<textElement textAlignment="Left" markup="html">
+					<font size="13" isBold="false"/>
+					<paragraph lineSpacing="Double" leftIndent="20" rightIndent="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{textAddit}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="1" y="123" width="87" height="20" uuid="22b7b352-d703-43ac-8356-98e4e0ed922b">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13"/>
+					<paragraph leftIndent="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{gender} == "F" ? "Madame :" : "Monsieur :"]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement key="" x="90" y="123" width="179" height="20" uuid="1ba0ada7-d483-4828-b1a1-a41c6711c498">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nom}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="390" y="123" width="70" height="20" uuid="3d5faa40-d804-441f-befc-1d3a1a19687b">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13"/>
+				</textElement>
+				<text><![CDATA[Matricule :]]></text>
+			</staticText>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="460" y="123" width="94" height="20" uuid="e9b66ec9-933c-4cc2-bf33-70d34b8839a5">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+					<paragraph rightIndent="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{matricule}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="1" y="155" width="58" height="20" uuid="fe463e28-84d2-4172-bafd-bfa2d35afd11">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13"/>
+					<paragraph leftIndent="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{gender} == "F" ? "Née :" : "Né :"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="390" y="155" width="20" height="20" uuid="8bb72c02-7a6d-4046-88dd-327438211398">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13"/>
+				</textElement>
+				<text><![CDATA[à :]]></text>
+			</staticText>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="410" y="155" width="142" height="20" uuid="37348fd4-bedf-4311-8b18-afbea97dbb19">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{lieuNaissance}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="60" y="155" width="130" height="20" uuid="cd705f0e-442e-4a78-8b67-44dfe5e3e025">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[DATEFORMAT($P{dateNaissance},"dd-MM-yyyy")]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement positionType="FixRelativeToBottom" x="340" y="333" width="215" height="20" uuid="b7f17beb-3c04-4c8e-861b-cf67e12f340a">
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="13"/>
+					<paragraph rightIndent="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{wilaya}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement stretchType="RelativeToTallestObject" x="1" y="330" width="553" height="19" uuid="750fe826-9434-4470-9363-450e9b86b91d">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" markup="html">
+					<font size="13" isBold="false"/>
+					<paragraph lineSpacing="Double" leftIndent="20" rightIndent="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{textAddit2}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="83" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="15" width="256" height="14" uuid="9f3219ca-b51a-4df6-a314-db7758a1e8a6"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[Siège Social :  1,PLACE MAURICE AUDIN ALGER 16000]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="210" y="65" width="167" height="14" backcolor="#3333FF" uuid="8d83429f-80ca-4b7e-b583-9a27ff2b3371"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[EPE/SPA au capital de : 60 000 000 000]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="211" y="55" width="114" height="14" uuid="f8e2b1ab-8f8f-46c3-b509-bdbcf74ec383"/>
+				<textElement textAlignment="Center">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[E-mail: contact@airalgerie.dz]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="422" y="14" width="87" height="14" uuid="ae555499-4676-4658-8cf8-1d6224541aea"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[Tél. : +213 (23) 50 41 36]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="28" width="164" height="14" uuid="f29d6f0f-098c-46e5-9085-7a76bfb2159b"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[R.C ALGER:  00B 0091 100]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="501" y="14" width="53" height="14" uuid="a401d426-a412-4dfe-9fd8-d36c76017a3b"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[:Télex. : 53 459]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="491" y="27" width="56" height="14" uuid="14ac886c-670a-497d-a290-4b4662ee5871"/>
+				<textElement textAlignment="Left">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[Sita : ALG DZ AH]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="229" y="45" width="100" height="20" uuid="004e8d0f-7f08-40ad-9acd-5aea9de22bec"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[http://www.airalgerie.dz]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="5" splitType="Stretch"/>
+	</summary>
+</jasperReport>

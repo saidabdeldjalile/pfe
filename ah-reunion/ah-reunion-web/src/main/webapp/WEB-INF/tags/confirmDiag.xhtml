@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:o="http://omnifaces.org/ui"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:b="http://bootsfaces.net/ui"
+    xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <o:tagAttribute name="message" default="Êtes-vous sûr de vouloir supprimer cette donnée ?" />
+    <o:tagAttribute name="name" />
+    <o:tagAttribute name="styleClass" />
+    <o:tagAttribute name="update" />
+    <o:tagAttribute name="onCompleteAction" />
+    
+    <o:tagAttribute name="actionListener" />
+
+
+    <b:form>
+        <b:modal title="Confirmation" styleClass="#{name} #{styleClass}"
+                 closable="false" close-on-escape="false" backdrop="false">
+            <p>#{message} <strong>Cette opération n'est pas réversible.</strong></p>
+            <f:facet name="footer">
+                <b:button value="Annuler" look="danger" styleClass="btn-raised" dismiss="modal" onclick="return false;"/>
+                <b:commandButton value="Valider" look="success" styleClass="btn-raised" 
+                                 onclick="loading(); ajax:#{actionListener};" 
+                                 process="@form" update="#{update}" 
+                                 onerror="alert('Erreur !')" 
+                                 onsuccess="$('.#{name}').modal('hide'); #{onCompleteAction} loadingHide();"/>
+            </f:facet>
+        </b:modal>
+    </b:form>
+</ui:composition>

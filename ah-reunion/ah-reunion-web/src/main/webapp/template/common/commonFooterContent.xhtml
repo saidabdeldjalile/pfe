@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <div class="pull-left" style=" margin: 0;">
+        <p class="text-gray-dark">
+            © AIR ALGERIE | 
+            <h:outputText value="#{session.lastAccessedTime}">
+                <f:convertDateTime pattern="yyyy" type="date" />
+            </h:outputText>
+            DSI | 
+            <h:outputText value="#{msg['app.name']}" />
+
+        </p>
+    </div>
+    <div class="pull-right" style=" margin: 0;">
+        <p class="text-gray-dark">
+            <h:outputText value="Version #{applicationBean.version} " />
+            <span><h:outputText value=" - #{msg['app.debug.mode']}" rendered="#{msg['app.debug.mode'] eq 'Test'}" /></span>
+        </p>
+    </div>
+
+</ui:composition>

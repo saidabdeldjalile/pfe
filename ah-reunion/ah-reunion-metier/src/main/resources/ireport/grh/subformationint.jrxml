@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subformationint" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="354c8d0c-bc4b-4ef5-be19-4522f21ec6d3">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="matricule" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[select UPPER(t.LIBELLE) as theme,d.LIBELLE as dip,fi.ORGANISME as org,fi.DATE_DEB as dd,fi.DATE_FIN as df
+from GRH.FRM.FORMATION_INT fi
+left join GRH.FRM.THEME t on t.CODE_THM=fi.CODE_THM
+left join GRH.FRM.DIPLOME d on d.CODE_DIP=fi.CODE_DIP where
+ fi.MATRICULE=$P{matricule} order by fi.DATE_DEB desc]]>
+	</queryString>
+	<field name="theme" class="java.lang.String"/>
+	<field name="dip" class="java.lang.String"/>
+	<field name="org" class="java.lang.String"/>
+	<field name="dd" class="java.lang.String"/>
+	<field name="df" class="java.lang.String"/>
+	<title>
+		<band height="3" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="3" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="1" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="38" splitType="Stretch">
+			<textField>
+				<reportElement x="136" y="13" width="183" height="20" uuid="6d0761ed-366d-4440-9fa0-1a06be3b556c"/>
+				<textFieldExpression><![CDATA[$F{theme}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="331" y="13" width="154" height="20" uuid="de395cd8-72ed-4a6d-8d7c-cc7ff9daa9f0"/>
+				<textFieldExpression><![CDATA[$F{dip}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="485" y="13" width="63" height="20" uuid="41b335aa-0c89-4038-a72d-3560d5d0466f"/>
+				<textFieldExpression><![CDATA[$F{org}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="0" y="13" width="64" height="20" uuid="a415d970-cc88-4a34-a60a-6c419a0ba46f"/>
+				<textFieldExpression><![CDATA[$F{dd}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="71" y="13" width="65" height="20" uuid="f18f8e58-bb32-4516-bb5b-a851870318cf"/>
+				<textFieldExpression><![CDATA[$F{df}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="64" y="14" width="10" height="20" uuid="f598123e-48f7-4cb0-bd2c-2ee4b4152d3f"/>
+				<text><![CDATA[-]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<noData>
+		<band height="39">
+			<staticText>
+				<reportElement x="2" y="17" width="49" height="20" uuid="5d4d0320-fdf6-48b0-8411-65bb4250e745"/>
+				<textElement>
+					<font fontName="SansSerif" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Néant]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

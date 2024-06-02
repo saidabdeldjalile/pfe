@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subRubMensuel" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e079ba1d-d3db-43db-887b-eae0257a5f5b">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="matricule" class="java.lang.Integer"/>
+	<parameter name="datetrt" class="java.lang.Integer"/>
+	<parameter name="datepai" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[select r.CODE_RUB, LIBE_RUB, SENS, TYP_ENRG, VAL_UNITE, VAL_BASE, VAL_MONTANT
+from paie.RUB_MENSUEL r left join paie.RUBRIQUE ru on r.CODE_RUB = ru.CODE_RUB
+where MATRICULE = $P{matricule}
+and DATE_TRT = $P{datetrt}
+and DATE_PAI = $P{datepai}]]>
+	</queryString>
+	<field name="CODE_RUB" class="java.lang.String"/>
+	<field name="LIBE_RUB" class="java.lang.String"/>
+	<field name="SENS" class="java.lang.String"/>
+	<field name="TYP_ENRG" class="java.math.BigDecimal"/>
+	<field name="VAL_UNITE" class="java.math.BigDecimal"/>
+	<field name="VAL_BASE" class="java.math.BigDecimal"/>
+	<field name="VAL_MONTANT" class="java.math.BigDecimal"/>
+	<columnHeader>
+		<band height="21">
+			<staticText>
+				<reportElement uuid="4253456a-db18-4977-a6ce-6fbb4d4040a5" x="0" y="0" width="71" height="20"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.25"/>
+					<topPen lineWidth="1.25"/>
+					<leftPen lineWidth="1.25"/>
+					<bottomPen lineWidth="1.25"/>
+					<rightPen lineWidth="1.25"/>
+				</box>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Code Rubrique]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="042f09fb-0577-49a5-8f76-c70caf3ee1c1" x="71" y="0" width="155" height="20"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.25"/>
+					<topPen lineWidth="1.25"/>
+					<leftPen lineWidth="1.25"/>
+					<bottomPen lineWidth="1.25"/>
+					<rightPen lineWidth="1.25"/>
+				</box>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Libellé]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ade95a07-4cc5-4197-bc9d-2fac34aac287" x="226" y="0" width="53" height="20"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.25"/>
+					<topPen lineWidth="1.25"/>
+					<leftPen lineWidth="1.25"/>
+					<bottomPen lineWidth="1.25"/>
+					<rightPen lineWidth="1.25"/>
+				</box>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sens]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f5adeb3c-1c0a-4918-afd4-bbca8277f23a" x="279" y="0" width="75" height="20"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.25"/>
+					<topPen lineWidth="1.25"/>
+					<leftPen lineWidth="1.25"/>
+					<bottomPen lineWidth="1.25"/>
+					<rightPen lineWidth="1.25"/>
+				</box>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Enregistrement]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="35b1d73b-7c04-4132-b551-09fe8ec0e6f4" x="354" y="0" width="73" height="20"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.25"/>
+					<topPen lineWidth="1.25"/>
+					<leftPen lineWidth="1.25"/>
+					<bottomPen lineWidth="1.25"/>
+					<rightPen lineWidth="1.25"/>
+				</box>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Val Unité]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ede42932-25ca-4ff1-996e-814432697520" x="427" y="0" width="55" height="20"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.25"/>
+					<topPen lineWidth="1.25"/>
+					<leftPen lineWidth="1.25"/>
+					<bottomPen lineWidth="1.25"/>
+					<rightPen lineWidth="1.25"/>
+				</box>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Val Base]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3c9a88f5-100b-4498-afec-749b29666069" x="482" y="0" width="73" height="20"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.25"/>
+					<topPen lineWidth="1.25"/>
+					<leftPen lineWidth="1.25"/>
+					<bottomPen lineWidth="1.25"/>
+					<rightPen lineWidth="1.25"/>
+				</box>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Val Montant]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement uuid="040fc7be-0465-4056-b170-10d4e661bca4" x="0" y="0" width="71" height="20"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{CODE_RUB}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="fc10d1ac-7811-40e7-be61-d098f9f3dc53" x="71" y="0" width="155" height="20"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{LIBE_RUB}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0686a642-cb87-40e5-a376-22b9d145ecd3" x="226" y="0" width="53" height="20"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{SENS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b6112865-f5a0-4acd-9425-359cf6c69ead" x="279" y="0" width="75" height="20"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{TYP_ENRG}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="94efd2fc-595e-49fc-8773-923f9e96a4a1" x="354" y="0" width="73" height="20"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{VAL_UNITE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="02511dc4-8e3d-4625-9dd7-9c9de2359f00" x="427" y="0" width="55" height="20"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{VAL_BASE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="2191c0ea-c0a4-40be-af85-e7c0e7cec94b" x="482" y="0" width="73" height="20"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{VAL_MONTANT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

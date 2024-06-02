@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subAntecedents" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="80aae58b-67c0-4996-b76f-6114c2eb8a25">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="matricule" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[select an.DATE_DEB, an.DATE_FIN, p.libelle as LIBEPOSTE, an.ORGANISME
+from car.ANTECEDENT an
+left join car.POSTE_TRAVAIL p on an.CODE_PSTR = p.CODE_PSTR
+where an.MATRICULE = $P{matricule}]]>
+	</queryString>
+	<field name="DATE_DEB" class="java.util.Date"/>
+	<field name="DATE_FIN" class="java.util.Date"/>
+	<field name="LIBEPOSTE" class="java.lang.String"/>
+	<field name="ORGANISME" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="0" y="0" width="65" height="20" forecolor="#333333" uuid="76bb37c5-697b-4292-8903-7df72c28f12d"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DATE_DEB}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="65" y="0" width="6" height="20" uuid="6495bd49-1eb7-4619-9b39-f3d5fc5588bb"/>
+				<textElement textAlignment="Justified">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement mode="Transparent" x="72" y="0" width="76" height="20" forecolor="#333333" backcolor="#FFFFFF" uuid="fe5f5544-57e5-4565-9fc5-01a9f1d5e219"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DATE_FIN}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="148" y="0" width="214" height="20" uuid="2b566412-c638-4dee-af61-d69c954514de"/>
+				<textFieldExpression><![CDATA[$F{LIBEPOSTE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="362" y="0" width="193" height="20" uuid="5467a872-1e2e-4d82-bbaf-a2150b1c6d02"/>
+				<textFieldExpression><![CDATA[$F{ORGANISME}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<noData>
+		<band height="22">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" forecolor="#333333" uuid="a5e4ab4d-d4bc-4b30-914f-39cfe764dead"/>
+				<text><![CDATA[Néant]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

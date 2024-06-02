@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subDiplomes" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7dfa2122-469f-4662-87c3-7b0aad8980d6">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="matricule" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT ISNULL( t.LIBELLE, '')  +' '+ ISNULL( d.LIBELLE, '') +' '+ ISNULL( e.LIBELLE, '') as niveau
+			  FROM FRM.FORMATION f  left join frm.TYPE_FORMATION t on f.TYPE_FRM = t.TYPE_FRM
+			  left join frm.DIPLOME d on f.CODE_DIP = d.CODE_DIP
+			  left join frm.ETUDE e on f.CODE_ETU = e.CODE_ETU
+			  where f.MATRICULE = $P{matricule}
+			  order by f.DATE_FIN desc]]>
+	</queryString>
+	<field name="niveau" class="java.lang.String"/>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="81f75190-ddb9-405a-bb2e-90962aace510" x="0" y="0" width="555" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{niveau}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<noData>
+		<band height="20">
+			<staticText>
+				<reportElement uuid="03446d92-1039-4ad2-bf15-74ba1182369b" x="0" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Néant]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

@@ -1,0 +1,5 @@
+MAINFILE=Changes.mdown
+
+_update_version() {
+        return 1;
+}

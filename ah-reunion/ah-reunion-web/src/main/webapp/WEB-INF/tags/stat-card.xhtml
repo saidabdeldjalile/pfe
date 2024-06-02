@@ -1,0 +1,154 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:o="http://omnifaces.org/ui"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:b="http://bootsfaces.net/ui"
+    xmlns:f="http://java.sun.com/jsf/core">
+
+    <o:tagAttribute name="type" default="" />
+    <o:tagAttribute name="title" />
+    <o:tagAttribute name="data" />
+    <o:tagAttribute name="subData" />
+    <o:tagAttribute name="inputType" />
+    <o:tagAttribute name="styleClass" />
+    <o:tagAttribute name="containerStyleClass" default="col-sm-6 m-b-1" />
+    <o:tagAttribute name="icon" />
+    <o:tagAttribute name="iconType" default="" />
+    <o:tagAttribute name="bgColor" default="bg-white" />
+    <o:tagAttribute name="bordersBgColor" default="bg-white" />
+
+    <div class="#{containerStyleClass}">
+
+        <c:choose>
+            <c:when test="#{type eq 'style-1'}">
+                <div class="#{bgColor} shadow-box border-radius-10 d-flex height-100-p overflow-hidden p-y-1 widget-card pos-rel #{styleClass}">
+                    <div class="#{bordersBgColor} border-radius-100 mb-n5 mr-n5 opacity-15 position-br" style="width: 6.25rem;height: 6.25rem;"></div>
+                    <div class="#{bordersBgColor} border-radius-100 mb-n5 mr-n5 opacity-20 position-br" style="width: 5.75rem;height: 5.75rem;"></div>
+                    <div class="#{bordersBgColor} border-radius-100 mb-n5 mr-n5 opacity-20 position-br" style="width: 5.25rem;height: 5.25rem;"></div>
+                    <div class="flex-grow-1 pl-25 pos-rel d-flex flex-column">
+                        <div class="text-secondary-d4">
+                            <span class="text-200">
+                                <h:outputText value="#{data}" />
+                            </span>
+                        </div>
+
+                        <div class="letter-spacing mt-auto mt-n1 text-105 text-nowrap text-secondary-d2">
+                            <h:outputText value="#{title}" />
+                        </div>
+                    </div>
+                    <div class="align-self-center ml-auto pos-rel pr-1 text-125">
+                        <c:choose>
+                            <c:when test="#{iconType eq 'bf'}">
+                                <b:iconAwesome value="#{icon}" styleClass="mr-25 opacity-91" style="font-size: 40px;" solid="true"/>
+                            </c:when>
+                            <c:otherwise>
+                                <i class="#{icon} mr-25 opacity-91" style="font-size: 40px;"></i>
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
+                </div>
+            </c:when>
+            <c:when test="#{type eq 'style-2'}">
+                <div class="#{bgColor} shadow-box border-radius-10 d-flex height-100-p overflow-hidden p-y-1 widget-card pos-rel #{styleClass}">
+                    <div class="#{bordersBgColor} border-radius-100 mb-n5 mr-n5 opacity-15 position-br" style="width: 6.25rem;height: 6.25rem;"></div>
+                    <div class="#{bordersBgColor} border-radius-100 mb-n5 mr-n5 opacity-20 position-br" style="width: 5.75rem;height: 5.75rem;"></div>
+                    <div class="#{bordersBgColor} border-radius-100 mb-n5 mr-n5 opacity-20 position-br" style="width: 5.25rem;height: 5.25rem;"></div>
+                    <div class="flex-grow-1 pl-25 pos-rel d-flex flex-column">
+                        <div class="text-secondary-d4">
+                            <span class="text-200">
+                                <h:outputText value="#{data}" >
+                                    <f:convertNumber type="number" maxFractionDigits="2" minFractionDigits="2"/>
+                                </h:outputText>
+                            </span>
+                            <span class="text-125 m-l-2">
+                                <h:outputText value="#{currency}" />
+                            </span>
+                        </div>
+
+                        <div>
+                            <span class="letter-spacing mt-auto mt-n1 text-125 text-nowrap text-secondary-d4 pull-left">
+                                <strong><h:outputText value="#{title}" /></strong>
+                            </span>
+                            <span class="letter-spacing mt-auto mt-n1 text-125 text-nowrap text-secondary-d4 pull-right m-r-1">
+                                <strong><h:outputText value="#{subData}" /></strong>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="align-self-center ml-auto pos-rel pr-1 text-125">
+                        <c:choose>
+                            <c:when test="#{iconType eq 'bf'}">
+                                <b:iconAwesome value="#{icon}" styleClass="mr-25 opacity-91" style="font-size: 40px;" solid="true"/>
+                            </c:when>
+                            <c:otherwise>
+                                <i class="#{icon} mr-25 opacity-91" style="font-size: 40px;"></i>
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
+                </div>
+            </c:when>
+            <c:when test="#{type eq 'style-3'}">
+                <div class="#{bgColor} shadow-box border-radius-10 d-flex height-100-p overflow-hidden p-y-1 widget-card pos-rel #{styleClass}">
+                    <div class="#{bordersBgColor} border-radius-100 mb-n5 mr-n5 opacity-15 position-br" style="width: 6.25rem;height: 6.25rem;"></div>
+                    <div class="#{bordersBgColor} border-radius-100 mb-n5 mr-n5 opacity-20 position-br" style="width: 5.75rem;height: 5.75rem;"></div>
+                    <div class="#{bordersBgColor} border-radius-100 mb-n5 mr-n5 opacity-20 position-br" style="width: 5.25rem;height: 5.25rem;"></div>
+                    <div class="flex-grow-1 pl-25 pos-rel d-flex flex-column">
+                        <div class="text-secondary-d4">
+                            <span class="text-200">
+                                <h:outputText value="#{data}" />
+                            </span>
+                            <span class="text-125 m-l-2">
+                                <h:outputText value="#{currency}" />
+                            </span>
+                        </div>
+
+                        <div>
+                            <span class="letter-spacing mt-auto mt-n1 text-125 text-nowrap text-secondary-d4 pull-left">
+                                <strong><h:outputText value="#{title}" /></strong>
+                            </span>
+                            <span class="letter-spacing mt-auto mt-n1 text-125 text-nowrap text-secondary-d4 pull-right m-r-1">
+                                <strong><h:outputText value="#{subData}" /></strong>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="align-self-center ml-auto pos-rel pr-1 text-125">
+                        <c:choose>
+                            <c:when test="#{iconType eq 'bf'}">
+                                <b:iconAwesome value="#{icon}" styleClass="mr-25 opacity-91" style="font-size: 40px;" solid="true"/>
+                            </c:when>
+                            <c:otherwise>
+                                <i class="#{icon} mr-25 opacity-91" style="font-size: 40px;"></i>
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
+                </div>
+            </c:when>
+            <c:otherwise>
+                <div class="#{bgColor} shadow-box border-radius-10 height-100-p widget-card #{styleClass}">
+                    <div class="d-flex flex-wrap align-items-center">
+                        <div class="widget-data">
+                            <div class="font-20 text-bold">#{title}</div>
+                            <div class="font-30 text-bold">#{data}</div>
+                        </div>
+                        <div class="widget-icon">
+                            <div class="icon">
+                                <c:choose>
+                                    <c:when test="#{iconType eq 'bf'}">
+                                        <b:iconAwesome value="#{icon}" solid="true"/>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <i class="#{icon}" aria-hidden="true"></i>
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </c:otherwise>
+        </c:choose>
+    </div>
+</ui:composition>

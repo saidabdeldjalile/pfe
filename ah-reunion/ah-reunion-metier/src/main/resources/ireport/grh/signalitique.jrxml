@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="signalitique" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="65eba410-d6f2-46ab-bc47-957a0ffe3b6d">
+	<property name="ireport.zoom" value="1.1000000000000005"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="240"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\Administrateur\\Documents\\NetBeansProjects\\GRH\\src\\java\\ireport\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="matricule" class="java.lang.Integer"/>
+	<parameter name="logo" class="java.io.InputStream"/>
+	<parameter name="photo" class="java.lang.Object"/>
+	<queryString>
+		<![CDATA[select top 1 s.MATRICULE
+, s.nom noms, s.prenoms, s.njfille
+, s.NOM + '   ' + case when s.NJFILLE IS not null and s.NJFILLE != '' then 'Née   ' + s.NJFILLE + '   ' else '' end + s.PRENOMS as NOM
+, convert(varchar, s.DATE_NAIS, 105) as DATE_NAIS,case when (cnt.ADRESSE is null or cnt.ADRESSE ='') then  s.ADRESSE_ALG else cnt.ADRESSE end as ADRESSE, 'à '+g.LIBELLE as LIEUNAISS,
+ c.LIBELLE SITUA
+,CAR.GETNBREENFANT($P{matricule}) as NBRE_ENFANT
+ ,CAR.GETLIENPARENTE($P{matricule}) as FILSDE,pers.DATE_ENTREE  as DATE_ENTREE, case when ca.CODE_ACT='013' then p.LIBELLE +' PAR INTÉRIM'   else p.LIBELLE   end  as FONCTION
+ , CAR.GETNIVEAUETUDE($P{matricule}) as ETUDE
+ , gg.LIBELLE as grp_libelle
+ , pers.date_sortie
+, ca.DATE_SORTIE as ds
+from car.SIGNALITIQUE s
+ left join car.v_personnel pers on pers.matricule = s.matricule
+ left join CAR.SIT_FAMILIALE si on si.MATRICULE = s.MATRICULE and si.DATE_FIN = '31-12-2100'
+ left join CAR.CIVILE c on si.CODE_CIV = c.CODE_CIV
+ left join CAR.CODE_GEOGRAPHIQUE g on s.LIEU_NAIS = g.CODE_GEO
+ left join car.CARRIERE ca on ca.MATRICULE = s.MATRICULE
+left join CAR.CONTACT cnt on cnt.MATRICULE=s.MATRICULE
+ outer apply (select top 1 * from CAR.POSTE_TRAVAIL p where ca.CODE_PSTR = p.CODE_PSTR order by date_val desc) p
+outer apply (select top 1 * from car.GRP_CHAP gg where ca.GRP_CHAP = gg.GRP_CHAP and ca.COMPTE_ANAL=gg.COMPTE_ANAL  order by gg.DATE_FIN desc ) gg
+where s.MATRICULE = $P{matricule}
+and ca.DATE_FIN = '31-12-2100'
+order by ca.date_deb desc, si.DATE_DEB desc]]>
+	</queryString>
+	<field name="MATRICULE" class="java.lang.Integer"/>
+	<field name="noms" class="java.lang.String"/>
+	<field name="prenoms" class="java.lang.String"/>
+	<field name="njfille" class="java.lang.String"/>
+	<field name="NOM" class="java.lang.String"/>
+	<field name="DATE_NAIS" class="java.lang.String"/>
+	<field name="ADRESSE" class="java.lang.String"/>
+	<field name="LIEUNAISS" class="java.lang.String"/>
+	<field name="SITUA" class="java.lang.String"/>
+	<field name="NBRE_ENFANT" class="java.lang.String"/>
+	<field name="FILSDE" class="java.lang.String"/>
+	<field name="DATE_ENTREE" class="java.sql.Date"/>
+	<field name="FONCTION" class="java.lang.String"/>
+	<field name="ETUDE" class="java.lang.String"/>
+	<field name="grp_libelle" class="java.lang.String"/>
+	<field name="date_sortie" class="java.sql.Date"/>
+	<field name="ds" class="java.sql.Date"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="304" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="171" y="219" width="83" height="20" uuid="967c3b28-4491-4b66-b9e6-71b84866d9b3"/>
+				<textFieldExpression><![CDATA[$F{DATE_NAIS}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="247" y="219" width="291" height="20" uuid="0fdf09da-db10-49bd-a230-274affb94d68"/>
+				<textFieldExpression><![CDATA[$F{LIEUNAISS}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="170" y="239" width="60" height="20" uuid="c5198915-6ebe-4c23-897e-94c19f7dc0ee"/>
+				<textFieldExpression><![CDATA[$F{SITUA}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="235" y="239" width="179" height="20" uuid="6ccfca1c-600a-4b98-a2cd-f8f80f12299d"/>
+				<textFieldExpression><![CDATA[$F{NBRE_ENFANT}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="171" y="258" width="375" height="20" uuid="440351b0-83e0-44d7-894a-0b1ef3c2861f"/>
+				<textFieldExpression><![CDATA[$F{FILSDE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="171" y="279" width="375" height="20" uuid="978a3a99-e33b-4c11-b34e-f3d33dec01c8"/>
+				<textFieldExpression><![CDATA[$F{ADRESSE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="7" width="555" height="20" uuid="47d3d07e-d956-418c-b7c6-2af8c2d5d532"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[DIRECTION DES RESSOURCES HUMAINES ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-11" y="35" width="555" height="20" uuid="ba29d2d0-ea75-4f13-9e70-aac7ea41f02d"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[FICHE SIGNALETIQUE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="78" width="146" height="20" uuid="82ca31e1-5d42-412c-a9f6-9ef50e3eb389"/>
+				<textElement>
+					<font size="12" isBold="true" isItalic="false" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[IDENTIFICATION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="199" width="119" height="20" forecolor="#333333" uuid="adf34873-f78a-433b-86a9-6aa93a19f052"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Prénom]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="219" width="162" height="20" forecolor="#333333" uuid="5ae379f5-7fea-4fbe-800e-0d33631b1a7f"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date et lieu de naissance]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="239" width="119" height="20" forecolor="#333333" uuid="9905a1af-7b29-4e2b-acb4-71ae7a2e2fff"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Situation familiale]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="258" width="119" height="20" forecolor="#333333" uuid="120b0c01-3c54-434e-a58f-f91ac11aada5"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Filiation]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="279" width="119" height="20" forecolor="#333333" uuid="960a5dc3-0793-4275-8712-27da1fbb12c5"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Adresse]]></text>
+			</staticText>
+			<image>
+				<reportElement mode="Transparent" x="450" y="37" width="85" height="91" uuid="1798a659-e7f2-4fde-a0f6-00453ccb6260"/>
+				<imageExpression><![CDATA[$P{photo}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="171" y="128" width="100" height="20" uuid="a1dbf5ad-73ab-4595-935e-e5017cdd55b4"/>
+				<textFieldExpression><![CDATA[$F{MATRICULE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="170" y="149" width="220" height="20" uuid="52f0e833-7d77-40a6-9502-fb1dbb630157"/>
+				<textFieldExpression><![CDATA[$F{noms}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="171" y="169" width="219" height="20" uuid="a1c11e74-c9b9-48ee-b2c2-8b359e4456b3"/>
+				<textFieldExpression><![CDATA[$F{njfille}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="171" y="199" width="219" height="20" uuid="a98ca01b-c23b-46da-a1a7-943b805c7ceb"/>
+				<textFieldExpression><![CDATA[$F{prenoms}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="14" y="149" width="119" height="20" forecolor="#333333" uuid="2a0a738f-0bf1-4b44-9a89-7950fe49abc7"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nom]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="169" width="119" height="20" forecolor="#333333" uuid="5e2da2d5-afa4-4aca-be81-f8c6226f5100">
+					<printWhenExpression><![CDATA[!$F{njfille}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nom de Jeune Fille]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="129" width="119" height="20" forecolor="#333333" uuid="d3b922bc-ecd9-4cc8-af87-23041332c48b"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Matricule]]></text>
+			</staticText>
+			<image>
+				<reportElement x="449" y="-17" width="124" height="44" uuid="ad2b938e-61a7-421d-a67f-821cfc8a52a1"/>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<detail>
+		<band height="94" splitType="Stretch">
+			<staticText>
+				<reportElement x="14" y="21" width="119" height="20" forecolor="#333333" uuid="5a768c29-7ce1-4d34-996a-67009f6a5355"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fonction actuelle]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="171" y="21" width="319" height="20" uuid="9513cad4-cd2f-4a00-8029-917f0b71b942"/>
+				<textFieldExpression><![CDATA[$F{FONCTION}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="14" y="1" width="119" height="20" forecolor="#333333" uuid="672e86da-4c89-4f74-a49b-16ed32155b21"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date de recrutement AH]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="171" y="1" width="319" height="20" uuid="f9f2ba5b-ad01-439e-8f08-d080614344eb"/>
+				<textFieldExpression><![CDATA[$F{DATE_ENTREE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="14" y="43" width="119" height="20" forecolor="#333333" uuid="cd233d5c-0972-4379-9b60-24d964b3ca42"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Affectation actuelle]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="170" y="41" width="320" height="20" uuid="235de87c-07ac-4cd1-a15e-1dd014edc035"/>
+				<textFieldExpression><![CDATA[$F{grp_libelle}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="298" y="63" width="219" height="20" forecolor="#FF0000" uuid="8fbe3bd4-ef05-4c43-9e4a-93446b67aa03">
+					<printWhenExpression><![CDATA[($F{date_sortie} == null ) ? false : true]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{date_sortie} == null ) ? "" : "Personnel sortant"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="31" y="67" width="102" height="20" uuid="417e0808-69e4-46c8-91fa-0d6f15550f33">
+					<printWhenExpression><![CDATA[!$F{ds}.equals( null )]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date de Sortie ]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="171" y="67" width="100" height="20" uuid="7774ecaa-d5b5-4e29-aa4e-a992c0cca103"/>
+				<textFieldExpression><![CDATA[$F{ds}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="54">
+			<subreport>
+				<reportElement x="9" y="24" width="526" height="30" uuid="61260d51-425c-4021-aab0-8840726d501c"/>
+				<subreportParameter name="matricule">
+					<subreportParameterExpression><![CDATA[$P{matricule}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "subDiplomes.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="9" y="4" width="273" height="20" uuid="f1156eed-5628-47f4-b050-ad04812b1dde"/>
+				<textElement>
+					<font size="12" isBold="true" isItalic="false" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[DIPLOMES OBTENUS]]></text>
+			</staticText>
+		</band>
+		<band height="53">
+			<staticText>
+				<reportElement x="8" y="0" width="130" height="20" uuid="6a864803-3573-49d1-a060-8dfd31b1c51a"/>
+				<textElement>
+					<font size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[NIVEAU D'ETUDES]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="9" y="19" width="526" height="34" uuid="3c54e4ef-b0b9-4d44-85f4-0aa2a1b5c8cb"/>
+				<subreportParameter name="matricule">
+					<subreportParameterExpression><![CDATA[$P{matricule}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "netudes.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="51">
+			<staticText>
+				<reportElement x="9" y="0" width="176" height="20" uuid="afc14941-d4ba-4cdb-beb5-4bfc00375c7a"/>
+				<textElement>
+					<font size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[FORMATIONS INTERNES]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="8" y="20" width="537" height="31" uuid="d235ace6-0f25-4b29-9289-27bd5b56d9a7"/>
+				<subreportParameter name="matricule">
+					<subreportParameterExpression><![CDATA[$P{matricule}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "subformationint.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="50">
+			<subreport>
+				<reportElement x="9" y="18" width="555" height="32" uuid="59959477-d2cd-4315-9d0a-3273e6ac417a"/>
+				<subreportParameter name="matricule">
+					<subreportParameterExpression><![CDATA[$F{MATRICULE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "subCarriere.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="10" y="0" width="273" height="20" uuid="a2218060-4199-41c3-a169-837d35ee8552"/>
+				<textElement>
+					<font size="12" isBold="true" isItalic="false" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[CARRIERE AU SEIN D'AIR ALGERIE ]]></text>
+			</staticText>
+		</band>
+		<band height="50">
+			<subreport>
+				<reportElement x="8" y="19" width="530" height="31" uuid="cfe4c3c7-00af-4164-8968-a8f381360498"/>
+				<subreportParameter name="matricule">
+					<subreportParameterExpression><![CDATA[$F{MATRICULE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "subAvancements.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="9" y="0" width="273" height="20" uuid="4abc9d27-3c6c-4513-bfe9-d27bea8a84c1"/>
+				<textElement>
+					<font size="12" isBold="true" isItalic="false" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[AVANCEMENTS]]></text>
+			</staticText>
+		</band>
+		<band height="50">
+			<subreport>
+				<reportElement x="9" y="22" width="530" height="28" uuid="3316d742-25f5-4463-96ad-f7d7f312d376"/>
+				<subreportParameter name="matricule">
+					<subreportParameterExpression><![CDATA[$F{MATRICULE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "subAntecedents.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="9" y="0" width="273" height="20" uuid="c87491da-fd83-4926-ae9e-a4e1b63a209d"/>
+				<textElement>
+					<font size="12" isBold="true" isItalic="false" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[ANTECEDENTS PROFESSIONNELS]]></text>
+			</staticText>
+		</band>
+		<band height="50">
+			<subreport>
+				<reportElement x="8" y="20" width="530" height="28" uuid="988ca0ad-71e7-492b-a966-2e47cbbd4617"/>
+				<subreportParameter name="matricule">
+					<subreportParameterExpression><![CDATA[$F{MATRICULE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "subDisciplines.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="8" y="0" width="273" height="20" uuid="9bdf4a00-1860-487e-9365-f5dab13418cc"/>
+				<textElement>
+					<font size="12" isBold="true" isItalic="false" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[ANTECEDENTS DISCIPLINAIRES]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="11" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="33" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="271" y="13" width="284" height="20" forecolor="#FF0000" backcolor="#FFFFFF" uuid="9631d203-b198-4abf-bceb-be9e208744de"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[AIR ALGERIE | Direction des Systèmes d'Information]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="9" splitType="Stretch"/>
+	</summary>
+</jasperReport>

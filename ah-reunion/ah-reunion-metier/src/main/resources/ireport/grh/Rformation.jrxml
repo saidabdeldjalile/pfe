@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Rformation" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7c930753-bc36-462e-80a4-9f323e98e79e">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="144"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
+	<parameter name="matricule" class="java.lang.Integer"/>
+	<parameter name="logo" class="java.io.InputStream"/>
+	<parameter name="nom" class="java.lang.String"/>
+	<parameter name="njfille" class="java.lang.String"/>
+	<parameter name="prenom" class="java.lang.String"/>
+	<parameter name="lib" class="java.lang.String"/>
+	<parameter name="org" class="java.lang.String"/>
+	<parameter name="dd" class="java.lang.String"/>
+	<parameter name="df" class="java.lang.String"/>
+	<parameter name="dip" class="java.lang.String"/>
+	<parameter name="cout" class="java.math.BigDecimal"/>
+	<parameter name="sfl" class="java.lang.String"/>
+	<parameter name="dfc" class="java.lang.Integer"/>
+	<parameter name="logo1" class="java.io.InputStream"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<background>
+		<band height="555" splitType="Stretch">
+			<image scaleImage="FillFrame">
+				<reportElement x="0" y="0" width="802" height="555" uuid="3dddf81e-e8d1-462e-9a94-93ccb977de0e"/>
+				<imageExpression><![CDATA[$P{logo1}]]></imageExpression>
+			</image>
+		</band>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="66" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="265" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="291" y="145" width="433" height="20" forecolor="#333333" uuid="d9125473-cc73-469e-aa04-fdadf7fcb268"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{lib}]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy/MM/dd" isBlankWhenNull="true">
+				<reportElement x="562" y="174" width="100" height="20" forecolor="#333333" uuid="9e1c4c24-6bb5-4a51-97a6-6b547753fbf7"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{df}]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy/MM/dd" isBlankWhenNull="true">
+				<reportElement x="386" y="173" width="100" height="20" forecolor="#333333" uuid="60bbef0b-0299-4c1c-8054-862eb30181de"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dd}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="671" y="240" width="132" height="20" forecolor="#333333" uuid="0fc20680-63d7-4cdb-bf7a-e1e2031f048c"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="305" y="57" width="74" height="20" forecolor="#333333" uuid="bcbc37ac-527c-4de7-82a5-868471e28bba"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nom}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="490" y="57" width="96" height="20" forecolor="#333333" uuid="979dabe2-4ee9-4775-8990-4c1a4526a054"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{njfille}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="464" y="57" width="26" height="20" forecolor="#333333" uuid="74e16783-c525-4aa6-b093-21d894fa4afd">
+					<printWhenExpression><![CDATA[!($P{njfille}.isEmpty())]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Née]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="379" y="57" width="85" height="20" forecolor="#333333" uuid="a5d492a0-c7e7-48ca-b63c-b8b6be1ada1b"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{prenom}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

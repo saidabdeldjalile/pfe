@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subAvancements" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e82d1fb7-991d-4308-9b20-4232e3cef741">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="matricule" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[select car.MATRICULE, car.CODE_ACT, ac.LIBELLE as LIBELLEACTE, car.DATE_DEB, car.DATE_FIN, po.LIBELLE as FONCTION, g.libelle DESC_DIR
+from car.CARRIERE car left join car.ACTE ac on car.CODE_ACT = ac.CODE_ACT
+left join car.POSTE_TRAVAIL po on car.CODE_PSTR = po.CODE_PSTR
+outer apply (select top 1 * from car.grp_chap g where g.grp_chap = car.grp_chap and g.compte_anal = car.compte_anal and car.date_deb between g.date_deb and g.date_fin order by g.date_fin desc) g
+where car.CODE_ACT in (25,26,27)
+ and car.MATRICULE = $P{matricule}
+ and ac.TYPE_ACT = 'C'
+ order by car.DATE_DEB DESC]]>
+	</queryString>
+	<field name="MATRICULE" class="java.lang.Integer"/>
+	<field name="CODE_ACT" class="java.lang.String"/>
+	<field name="LIBELLEACTE" class="java.lang.String"/>
+	<field name="DATE_DEB" class="java.sql.Date"/>
+	<field name="DATE_FIN" class="java.sql.Date"/>
+	<field name="FONCTION" class="java.lang.String"/>
+	<field name="DESC_DIR" class="java.lang.String"/>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement x="100" y="0" width="126" height="20" uuid="2d4a92e1-9be4-4243-b2d6-12c16e6be4d4"/>
+				<textFieldExpression><![CDATA[$F{LIBELLEACTE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="0" y="0" width="100" height="20" forecolor="#333333" uuid="cacea332-d387-43f0-b39e-8785bb0186c7"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DATE_DEB}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="226" y="0" width="225" height="20" uuid="a425f296-eb14-467f-bd38-2143143105fc"/>
+				<textFieldExpression><![CDATA[$F{FONCTION}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="451" y="0" width="33" height="20" uuid="6fe60dfe-e8e5-424f-aabe-4a1ee7ce8dfd"/>
+				<textFieldExpression><![CDATA[$F{DESC_DIR}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<noData>
+		<band height="23">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" forecolor="#333333" uuid="25ea72de-1565-4970-b176-c050e29221ff"/>
+				<text><![CDATA[Néant]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

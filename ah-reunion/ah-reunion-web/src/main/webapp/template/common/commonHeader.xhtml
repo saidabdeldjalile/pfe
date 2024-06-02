@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <div class="navbar-default navbar navbar-fixed-top navbar-danger text-14" style='background: linear-gradient(to right,#cb3d4a,#e26262);border: none;box-shadow: 0 10px 30px 0 rgba(24,28,33,0.06);'>
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <h:link styleClass="current navbar-brand p-y-1 m-l-1" outcome="/index.xhtml" >
+                    <h:graphicImage value="#{resource['/assets/images/logo.png']}" alt="Logo" height="100%" />
+                </h:link>
+                <button class="navbar-toggle collapsed" data-target="#navbar" data-toggle="collapse" type="button" aria-expanded="false">
+                    <i class="fa fa-fw fa-user"></i>
+                </button>
+                <button class="action-sidebar-open navbar-toggle collapsed" type="button">
+                    <i class="fa fa-fw fa-bars"></i>
+                </button>
+            </div>
+
+            <div class="collapse navbar-collapse" id="navbar">
+                <ul class="nav navbar-nav navbar-left clearfix yamm">
+                    <li id="sidebar-switch" class="hidden-xs">
+                        <a class="action-toggle-sidebar-slim" data-placement="bottom" data-toggle="tooltip" href="#" title="Menu on/off">
+                            <i class="fa fa-lg fa-bars fa-fw"></i>
+                        </a>
+                    </li>
+                </ul>
+                <h:form id="header-user-infos">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="javascript: void(0)" role="button" aria-expanded="true">
+                                <i class="animated fa fa-bell fa-fw fa-lg hidden-xs infinite swing-bell"></i>
+                                <span class="hidden-sm hidden-md hidden-lg">
+                                    Notifications
+                                    <b:badge value="#{notificationBean.nbUnreadNotifs}"
+                                             style-class="badge-primary m-l-1"
+                                             rendered="#{notificationBean.notifications ne null and !notificationBean.notifications.isEmpty()}" />
+                                </span>
+                                <b:label value="#{notificationBean.nbUnreadNotifs}"
+                                         severity="primary"
+                                         style-class="animated label label-pill label-with-icon hidden-xs infinite tada-label"
+                                         rendered="#{notificationBean.notifications ne null and !notificationBean.notifications.isEmpty()}" />
+                                <span class="fa fa-fw fa-angle-down hidden-lg hidden-md hidden-sm"></span>
+                            </a>
+
+                            <ul class="dropdown-menu dropdown-menu-right p-t-0 b-t-0 p-b-0 b-b-0 b-a-0">
+                                <li>
+                                    <div class="yamm-content p-t-0 p-r-0 p-l-0 p-b-0">
+                                        <ul class="list-group m-b-0 b-b-0">
+                                            <li class="list-group-item b-r-0 b-l-0 b-r-0 b-t-r-0  b-t-l-0 b-b-2 w-350">
+                                                <small class="text-uppercase">
+                                                    <strong>Centre de Notifications</strong>
+                                                </small>
+                                            </li>
+
+                                            <li class="list-group-item b-a-0 p-x-0 p-y-0 b-t-0">
+                                                <div class="scroll-300 custom-scrollbar ps-container ps-theme-default" data-ps-id="85f5059d-3b9b-de50-5019-11c8f0729aeb">
+                                                    <ui:repeat value="#{notificationBean.notifications}" var="notification" >
+                                                        <a href="#" class="list-group-item b-r-0 b-t-0 b-l-0 #{notification.isRead ? '' : 'bg-body-bg'}">
+                                                            <div class="media">
+                                                                <div class="media-left">
+                                                                    <span class="fa-stack fa-lg">
+                                                                        <i class="fa fa-circle-thin fa-stack-2x text-primary"></i>
+                                                                        <i class="fa fa-info fa-stack-1x fa-fw text-primary"></i>
+                                                                    </span>
+                                                                </div>
+                                                                <div class="media-body">
+                                                                    <h5 class="m-t-0">
+                                                                        <span>
+                                                                            <h:outputText value="#{notification.data}" />
+                                                                        </span>
+                                                                    </h5>
+                                                                    <p class="text-nowrap small m-b-0">
+                                                                        <span>
+                                                                            <h:outputText value="#{notification.createdAt}" >
+                                                                                <f:convertDateTime type="localDateTime" pattern="dd-MM-yyyy à HH:mm"/>
+                                                                            </h:outputText>
+                                                                        </span>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                    </ui:repeat>
+
+                                                    <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;"><div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps-scrollbar-y-rail" style="top: 0px; right: 0px;"><div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 0px;"></div></div></div>
+                                            </li>
+                                            <c:if test="#{notificationBean.notifications eq null or notificationBean.notifications.isEmpty()}" >
+                                                <li class="list-group-item b-a-0 p-x-0 p-y-0 r-a-0 b-b-0">
+                                                    <a class="list-group-item text-center b-r-0 b-b-0 b-l-0 b-r-b-r-0 b-r-b-l-0" href="../pages/timeline.html">
+                                                        Aucune notification pour le moment.
+                                                    </a>
+                                                </li>
+                                            </c:if>
+
+                                        </ul>
+                                    </div>
+
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle user-dropdown" data-toggle="dropdown" href="#" role="button">
+                                <span class="m-r-1">#{userBean.loggedUser.nomComplet}</span>
+                                <div class="avatar-inline fa fa-fw fa-user">
+                                </div>
+                            </a>
+
+                            <ul class="dropdown-menu">
+                                <li class="dropdown-header text-14">
+                                    <small class="text-uppercase"><strong>Mon Compte</strong></small>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                                <li>
+                                    <p:commandLink onclick="$('#changePasswordModal').modal('show');" class="btn-outline">
+                                        <i class="fa fa-cogs fa-fw m-r-1 btn-outline" aria-hidden="true"></i>
+                                        Préférences
+                                    </p:commandLink>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                                <li>
+                                    <h:commandLink action="#{userBean.logout()}">
+                                        <i class="fa fa-power-off fa-fw m-r-1" aria-hidden="true"></i>
+                                        Déconnexion
+                                    </h:commandLink>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </h:form>
+
+            </div>
+
+        </div>
+    </div>
+
+</ui:composition>
+
+
