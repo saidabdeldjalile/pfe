@@ -41,21 +41,6 @@
         </web-resource-collection>
     </security-constraint>
     <security-constraint>
-        <display-name>AppAccess</display-name>
-        <web-resource-collection>
-            <web-resource-name>index page</web-resource-name>
-            <description>Secured index page</description>
-            <url-pattern>/index.xhtml</url-pattern>
-            <url-pattern>/faces/index.xhtml</url-pattern>
-            <url-pattern>/pages/*</url-pattern>
-            <url-pattern>/faces/pages/*</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-            <description>Secured index page</description>
-            <role-name>appRefAccess</role-name>
-        </auth-constraint>
-    </security-constraint>
-    <security-constraint>
         <display-name>Resources access</display-name>
         <web-resource-collection>
             <web-resource-name>resources</web-resource-name>
@@ -143,7 +128,7 @@
         </web-resource-collection>
         <auth-constraint>
             <description/>
-            <role-name>refAdminGroupeView</role-name>
+            <role-name>permission</role-name>
         </auth-constraint>
     </security-constraint>
     <security-constraint>
@@ -156,7 +141,7 @@
         </web-resource-collection>
         <auth-constraint>
             <description/>
-            <role-name>refAdminUserView</role-name>
+            <role-name>admin</role-name>
         </auth-constraint>
     </security-constraint>
     <security-constraint>
@@ -186,22 +171,57 @@
         </auth-constraint>
     </security-constraint>
     <security-constraint>
-        <display-name>USER STATS</display-name>
+        <display-name>Admin</display-name>
         <web-resource-collection>
-            <web-resource-name>USER STATS</web-resource-name>
+            <web-resource-name>Admin</web-resource-name>
             <description/>
-            <url-pattern>/pages/stats/index.xhtml</url-pattern>
-            <url-pattern>/faces/pages/stats/index.xhtml</url-pattern>
+            <url-pattern>/pages/reunion/admin.xhtml</url-pattern>
+            <url-pattern>/faces/pages/reunion/admin.xhtml</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <description/>
-            <role-name>refStatsView</role-name>
+            <role-name>admin</role-name>
         </auth-constraint>
     </security-constraint>
-    <security-role>
-        <description/>
-        <role-name>appRefAccess</role-name>
-    </security-role>
+    <security-constraint>
+        <display-name>Manager</display-name>
+        <web-resource-collection>
+            <web-resource-name>Manager</web-resource-name>
+            <description/>
+            <url-pattern>/pages/reunion/manager.xhtml</url-pattern>
+            <url-pattern>/faces/pages/reunion/manager.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>manager</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>Employe</display-name>
+        <web-resource-collection>
+            <web-resource-name>Employe</web-resource-name>
+            <description/>
+            <url-pattern>/pages/reunion/employe.xhtml</url-pattern>
+            <url-pattern>/faces/pages/reunion/employe.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>employe</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>User</display-name>
+        <web-resource-collection>
+            <web-resource-name>User</web-resource-name>
+            <description/>
+            <url-pattern>/pages/reunion/user.xhtml</url-pattern>
+            <url-pattern>/faces/pages/reunion/user.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>user</role-name>
+        </auth-constraint>
+    </security-constraint>
     <security-role>
         <description/>
         <role-name>refAdminDomaineView</role-name>
@@ -220,7 +240,7 @@
     </security-role>
     <security-role>
         <description/>
-        <role-name>refAdminGroupeView</role-name>
+        <role-name>permission</role-name>
     </security-role>
     <security-role>
         <description/>
@@ -294,6 +314,24 @@
         <description/>
         <role-name>appPrtAccess</role-name>
     </security-role>
-    
-
+    <security-role>
+        <description/>
+        <role-name>admin</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>manager</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>employe</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>user</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>permissionAdd</role-name>
+    </security-role>
 </web-app>

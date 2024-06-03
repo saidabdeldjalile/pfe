@@ -46,26 +46,10 @@ import org.slf4j.LoggerFactory;
 @ApplicationScoped
 @DatabaseIdentityStoreDefinition(dataSourceLookup = ErpConstante.UnitName.REF_JNDI_NAME,
     callerQuery = "SELECT [PASSWORD] FROM [AUTH].USERS WHERE [LOGIN] = ?",
-    groupsQuery = "DECLARE @LOGIN VARCHAR(70) = ?; \n" + "SELECT DISTINCT P.NAME\n"
-        + "FROM AUTH.USERS U\n" + "	INNER JOIN AUTH.USERS_GROUPE UG ON U.MATRICULE = UG.MATRICULE\n"
-        + "	INNER JOIN AUTH.GROUPE_PERMISSION GP ON GP.ID_GROUPE = UG.ID_GROUPE\n"
-        + "	INNER JOIN AUTH.PERMISSION P ON P.ID = GP.ID_PERMISSION\n"
-        + "	INNER JOIN AUTH.FONCTION F ON F.ID = P.ID_FONCTION and f.STATUT = 1\n"
-        + "	INNER JOIN AUTH.MODULE M ON M.ID = F.ID_MODULE and m.STATUT = 1\n"
-        + "	INNER JOIN AUTH.DOMAINE D ON D.ID = M.ID_DOMAINE AND d.STATUT = 1\n"
-        + "WHERE [LOGIN] = @LOGIN \n" + "UNION\n" + "SELECT \n" + "	CASE \n"
-        + "		WHEN D.CODE = 'GRH' THEN 'appGrhAccess'\n"
-        + "		WHEN D.CODE = 'GFC' THEN 'appGfcAccess'\n"
-        + "		WHEN D.CODE = 'REF' THEN 'appRefAccess'\n"
-        + "		WHEN D.CODE = 'PORTAIL' THEN 'appPrtAccess'\n"
-        + "		WHEN D.CODE = 'OPS' THEN 'appOpsAccess'\n" + "		ELSE ''\n" + "	END NAME\n"
-        + "FROM AUTH.USERS U\n" + "	INNER JOIN AUTH.USERS_GROUPE UG ON U.MATRICULE = UG.MATRICULE\n"
-        + "	INNER JOIN AUTH.GROUPE_PERMISSION GP ON GP.ID_GROUPE = UG.ID_GROUPE\n"
-        + "	INNER JOIN AUTH.PERMISSION P ON P.ID = GP.ID_PERMISSION\n"
-        + "	INNER JOIN AUTH.FONCTION F ON F.ID = P.ID_FONCTION AND F.STATUT = 1\n"
-        + "	INNER JOIN AUTH.MODULE M ON M.ID = F.ID_MODULE AND M.STATUT = 1\n"
-        + "	INNER JOIN AUTH.DOMAINE D ON D.ID = M.ID_DOMAINE AND D.STATUT = 1\n"
-        + "WHERE [LOGIN] = @LOGIN \n" + "GROUP BY D.CODE\n",
+    groupsQuery = "DECLARE @LOGIN VARCHAR(70) = ?; \n" + "SELECT DISTINCT GG.NAME\n"
+        + "FROM AUTH.USERS U INNER JOIN AUTH.USERS_GROUPE UG ON U.MATRICULE = UG.MATRICULE\n"
+        + "			INNER JOIN AUTH.GROUPE GG ON GG.ID = UG.ID_GROUPE\n"
+        + "WHERE [LOGIN] = @LOGIN  ",
     priorityExpression = "#{100}",
     hashAlgorithmParameters = {"Pbkdf2PasswordHash.Iterations=3072", "${applicationBean.dyna}"})
 @CustomFormAuthenticationMechanismDefinition(loginToContinue = @LoginToContinue(

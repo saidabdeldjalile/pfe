@@ -38,6 +38,9 @@ public class Employe implements Serializable {
     @Column(name = "ADRESSE")
     private String adresse;
     
+    @Column(name = "MAIL")
+    private String mail;
+    
     @ManyToMany(mappedBy = "gestionreunion")
     Set<Reunion> likes;
 
@@ -92,6 +95,14 @@ public class Employe implements Serializable {
 
     public void setAdresse(String adresse) {
         this.adresse = adresse;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
     }
 
     @Override

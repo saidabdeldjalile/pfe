@@ -44,7 +44,6 @@ public class UtilsLogger {
    */
   public static void userDetails(PersonnelDTO user) {
     if (user != null) {
-      MDC.put(ErpConstante.LoggerKey.USER_KEY, user.getNomComplet());
       MDC.put(ErpConstante.LoggerKey.MATRICULE_KEY, user.getMatricule().toString());
     } else {
       MDC.put(ErpConstante.LoggerKey.USER_KEY, "Anonymous");

@@ -8,18 +8,18 @@ package dz.airalgerie.commun.bean;
 import dz.airalgerie.commun.bean.core.AbstractBeanManager;
 import dz.airalgerie.commun.exception.InvalideInscriptionPortaillException;
 import dz.airalgerie.commun.facade.CommunManagerFacade;
-import dz.airalgerie.commun.facade.PersonnelFacade;
 import dz.airalgerie.commun.ref.entities.RefGroupe;
 import dz.airalgerie.commun.ref.entities.RefInscription;
 import dz.airalgerie.commun.ref.entities.RefUser;
 import dz.airalgerie.commun.ref.facade.RefGroupeFacade;
 import dz.airalgerie.commun.ref.facade.RefInscriptionFacade;
 import dz.airalgerie.commun.ref.facade.RefUserFacade;
+import dz.airalgerie.commun.reunion.Employe;
+import dz.airalgerie.commun.reunion.EmployeFacade;
 import dz.airalgerie.commun.utils.ErpConstante;
 import dz.airalgerie.commun.utils.Messages;
 import dz.airalgerie.commun.utils.PasswordHash;
 import dz.airalgerie.commun.utils.UtilsLogger;
-import dz.airalgerie.grh.model.dto.commun.PersonnelDTO;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -49,7 +49,7 @@ public class InscriptionBean extends AbstractBeanManager {
   @EJB
   private RefInscriptionFacade refInscriptionFacade;
   @EJB
-  private PersonnelFacade personnelFacade;
+  private EmployeFacade personnelFacade;
   @EJB
   private RefGroupeFacade refGroupeFacade;
   private RefUser refUser;
@@ -61,7 +61,7 @@ public class InscriptionBean extends AbstractBeanManager {
   private String password;
   private String passwordConfirm;
   private boolean userExist;
-  PersonnelDTO personnel;
+  Employe personnel;
   RefGroupe defaulUserGroupeRoles;
   static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(InscriptionBean.class);
 
@@ -234,16 +234,6 @@ public class InscriptionBean extends AbstractBeanManager {
         refUser.setMatricule(matricule);
         refUser.setMotDePasse(PasswordHash.hash(password));
         refUser.setIsInscriptionPortail(true);
-        if (personnel.getCodeTech().equals('T')) {
-          defaulUserGroupeRoles =
-              refGroupeFacade.findGroupeByName(ErpConstante.DefaultGroupesUser.PNT_USER);
-        } else if (personnel.getCodeTech().equals('C')) {
-          defaulUserGroupeRoles =
-              refGroupeFacade.findGroupeByName(ErpConstante.DefaultGroupesUser.PNC_USER);
-        } else {
-          defaulUserGroupeRoles =
-              refGroupeFacade.findGroupeByName(ErpConstante.DefaultGroupesUser.SOL_USER);
-        }
         communManagerFacade.inscriptionUserPortail(refUser);
         refUser.addGroupe(defaulUserGroupeRoles);
         communManagerFacade.updateUserPortail(refUser);
@@ -362,11 +352,11 @@ public class InscriptionBean extends AbstractBeanManager {
     this.userExist = userExist;
   }
 
-  public PersonnelDTO getPersonnel() {
+  public Employe getPersonnel() {
     return personnel;
   }
 
-  public void setPersonnel(PersonnelDTO personnel) {
+  public void setPersonnel(Employe personnel) {
     this.personnel = personnel;
   }
 

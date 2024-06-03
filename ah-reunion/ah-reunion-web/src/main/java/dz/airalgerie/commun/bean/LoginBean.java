@@ -5,7 +5,6 @@
 
 package dz.airalgerie.commun.bean;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import static javax.faces.application.FacesMessage.SEVERITY_ERROR;
 import static javax.security.enterprise.AuthenticationStatus.SEND_CONTINUE;
 import static javax.security.enterprise.AuthenticationStatus.SEND_FAILURE;
@@ -16,12 +15,10 @@ import dz.airalgerie.commun.bean.core.AbstractBeanManager;
 import dz.airalgerie.commun.exception.InvalidPasswordException;
 import dz.airalgerie.commun.facade.CommunManagerFacade;
 import dz.airalgerie.commun.utils.Messages;
-import dz.airalgerie.commun.facade.PersonnelFacade;
-import dz.airalgerie.commun.facade.SignalitiqueFacade;
 import dz.airalgerie.commun.ref.entities.RefUser;
 import dz.airalgerie.commun.ref.facade.RefUserFacade;
+import dz.airalgerie.commun.reunion.EmployeFacade;
 import dz.airalgerie.grh.model.dto.commun.PersonnelDTO;
-import java.security.Principal;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -36,24 +33,15 @@ import javax.security.enterprise.SecurityContext;
 import javax.security.enterprise.credential.Credential;
 import javax.security.enterprise.credential.Password;
 import javax.security.enterprise.credential.UsernamePasswordCredential;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import dz.airalgerie.commun.utils.ErpConstante;
 import dz.airalgerie.commun.utils.UtilsLogger;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import org.primefaces.shaded.json.JSONObject;
 
 /**
  *
@@ -68,11 +56,9 @@ public class LoginBean extends AbstractBeanManager {
   @EJB
   private CommunManagerFacade communManagerFacade;
   @EJB
-  private SignalitiqueFacade signalitiqueFacade;
-  @EJB
   private RefUserFacade refUserFacade;
   @EJB
-  private PersonnelFacade personnelFacade;
+  private EmployeFacade personnelFacade;
   private String login;
   private String password;
   private String passwordResetEmail;
@@ -80,8 +66,6 @@ public class LoginBean extends AbstractBeanManager {
   private String passwordConfirm;
   private String confirmationCode;
   private RefUser refUser;
-  @Inject
-  private ApplicationBean applicationBean;
   private boolean nextStep;
   @Inject
   SecurityContext securityContext;
@@ -113,9 +97,9 @@ public class LoginBean extends AbstractBeanManager {
 
       String caller = ((UsernamePasswordCredential) credential).getCaller();
       this.refUser = refUserFacade.findByLogin(caller);
-      PersonnelDTO loggedUser = personnelFacade.findByMatricule(this.refUser.getMatricule());
+      PersonnelDTO loggedUser = personnelFacade.findByMatriculeInfo(this.refUser.getMatricule());
       UtilsLogger.userDetails(loggedUser);
-      Object[] user = signalitiqueFacade.findUserInfos(this.refUser.getMatricule());
+      Object[] user = personnelFacade.findUserInfos(this.refUser.getMatricule());
       ExternalContext externalContext = context.getExternalContext();
       Map<String, Object> sessionMap = externalContext.getSessionMap();
       sessionMap.put("User", refUser);

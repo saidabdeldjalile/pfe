@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/common/commonLayout.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:cc="http://java.sun.com/jsf/composite/component"
+                xmlns:ct="http://airalgerie.dz/facelets"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:of="http://omnifaces.org/functions">
+
+    <ui:define name="stylesTop">
+    </ui:define>
+
+    <ui:define name="titlePage">
+        <title>ERP - Gestion des reunions</title>
+    </ui:define>
+
+
+    <ui:define name="pageTitle">
+        <h3 class="m-a-2">Gestion des reunions</h3>
+    </ui:define>
+
+    <ui:define name="content">
+
+        
+        <div class="row m-b-2">
+
+            <b:column col-sm="3" col-md="2" styleClass="pull-right">
+                <ct:link id="filterBtnEmploye"
+                         styleClass="btn-success btn-block"
+                         icon="fa-plus"
+                         value="Ajouter Employé"
+                         onComplete="PF('addDialog').show();"
+                         process="@this">
+                </ct:link>
+            </b:column>
+        </div> 
+        
+
+        <p:dialog header="Message" widgetVar="messageDialog" resizable="false" modal="true">
+            <h:form id="messageForm">
+                <h:messages globalOnly="true" showDetail="true" showSummary="false" styleClass="error-messages"/>
+            </h:form>
+        </p:dialog>
+
+        <p:dialog header="Ajouter un employé" widgetVar="addDialog" resizable="false" modal="true">
+            <h:form id="addDialogForm">
+                <h:panelGrid columns="2">
+                    <h:outputLabel for="matriculeInput" value="Matricule:" />
+                    <h:inputText id="matriculeInput" value="#{employeBean.employe.matricule}" />
+
+                    <h:outputLabel for="nomInput" value="Nom:" />
+                    <h:inputText id="nomInput" value="#{employeBean.employe.nom}" />
+
+                    <h:outputLabel for="prenomInput" value="Prénom:" />
+                    <h:inputText id="prenomInput" value="#{employeBean.employe.prenom}" />
+
+                    <h:outputLabel for="adresseInput" value="Adresse:" />
+                    <h:inputText id="adresseInput" value="#{employeBean.employe.adresse}" />
+                </h:panelGrid>
+                <p:commandButton value="Ajouter" action="#{employeBean.ajouterEmploye}" 
+                                 oncomplete="if (!args.validationFailed) PF('addDialog').hide(); PF('messageDialog').show();" 
+                                 update="addDialogForm :messageForm" />
+            </h:form>
+        </p:dialog>
+
+        <h:form id="tableForm">
+            <div class="table-wrapper">
+                <p:dataTable value="#{employeBean.employes}" var="employe" id="tableEmployes" styleClass="table table-bordered table-striped">
+                    <p:column headerText="Matricule">#{employe.matricule}</p:column>
+                    <p:column headerText="Nom">#{employe.nom}</p:column>
+                    <p:column headerText="Prénom">#{employe.prenom}</p:column>
+                    <p:column headerText="Adresse">#{employe.adresse}</p:column>
+
+                    <p:column headerText="Actions">
+                        <p:commandButton value="Modifier" action="#{employeBean.modifierEmploye(employe)}"
+                                         oncomplete="PF('modifyDialog').show()" update=":modifyForm"/>
+                        <p:commandButton value="Supprimer" action="#{employeBean.supprimerEmploye(employe)}"
+                                         oncomplete="PF('messageDialog').show()" update=":tableForm :messageForm" icon="pi pi-trash"
+                                         onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet employé ?')"/>
+                    </p:column>
+                </p:dataTable>
+            </div>
+        </h:form>
+
+        <p:dialog header="Modifier un employé" widgetVar="modifyDialog" resizable="false" modal="true">
+            <h:form id="modifyForm">
+                <h:panelGrid columns="2">
+                    <h:outputLabel for="matriculeInput" value="Matricule:" />
+                    <h:inputText id="matriculeInput" value="#{employeBean.employeAModifier.matricule}" />
+
+                    <h:outputLabel for="nomInput" value="Nom:" />
+                    <h:inputText id="nomInput" value="#{employeBean.employeAModifier.nom}" />
+
+                    <h:outputLabel for="prenomInput" value="Prénom:" />
+                    <h:inputText id="prenomInput" value="#{employeBean.employeAModifier.prenom}" />
+
+                    <h:outputLabel for="adresseInput" value="Adresse:" />
+                    <h:inputText id="adresseInput" value="#{employeBean.employeAModifier.adresse}" />
+                </h:panelGrid>
+                <p:commandButton value="Confirmer" action="#{employeBean.modifierEmploye}" 
+                                 oncomplete="PF('modifyDialog').hide(); PF('messageDialog').show();" update=":tableForm :messageForm" />
+            </h:form>
+        </p:dialog>
+
+        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+            <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no ui-button-flat" />
+            <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" />
+        </p:confirmDialog>
+
+    </ui:define>
+</ui:composition>

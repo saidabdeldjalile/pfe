@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/common/commonLayout.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:cc="http://java.sun.com/jsf/composite/component"
+                xmlns:ct="http://airalgerie.dz/facelets"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:of="http://omnifaces.org/functions">
+
+    <ui:define name="stylesTop">
+    </ui:define>
+
+    <ui:define name="titlePage">
+        <title>ERP - Gestion des reunions</title>
+    </ui:define>
+
+
+    <ui:define name="pageTitle">
+        <h3 class="m-a-2">Gestion des reunions</h3>
+    </ui:define>
+
+    <ui:define name="content">
+
+
+        <div class="row m-b-2">
+            <!--add btn-->
+            <b:column col-sm="3" col-md="2" styleClass="pull-right">
+                <ct:link id="addBtnReunion"
+                         styleClass="btn-success btn-block"
+                         icon="fa-plus"
+                         value="Filtrer Réunions"
+                         onComplete="PF('filterDialog').show();"
+                         process="@this">
+                </ct:link>
+            </b:column>
+        </div> 
+
+        <h:form id="tableForm">
+            <p:dataTable value="#{loginBeans.reunions}" var="reunion" id="tableReunions" styleClass="table table-bordered table-striped"
+                         filteredValue="#{loginBeans.reunions}">
+                <p:column headerText="ID" filterBy="#{reunion.id}" filterMatchMode="contains">
+                    #{reunion.id}
+                </p:column>
+                <p:column headerText="Date de début" filterBy="#{reunion.dateDeb}" filterMatchMode="contains">
+                    #{reunion.dateDeb}
+                </p:column>
+                <p:column headerText="Durée" filterBy="#{reunion.duree}" filterMatchMode="contains">
+                    #{reunion.duree}
+                </p:column>
+                <p:column headerText="Titre" filterBy="#{reunion.titre}" filterMatchMode="contains">
+                    #{reunion.titre}
+                </p:column>
+                <p:column headerText="Détails" filterBy="#{reunion.detaille}" filterMatchMode="contains">
+                    #{reunion.detaille}
+                </p:column>
+                <p:column headerText="Employés">
+                    <ul>
+                        <ui:repeat value="#{reunion.gestionreunion}" var="employee">
+                            <li>#{employee.nom} #{employee.prenom}</li>
+                        </ui:repeat>
+                    </ul>
+                </p:column>
+                <p:column headerText="Fichiers">
+                    <p:commandButton value="Voir les fichiers" actionListener="#{reunionBean.loadFilesForReunion(reunion.id)}" oncomplete="PF('fileDialog').show();" update=":files"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+
+    </ui:define>
+</ui:composition>
+
+

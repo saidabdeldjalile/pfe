@@ -1,0 +1,187 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/common/commonLayout.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:cc="http://java.sun.com/jsf/composite/component"
+                xmlns:ct="http://airalgerie.dz/facelets"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:of="http://omnifaces.org/functions">
+
+    <ui:define name="stylesTop">
+    </ui:define>
+
+    <ui:define name="titlePage">
+        <title>ERP - Gestion des reunions</title>
+    </ui:define>
+
+
+    <ui:define name="pageTitle">
+        <h3 class="m-a-2">Gestion des reunions</h3>
+    </ui:define>
+
+    <ui:define name="content">
+
+
+
+        <div class="row m-b-2">
+            <!--add btn-->
+            <b:column col-sm="3" col-md="2" styleClass="pull-right">
+                <ct:link id="addBtnReunion"
+                         styleClass="btn-success btn-block"
+                         icon="fa-plus"
+                         value="Filtrer Réunions"
+                         onComplete="PF('filterDialog').show();"
+                         process="@this">
+                </ct:link>
+            </b:column>
+
+            <b:column col-sm="3" col-md="2" styleClass="pull-right">
+                <ct:link id="filterBtnReunion"
+                         styleClass="btn-success btn-block"
+                         icon="fa-plus"
+                         value="Ajouter Réunion"
+                         onComplete="PF('addDialog').show();"
+                         process="@this">
+                </ct:link>
+            </b:column>
+        </div>  
+
+        <p:dialog header="Ajouter une réunion" widgetVar="addDialog" resizable="false" modal="true">
+            <h:form id="addDialogForm">
+                <h:panelGrid columns="2">
+                    <h:outputLabel for="newIdInput" value="ID:" />
+                    <h:inputText id="newIdInput" value="#{reunionBean.reunion.id}" />
+
+                    <h:outputLabel for="newDateDebInput" value="Date de début:" />
+                    <p:calendar id="newDateDebInput" value="#{reunionBean.reunion.dateDeb}" showButtonPanel="true" pattern="MM/dd/yyyy HH:mm:ss" />
+
+                    <p:outputLabel for="timeonly" value="Durée" />
+                    <p:calendar id="timeonly" value="#{reunionBean.reunion.duree}" timeOnly="true" pattern="HH:mm" />
+
+                    <h:outputLabel for="newTitreInput" value="Titre:" />
+                    <h:inputText id="newTitreInput" value="#{reunionBean.reunion.titre}" />
+
+                    <h:outputLabel for="newDetailleInput" value="Détails:" />
+                    <h:inputTextarea id="newDetailleInput" value="#{reunionBean.reunion.detaille}" />
+
+                    <h:outputLabel for="selectedEmployees" value="Sélectionner les employés:" />
+                    <p:selectCheckboxMenu id="selectedEmployees" value="#{reunionBean.selectedEmployees}" 
+                                          label="Sélectionner les employés" 
+                                          filter="true" filterMatchMode="contains">
+                        <f:selectItems value="#{reunionBean.allEmployees}" var="emp" itemLabel="#{emp.nom} #{emp.prenom}" itemValue="#{emp}"/>
+                    </p:selectCheckboxMenu>
+
+                    <p:fileUpload listener="#{reunionBean.handleFileUpload}" dragDropSupport="false"
+                                  update="messages" allowTypes="/(\.|\/)(pdf)$/" auto="true" />
+                    <p:growl id="messages" showDetail="true" />
+
+                </h:panelGrid>
+                <p:commandButton value="Ajouter" action="#{reunionBean.ajouterReunion}" oncomplete="if (!args.validationFailed) PF('addDialog').hide()" update="addDialogForm"/>
+            </h:form>
+        </p:dialog>
+
+        <h:form id="tableForm">
+            <div class="table-wrapper">
+                <p:dataTable value="#{reunionBean.reunions}" var="reunion" id="tableReunions" styleClass="table table-bordered table-striped"
+                             filteredValue="#{reunionBean.filteredReunions}">
+                    <p:column headerText="ID" filterBy="#{reunion.id}" filterMatchMode="contains">#{reunion.id}</p:column>
+                    <p:column headerText="Date de début" filterBy="#{reunion.dateDeb}" filterMatchMode="contains">#{reunion.dateDeb}</p:column>
+                    <p:column headerText="Durée" filterBy="#{reunion.duree}" filterMatchMode="contains">#{reunion.duree}</p:column>
+                    <p:column headerText="Titre" filterBy="#{reunion.titre}" filterMatchMode="contains">#{reunion.titre}</p:column>
+                    <p:column headerText="Détails" filterBy="#{reunion.detaille}" filterMatchMode="contains">#{reunion.detaille}</p:column>
+                    <p:column headerText="Employés">
+                        <ui:repeat value="#{reunion.gestionreunion}" var="employee">
+                            <li> #{employee.nom} #{employee.prenom}</li>
+                        </ui:repeat>
+                    </p:column>
+                    <p:column headerText="Actions">
+                        <p:commandButton value="Modifier" oncomplete="PF('modifyDialog').show()" update=":modifyForm">
+                            <f:setPropertyActionListener target="#{reunionBean.reunionAModifier}" value="#{reunion}" />
+                        </p:commandButton>
+                        <p:commandButton value="Supprimer" action="#{reunionBean.supprimerReunion(reunion)}" update=":tableForm" >
+                            <p:confirm header="Confirmation" message="Are you sure you want to proceed?" icon="pi pi-exclamation-triangle"/>
+                        </p:commandButton>
+                    </p:column>
+                    <p:column headerText="Fichiers">
+                        <p:commandButton value="Voir les fichiers" actionListener="#{reunionBean.loadFilesForReunion(reunion.id)}" oncomplete="PF('fileDialog').show();" update=":files"/>
+                    </p:column>
+                </p:dataTable>
+            </div>
+        </h:form>
+
+        <p:dialog header="Filtrer par date" widgetVar="filterDialog" resizable="false" modal="true">
+            <h:form id="filterDialogForm">
+                <p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid">
+                    <p:row>
+                        <p:outputLabel for="startDate" value="Date de début:" />
+                        <p:calendar id="startDate" value="#{reunionBean.dateDebutFilter}" showButtonPanel="true" pattern="MM/dd/yyyy HH:mm:ss" />
+                    </p:row>
+                    <p:row>
+                        <p:outputLabel for="endDate" value="Date de fin:" />
+                        <p:calendar id="endDate" value="#{reunionBean.dateFinFilter}" showButtonPanel="true" pattern="MM/dd/yyyy HH:mm:ss" />
+                    </p:row>
+                </p:panelGrid>
+                <p:commandButton value="Filtrer" action="#{reunionBean.filtrerParDate}" oncomplete="PF('filterDialog').hide()" update=":tableForm" />
+            </h:form>
+        </p:dialog>
+        <p:dialog header="Modifier la réunion" widgetVar="modifyDialog" resizable="false" modal="true">
+            <h:form id="modifyForm">
+                <h:panelGrid columns="2">
+                    <h:outputLabel for="idInput" value="ID:" />
+                    <h:inputText id="idInput" value="#{reunionBean.reunionAModifier.id}" />
+
+                    <h:outputLabel for="DateDebInput" value="Date de début:" />
+                    <p:calendar id="DateDebInput" value="#{reunionBean.reunionAModifier.dateDeb}" showButtonPanel="true" pattern="MM/dd/yyyy HH:mm:ss" />
+
+                    <p:outputLabel for="timeonly" value="Durée" />
+                    <p:calendar id="timeonly" value="#{reunionBean.reunionAModifier.duree}" timeOnly="true" pattern="HH:mm" />
+
+                    <h:outputLabel for="titreInput" value="Titre:" />
+                    <h:inputText id="titreInput" value="#{reunionBean.reunionAModifier.titre}" />
+
+                    <h:outputLabel for="detailleInput" value="Détails:" />
+                    <h:inputTextarea id="detailleInput" value="#{reunionBean.reunionAModifier.detaille}" />
+
+                    <h:outputLabel value="Employés sélectionnés:" />
+                    <p:selectCheckboxMenu value="#{reunionBean.selectedEmployees}" label="Sélectionner les employés" 
+                                          filter="true" filterMatchMode="contains">
+                        <f:selectItems value="#{reunionBean.allEmployees}" var="emp" itemLabel="#{emp.nom} #{emp.prenom}" itemValue="#{emp}"/>
+                    </p:selectCheckboxMenu>
+                </h:panelGrid>
+                <p:commandButton value="Confirmer Modification" action="#{reunionBean.modifierReunion}" oncomplete="PF('modifyDialog').hide()" update=":tableForm" />
+            </h:form>
+        </p:dialog>
+
+        <p:dialog id="files" header="Fichiers de la Réunion" widgetVar="fileDialog" resizable="true" modal="true" width="600">
+            <h:form id="fileDialogForm">
+                <!-- Ajout du composant d'upload de fichiers -->
+
+                <!-- Tableau affichant les fichiers actuellement associés à la réunion -->
+                <p:dataTable value="#{reunionBean.selectedReunionFiles}" var="file" id="fileTable" emptyMessage="Aucun fichier trouvé">
+                    <p:column headerText="Nom de fichier">
+                        <h:outputText value="#{file.name}" />
+                        <p:commandButton value="Afficher PDF" action="#{reunionBean.afficherPDF(file.name)}" />
+                        <p:commandButton value="Supprimer" action="#{reunionBean.supprimerFichier(file.name)}" update="@form">
+                            <p:confirm header="Confirmation" message="Êtes-vous sûr de vouloir supprimer ce fichier ?" icon="pi pi-exclamation-triangle"/>
+                        </p:commandButton>
+                    </p:column>
+
+                </p:dataTable>
+                <p:fileUpload listener="#{reunionBean.handleFileUploadForModifiedReunion}" dragDropSupport="false"
+                              update="messages" allowTypes="/(\.|\/)(pdf)$/" auto="true" />
+                <p:growl id="messages" showDetail="true" />
+
+                <p:commandButton value="Ajouter" action="#{reunionBean.ajouterFichiersAReunion(reunionBean.selectedReunionId, reunionBean.filesForModifiedReunion)}" update="fileDialogForm"/>
+            </h:form>
+        </p:dialog>
+
+        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat"   />
+            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" />
+        </p:confirmDialog>
+
+    </ui:define>
+</ui:composition>

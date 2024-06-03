@@ -9,12 +9,10 @@
 package dz.airalgerie.commun.bean;
 
 import dz.airalgerie.commun.facade.CommunManagerFacade;
-import dz.airalgerie.commun.facade.SignalitiqueFacade;
 import dz.airalgerie.commun.ref.entities.Notifications;
 import dz.airalgerie.commun.ref.entities.RefPermission;
 import dz.airalgerie.commun.ref.entities.RefUser;
 import dz.airalgerie.grh.model.dto.commun.PersonnelDTO;
-import dz.airalgerie.grh.model.entities.carriere.Signalitique;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
@@ -54,8 +52,6 @@ public class UserBean implements Serializable {
   private static final long serialVersionUID = 1L;
 
   @EJB
-  SignalitiqueFacade SignalitiqueFacade;
-  @EJB
   private CommunManagerFacade communManagerFacade;
 
   private Integer selectedMatricule;
@@ -74,7 +70,6 @@ public class UserBean implements Serializable {
   private Object[] user;
   SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
   SimpleDateFormat formath = new SimpleDateFormat("HH:mm:ss");
-  private Signalitique signalitique;
   private Object[] Profile;
   private Object[] ProfileEdit;
   private String userCondition;
@@ -117,23 +112,6 @@ public class UserBean implements Serializable {
     this.show_mobile = show_mobile;
   }
 
-  public void toggleSrc(ActionEvent evt) {
-    try {
-      Integer matricule = Integer.parseInt(FacesContext.getCurrentInstance().getExternalContext()
-          .getRequestParameterMap().get("matricule"));
-      String searchMod = String.valueOf(FacesContext.getCurrentInstance().getExternalContext()
-          .getRequestParameterMap().get("searchMod"));
-
-      ProfileEdit = SignalitiqueFacade.searchProfile(matricule, searchMod);
-      if (ProfileEdit != null) {
-        show_photo = (boolean) ProfileEdit[16];
-        show_mobile = (boolean) ProfileEdit[17];
-      }
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-
-  }
 
   public Object[] getProfileEdit() {
     return ProfileEdit;
@@ -143,27 +121,6 @@ public class UserBean implements Serializable {
     this.ProfileEdit = ProfileEdit;
   }
 
-  public void editContact() {
-    if (Profile != null) {
-      try {
-        SignalitiqueFacade.editContact(Profile, show_photo, show_mobile);
-      } catch (Exception e) {
-        FacesContext.getCurrentInstance().validationFailed();
-        e.printStackTrace();
-      }
-    }
-  }
-
-  public void editProfileContact() {
-    if (ProfileEdit != null) {
-      try {
-        SignalitiqueFacade.editContact(ProfileEdit, show_photo, show_mobile);
-      } catch (Exception e) {
-        FacesContext.getCurrentInstance().validationFailed();
-        e.printStackTrace();
-      }
-    }
-  }
 
   public void redirectRole() throws IOException {
     homeLink = "inputPaie/saisiPaie.xhtml";
@@ -207,26 +164,6 @@ public class UserBean implements Serializable {
     }
   }
 
-  public Object[] getProfile() {
-    if (Profile == null && signalitique != null) {
-      Profile = SignalitiqueFacade.searchProfile(signalitique.getMatricule(), null);
-      if (Profile != null) {
-        show_photo = (boolean) Profile[16];
-        show_mobile = (boolean) Profile[17];
-      }
-    }
-    return Profile;
-  }
-
-  public String getProfileDir() {
-    Object[] Profile = SignalitiqueFacade.searchProfile(getSelectedMatricule(), null);
-
-    if (Profile != null) {
-      return (String) Profile[18];
-    }
-
-    return "";
-  }
 
   public void myProfile() {
     if (Profile != null) {
@@ -237,21 +174,6 @@ public class UserBean implements Serializable {
 
   public void setProfile(Object[] Profile) {
     this.Profile = Profile;
-  }
-
-  public Signalitique getSignalitique() {
-    if (signalitique == null) {
-      try {
-        signalitique = SignalitiqueFacade.find(getSelectedMatricule());
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
-    }
-    return signalitique;
-  }
-
-  public void setSignalitique(Signalitique signalitique) {
-    this.signalitique = signalitique;
   }
 
   public Object[] getQueryObject() {
@@ -324,45 +246,6 @@ public class UserBean implements Serializable {
     this.selectedYear = selectedYear;
   }
 
-  public void log(final String contenu) {
-    TimerTask log = new TimerTask() {
-      @Override
-      public void run() {
-        try {
-          String nj = "";
-          String content = null;
-          String path = logPath + "GRH_" + format.format(new Date()) + ".txt";
-          // if (refUser.getNjFille() != null) {
-          // nj = String.valueOf(refUser.getNjFille());
-          // }
-          if (contenu != null) {
-            content = contenu;
-          } else {
-            // content = "Access to GRH System : " + formath.format(new Date()) + " " +
-            // getSelectedMatricule() + " " + refUser.getNom() + " " + refUser.getPrenoms() + " " +
-            // nj /*+ "
-            // " + user[4]*/ + " \r\n";
-          }
-
-          File file = new File(path);
-          if (!file.exists()) {
-            try {
-              file.createNewFile();
-            } catch (Exception e) {
-            }
-          }
-          if (file.exists()) {
-            Files.write(Paths.get(path), content.getBytes(), StandardOpenOption.APPEND);
-          }
-
-        } catch (IOException e) {
-          e.printStackTrace();
-        }
-      }
-    };
-    Timer timer = new Timer();
-    timer.schedule(log, 0);
-  }
 
   @PostConstruct
   public void init() {

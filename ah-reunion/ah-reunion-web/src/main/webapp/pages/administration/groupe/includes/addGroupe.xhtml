@@ -37,19 +37,7 @@
                     <h6 class="bg-white-i text-gray-darker"><strong>Permissions</strong></h6>
                 </div>
             </div>
-            <div class="col-xs-12">
-                <b:column col-sm="3" col-md="3" styleClass="pull-right m-b-2">
-                    <ct:link id="addBtn"
-                             styleClass="btn-success btn-block"
-                             icon="fa-plus"
-                             value="Ajouter une permission"
-                             update=":addPermission"
-                             action="#{groupeBean.resetAddPermission()}"
-                             onComplete="PF('addPermission').show();"
-                             process="@this">
-                    </ct:link>
-                </b:column>
-            </div>
+
             <b:column col-xs="12" id="permList" >
 
                 <ct:dataTable value="#{groupeBean.groupe.refPermissionSet}"

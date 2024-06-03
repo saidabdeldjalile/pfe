@@ -28,7 +28,7 @@
 
             <div class="row m-b-2">
                 <!--add btn-->
-                <b:column col-sm="3" col-md="2" styleClass="pull-right" rendered="#{request.isUserInRole('refAdminGroupeAdd')}">
+                <b:column col-sm="3" col-md="2" styleClass="pull-right" rendered="#{request.isUserInRole('permissionAdd')}">
                     <ct:link id="addBtn"
                              styleClass="btn-success btn-block"
                              icon="fa-plus"
@@ -60,7 +60,7 @@
                     <h:outputText value="#{item.description}"/>
                 </p:column>
 
-                <p:column headerText="Actions" width="120" style="text-align: center" rendered="#{request.isUserInRole('refAdminGroupeAdd')}">
+                <p:column headerText="Actions" width="120" style="text-align: center" rendered="#{request.isUserInRole('permissionAdd')}">
                     <b:commandButton look="info" styleClass="btn-small-square" iconAwesome="edit"
                                      tooltip="Editer" action="#{groupeBean.resetEdit()}"
                                      oncomplete="PF('addGroupe').show(); loadingHide();" 
@@ -82,25 +82,13 @@
         <ct:dialog id="addGroupe" 
                    headerTitle="#{groupeBean.editMode ? 'Modification' : 'Ajout'} d'un groupe"
                    saveBtnRendred="true" height="450" saveBtnClass="addGroupeBtn" >
-            <h:form id="dataGroupe" rendered="#{request.isUserInRole('refAdminGroupeAdd')}">
+            <h:form id="dataGroupe" rendered="#{request.isUserInRole('permissionAdd')}">
                 <ui:include src="includes/addGroupe.xhtml" />
-            </h:form>
-        </ct:dialog>
-
-        <ct:dialog id="addPermission" headerTitle="Ajout d'une permission"
-                   saveBtnRendred="true" height="150" width="60%" saveBtnClass="addPermissionBtn" >
-            <h:form id="permissionsForm" rendered="#{request.isUserInRole('refAdminGroupeAdd')}" >
-
-                <ui:include src="includes/permission/addPermission.xhtml" />
             </h:form>
         </ct:dialog>
 
         <ct:confirmDiag name="delete-groupe" update=":contentForm"
                         actionListener="groupeBean.deleteGroupe()"
-                        message="-vous sûr de vouloir supprimer ce groupe ?" />
-
-        <ct:confirmDiag name="delete-permission2" update=":dataGroupe:permList"
-                        actionListener="groupeBean.deletePermession()"
                         message="-vous sûr de vouloir supprimer ce groupe ?" />
 
     </ui:define>
